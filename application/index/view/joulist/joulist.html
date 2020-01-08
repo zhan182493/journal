@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<link rel="stylesheet" href="__INDEX__/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__INDEX__/css/index.css">
+	<script src="__INDEX__/js/jquery.min.js"></script>
+	<script src="__INDEX__/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<!-- head开始 -->
+	{include file="public/head" /}
+	<!-- head结束 -->
+	
+<!-- content开始 -->
+<div class="container">
+	<div class="row">
+
+	<!-- 左边 -->
+		<div class="left-sidebar col-md-8" style="padding-right: 20px;">
+			<h4 class="item_title">{$title}</h4>
+			<div class="item_content">
+				<div id="guokan">
+       <div class="history table-responsive">
+         <table class="table table-striped table-hover table-bordered text-center">
+               <tbody>
+               		<tr><th>年份</th><td colspan="12">期数</td></tr>
+					<tr>
+						<th>2019年 25 卷</th>
+						<td><a href="{:url('joulist/artlist2')}">1</a></td>
+						<td><a href="#">2</a></td>
+						<td><a href="#">3</a></td>
+						<td><a href="#">4</a></td>
+						<td><a href="#">5</a></td>
+						<td><a href="#">6</a></td>
+						<td><a href="#">7</a></td>
+						<td><a href="#">8</a></td>
+						<td><a href="#">9</a></td>
+						<td><a href="#">10</a></td>
+						<td><a href="#">11</a></td>
+						<td><a href="#">12</a></td>
+					</tr>
+					<tr>
+						<th>2019年 24 卷</th>
+						<td><a href="#">1</a></td>
+						<td><a href="#">2</a></td>
+						<td><a href="#">3</a></td>
+						<td><a href="#">4</a></td>
+						<td><a href="#">5</a></td>
+						<td><a href="#">6</a></td>
+					</tr>
+				</tr>
+	    		</tbody>
+	    	</table>  
+	    
+							   
+       </div>  
+								</div>
+			</div>
+		</div>
+	<!-- 右边 -->
+		{include file="public/right" /}
+	<!-- 右边end -->
+		
+	</div>
+</div>
+<!-- content结束 -->
+
+<!-- foot开始 -->
+	{include file="public/foot" /}
+<!-- foot结束 -->
+
+</body>
+</html>

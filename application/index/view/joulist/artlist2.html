@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<link rel="stylesheet" href="__INDEX__/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__INDEX__/css/index.css">
+	<script src="__INDEX__/js/jquery.min.js"></script>
+	<script src="__INDEX__/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<!-- head开始 -->
+	{include file="public/head" /}
+	<!-- head结束 -->
+	
+<!-- content开始 -->
+<div class="container">
+	<div class="row">
+
+	<!-- 左边 -->
+		<div class="left-sidebar col-md-8" style="padding-right: 20px;">
+			<h4 class="m-nav"><icon class="glyphicon glyphicon-home"> </icon><a href="{:url('index/index')}">首页>></a><a href="{:url('joulist/history')}">过刊浏览>></a><span>2019年 25 卷第1期</span></h4>
+			<div class="item_content">
+	<div class=noselectrow>
+		<div class="wenzhang">
+			<dl>							
+				<div class="artlist">
+				<dd>
+					<a target="_blank" href="#" class="biaoti">关于全国两会期间期刊网站访问受限的公告</a>
+					<span class="time">[2020-01-08]</span>
+				</dd>
+				<dd>
+					<a target="_blank" href="#" class="biaoti">李良玉教授受聘为我刊特邀编委并做专题讲座</a>
+					<span class="time">[2020-01-08]</span>
+				</dd>
+				<dd>
+					<a target="_blank" href="#" class="biaoti">杂志社赴南京大学中国社会科学研究评价中心调研学习</a>
+					<span class="time">[2020-01-08]</span>
+				</dd>
+				<dd>
+					<a target="_blank" href="#" class="biaoti">2017年高被引论文、优秀审稿专家、突出贡献团队评选结果揭晓</a>
+					<span class="time">[2020-01-08]</span>
+				</dd>
+				</div>
+			</dl>
+		</div>
+	</div>
+	</div>
+		</div>
+	<!-- 右边 -->
+		{include file="public/right" /}
+	<!-- 右边end -->
+		
+	</div>
+</div>
+<!-- content结束 -->
+
+<!-- foot开始 -->
+	{include file="public/foot" /}
+<!-- foot结束 -->
+
+</body>
+</html>
