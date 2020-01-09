@@ -26,8 +26,12 @@ class Common extends Controller
 		return view('joulist');
 	}
 
-	public function artlist2(){
+	public function artlist2(){//当期文章目录
 		return view('artlist2');
+	}
+
+	public function datelist(){//当年期数目录
+		return view('datelist');
 	}
 	/*列表页end*/
 	/*单页*/

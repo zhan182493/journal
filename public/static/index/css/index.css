@@ -435,5 +435,19 @@ A.txt_zhaiyao1:active {
 	width: 80px;
 	height: 80px;
 }
+.panel-heading{
+	padding: 10px 15px 0 15px;
+}
+.panel-default>.panel-heading {
+    color: white;
+    background-color: #6CA6CD;
+}
+.panel-default>.panel-heading:hover{
+	background-color: #7AC5CD;
+}
 
+.panel-title{
+	height: 30px;
+	color: white;
+}
 /*文章详情页end*/

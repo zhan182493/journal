@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:65:"F:\journal\public/../application/index\view\joulist\artlist2.html";i:1578471030;s:50:"F:\journal\application\index\view\public\head.html";i:1578463323;s:51:"F:\journal\application\index\view\public\right.html";i:1578467531;s:50:"F:\journal\application\index\view\public\foot.html";i:1578449367;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:65:"F:\journal\public/../application/index\view\joulist\artlist2.html";i:1578537986;s:50:"F:\journal\application\index\view\public\head.html";i:1578463323;s:51:"F:\journal\application\index\view\public\right.html";i:1578467531;s:50:"F:\journal\application\index\view\public\foot.html";i:1578449367;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +6,6 @@
 	<title>Document</title>
 	
 	<link rel="stylesheet" href="http://www.journal.com/static/index/css/bootstrap.min.css">
-	<!-- <link rel="stylesheet" href="http://www.journal.com/static/index/css/bootstrap.css"> -->
 	<link rel="stylesheet" href="http://www.journal.com/static/index/css/index.css">
 	<script src="http://www.journal.com/static/index/js/jquery.min.js"></script>
 	<script src="http://www.journal.com/static/index/js/bootstrap.min.js"></script>
@@ -42,6 +41,7 @@
 
 	<!-- 左边 -->
 		<div class="left-sidebar col-md-8" style="padding-right: 20px;">
+		<h1 class="item_title">当期目录</h1>
 			<h4 class="m-nav"><icon class="glyphicon glyphicon-home"> </icon><a href="<?php echo url('index/index'); ?>">首页>></a><a href="<?php echo url('joulist/history'); ?>">过刊浏览>></a><span>2019年 25 卷第1期</span></h4>
 			<div class="item_content">
 	<div class=noselectrow>

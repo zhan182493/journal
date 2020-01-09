@@ -1,4 +1,75 @@
-<div class="right-sidebar col-md-4">
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:65:"F:\journal\public/../application/index\view\joulist\datelist.html";i:1578537138;s:50:"F:\journal\application\index\view\public\head.html";i:1578463323;s:51:"F:\journal\application\index\view\public\right.html";i:1578467531;s:50:"F:\journal\application\index\view\public\foot.html";i:1578449367;}*/ ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<link rel="stylesheet" href="http://www.journal.com/static/index/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://www.journal.com/static/index/css/index.css">
+	<script src="http://www.journal.com/static/index/js/jquery.min.js"></script>
+	<script src="http://www.journal.com/static/index/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<!-- head开始 -->
+	<div class="header">
+		<div class="banner">
+		<img src="http://www.journal.com/static/index/picture/logo.png" alt="">
+		</div>
+			<div class="nav">
+				<div class="navson">
+				<span style="margin-right:50px;"><font style="line-height: 40px;color: #ffffff;font-size: 17px;">		2020年1月3日 星期五</font></span>
+				<ul class="navMenu">
+					<li><a href="<?php echo url('index/index'); ?>">首页</a></li>
+					<li><a href="<?php echo url('page/desc'); ?>">学报简介</a></li>
+					<li><a href="<?php echo url('artlist/news'); ?>">学报动态</a></li>
+					<li><a href="<?php echo url('artlist/notice'); ?>">学报公告</a></li>
+					<li><a href="<?php echo url('joulist/history'); ?>">过刊浏览</a></li>
+					<li><a href="<?php echo url('search/search'); ?>">文章检索</a></li>
+					<li><a href="<?php echo url('artlist/helps'); ?>">投稿指南</a></li>
+					<li><a href="<?php echo url('page/call'); ?>">联系我们</a></li>
+				 </ul>
+				 </div>
+   			</div>
+</div>
+	<!-- head结束 -->
+	
+<!-- content开始 -->
+<div class="container">
+	<div class="row">
+
+	<!-- 左边 -->
+		<div class="left-sidebar col-md-8" style="padding-right: 20px;">
+			<h4 class="m-nav"><icon class="glyphicon glyphicon-home"> </icon><a href="<?php echo url('index/index'); ?>">首页>></a><span>2019年 25卷</span></h4>
+			<div class="item_content">
+	<div class=noselectrow>
+		<div class="wenzhang">
+			<dl>							
+				<div class="artlist">
+				<dd>
+					<a target="_blank" href="#" class="biaoti">第一期</a>
+					<a target="_blank" href="#" class="biaoti">第二期</a>
+					<a target="_blank" href="#" class="biaoti">第二期</a>
+					<a target="_blank" href="#" class="biaoti">第二期</a>
+				</dd>
+				<dd>
+					<a target="_blank" href="#" class="biaoti">第二期</a>
+				</dd>
+				<dd>
+					<a target="_blank" href="#" class="biaoti">第三期</a>
+				</dd>
+				<dd>
+					<a target="_blank" href="#" class="biaoti">第四期</a>
+				</dd>
+				</div>
+			</dl>
+		</div>
+	</div>
+	</div>
+		</div>
+	<!-- 右边 -->
+		<div class="right-sidebar col-md-4">
 		<!-- 稿件处理系统 -->
 			<div class="graft block">
 				<div class="title gjclxt">
@@ -7,18 +78,18 @@
 				<div class="content">
 					<div class="office-2">
                 <div class="office-2-l">
-                   <a href="{:url('Login/signin')}" target="_blank">
+                   <a href="#" target="_blank">
                         <div class="office-2-l-l">
                         	<img src="http://www.journal.shu.edu.cn/images/1007-2861/images/ico04.png">
                             
                         </div>
                         <div class="office-2-l-r">
-                            用户登录
+                            &nbsp&nbsp登录
                         </div>
                     </a>
                 </div>
                 <div class="office-2-r">
-                   <a href="{:url('Register/signup')}" target="_blank">
+                   <a href="#" target="_blank">
                         <div class="office-2-l-l">
                             <img src="http://www.journal.shu.edu.cn/images/1007-2861/images/ico02.png">
                         </div>
@@ -30,7 +101,7 @@
                 </div>
                 <div class="office-2">
                 <div class="office-2-l">
-                    <a href="{:url('Author/index')}" target="_blank">
+                    <a href="#" target="_blank">
                         <div class="office-2-l-l">
                         	<img src="http://www.journal.shu.edu.cn/images/1007-2861/images/ico01.png">
                             
@@ -61,7 +132,7 @@
 				</div>
 				<div class="content">
 					<div class="qkxx_fm">
-					<img src="__INDEX__/picture/20200102190358.jpg">
+					<img src="http://www.journal.com/static/index/picture/20200102190358.jpg">
 					</div>
 					<div class="qkxx_xx">
 				
@@ -126,3 +197,29 @@
 				</div>
 			</div>
 		</div>
+	<!-- 右边end -->
+		
+	</div>
+</div>
+<!-- content结束 -->
+
+<!-- foot开始 -->
+	<div class="foot">
+		<div class="footer" style="background-color: pink;">
+			<div class="banquan">
+		<div class="banquan_xx_l">
+			© 2019 上海大学学报（自然科学版）编辑部<br>
+办公地址：上海大学新校区出版大楼203室 电话：021-66135508 传真：021-66132736 E-mail: xuebao@mail.shu.edu.cn<br>
+通信地址：上海市上大路99号上海大学126信箱 邮编：200444<br>
+本系统由北京玛格泰克科技发展有限公司设计开发 技术支持：support@magtech.com.cn
+		</div>
+		
+		
+		
+	</div>
+		</div>
+	</div>
+<!-- foot结束 -->
+
+</body>
+</html>
