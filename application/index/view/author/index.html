@@ -109,7 +109,7 @@
           <form action="">
           <br>
           <div class="col-lg-4">
-            <img  src="__INDEX__/author/img/intro01.png" alt="">
+            <img class="tougao"  src="__INDEX__/author/img/intro01.png" alt="">
             <h3>选择稿件</h3>
             <p><div class="input-group">
                <input id='location' class="form-control" onclick="$('#i-file').click();" style="width: 360px;">
@@ -117,7 +117,7 @@
                </div></p>
           </div>
           <div class="col-lg-4">
-            <img  src="__INDEX__/author/img/intro02.png" alt="">
+            <img class="tougao" src="__INDEX__/author/img/intro02.png" alt="">
             <h3>选择附件</h3>
             <p><div class="input-group">
                <input id='location' class="form-control" onclick="$('#i-file').click();" style="width: 360px;">
@@ -161,13 +161,7 @@
     <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
       <table class="table">
         <tbody>
-          <tr>
-            <th>标题</th>
-            <th>状态</th>
-            <th>审改意见</th>
-            <th>操作</th>
-          </tr>
-          <tr>
+        <tr>
             <td>标题111111</td>
             <td><span class="badge badge-success">通过</span></td>
             <td>
@@ -176,7 +170,6 @@
               <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
                 审改意见
               </button>
-
               <!-- Modal -->
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -194,9 +187,7 @@
                   </div>
                 </div>
               </div>
-
     <!-- 审改意见end -->
-
               </td>
             <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
                 删除
@@ -215,46 +206,20 @@
     <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
       <table class="table">
         <tbody>
-          <tr>
-            <th>标题</th>
-            <th>状态</th>
-            <th>审改意见</th>
-            <th>操作</th>
-          </tr>
+        <form action=""></form>
           <tr>
             <td>标题111111</td>
             <td><span class="badge badge-warning">待审</span></td>
-            <td>
-    <!-- 审改意见 -->
-            <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
-                审改意见
-              </button>
-
-              <!-- Modal -->
-              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">审改意见</h4>
-                    </div>
-                    <div class="modal-body">
-                      这里是审改意见
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-    <!-- 审改意见end -->
-
-              </td>
-            <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
-                删除
-              </button></td>
+            <td><div class="input-group">
+               <input id="location" class="form-control" onclick="$('#i-file').click();"  placeholder="修改稿件">
+              <input type="file" name="file" id="i-file" accept=".xls, .xlsx" onchange="$('#location').val($('#i-file').val());" style="display: none">
+               </div></td>
+               <td><div class="input-group">
+               <input id="location" class="form-control" onclick="$('#i-file').click();"  placeholder="修改附件">
+              <input type="file" name="file" id="i-file" accept=".xls, .xlsx" onchange="$('#location').val($('#i-file').val());" style="display: none">
+               </div></td>
+            <td><input type="submit" class="form-control" style="background-color: #43CD80;" ></td>
+            <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">删除</button></td>
           </tr>
         </tbody>
       </table>
@@ -269,12 +234,6 @@
     <div id="collapseThree" class="panel-collapse collapse" aria-expanded="true" style="">
       <table class="table">
         <tbody>
-          <tr>
-            <th>标题</th>
-            <th>状态</th>
-            <th>审改意见</th>
-            <th>操作</th>
-          </tr>
           <tr>
             <td>标题111111</td>
             <td><span class="badge badge-danger">未通过</span></td>
