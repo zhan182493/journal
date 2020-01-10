@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:61:"F:\journal\public/../application/index\view\login\signin.html";i:1578540044;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:61:"F:\journal\public/../application/index\view\login\signin.html";i:1578622529;}*/ ?>
 
 <!doctype html>
 <html  lang="en">
@@ -70,6 +70,10 @@
 									<div class="form-group">
 										<label for="signin_form">密码</label>
 									    <input type="password" class="form-control" id="signin_form" placeholder="请输入密码">
+									</div><!--/.form-group -->
+									<div class="form-group">
+										<label for="signin_form">验证码</label>
+									    <input type="password" class="form-control" id="signin_form" placeholder="请输入验证码">
 									</div><!--/.form-group -->
 								</form><!--/form -->
 							</div><!--/.signin-form -->

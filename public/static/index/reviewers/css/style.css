@@ -10,6 +10,10 @@ ul{
   padding: 5px 20px;
 }
 
+textarea{
+  resize: none;
+}
+
 body {
   background-color: #f2f2f2;
   font-family: "Lato";
@@ -359,7 +363,8 @@ p input{
     float: right;
 }
 
-.signin-form input[type="submit"]{
-  
-}
+.signin-form input[type="submit"]
+
+
 /*.signin-form  .form-control*/
+

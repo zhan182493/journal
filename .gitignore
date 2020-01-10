@@ -1,4 +1,4 @@
 /runtime
-
 application/database.php
-application/1161.txt
+runtime/temp
+runtime/log

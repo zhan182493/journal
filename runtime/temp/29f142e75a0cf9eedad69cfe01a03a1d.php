@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:65:"F:\journal\public/../application/index\view\joulist\artlist2.html";i:1578537986;s:50:"F:\journal\application\index\view\public\head.html";i:1578463323;s:51:"F:\journal\application\index\view\public\right.html";i:1578467531;s:50:"F:\journal\application\index\view\public\foot.html";i:1578449367;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:65:"F:\journal\public/../application/index\view\joulist\artlist2.html";i:1578537986;s:50:"F:\journal\application\index\view\public\head.html";i:1578463323;s:51:"F:\journal\application\index\view\public\right.html";i:1578636027;s:50:"F:\journal\application\index\view\public\foot.html";i:1578449367;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,18 +80,18 @@
 				<div class="content">
 					<div class="office-2">
                 <div class="office-2-l">
-                   <a href="#" target="_blank">
+                   <a href="<?php echo url('Login/signin'); ?>" target="_blank">
                         <div class="office-2-l-l">
                         	<img src="http://www.journal.shu.edu.cn/images/1007-2861/images/ico04.png">
                             
                         </div>
                         <div class="office-2-l-r">
-                            &nbsp&nbsp登录
+                            用户登录
                         </div>
                     </a>
                 </div>
                 <div class="office-2-r">
-                   <a href="#" target="_blank">
+                   <a href="<?php echo url('Register/signup'); ?>" target="_blank">
                         <div class="office-2-l-l">
                             <img src="http://www.journal.shu.edu.cn/images/1007-2861/images/ico02.png">
                         </div>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="office-2">
                 <div class="office-2-l">
-                    <a href="#" target="_blank">
+                    <a href="<?php echo url('Author/index'); ?>" target="_blank">
                         <div class="office-2-l-l">
                         	<img src="http://www.journal.shu.edu.cn/images/1007-2861/images/ico01.png">
                             
@@ -114,7 +114,7 @@
                     </a>
                 </div>
                 <div class="office-2-r">
-                    <a href="#" target="_blank">
+                    <a href="<?php echo url('Reviewers/index'); ?>" target="_blank">
                         <div class="office-2-l-l">
                             <img src="http://www.journal.shu.edu.cn/images/1007-2861/images/ico03.png">
                             </div>
