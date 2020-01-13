@@ -88,7 +88,7 @@
                   <td scope="row">未通过稿件&nbsp;&nbsp;<span class="badge badge-danger">3</span></td>
                 </tr>
                 <tr>
-                  <td><a href="">返回网站主页</a></td>
+                  <td><a href="{:url('index/index')}">返回网站主页</a></td>
                   <td><a href="">注销账号</a></td>
                 </tr>
               </tbody>
@@ -171,9 +171,9 @@
             <td>所属类型</td>
             <td><!-- 审改意见 -->
             <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+              <a data-toggle="modal" data-target="#myModal">
                 摘要
-              </button>
+              </a>
 
               <!-- Modal -->
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -192,6 +192,33 @@
 
     <!-- 审改意见end --></td>
             <td><span class="badge badge-success">已支付</span></td>
+            <td>
+            <!-- 专家联系方式 -->
+              <!-- Button trigger modal -->
+              <a data-toggle="modal" data-target="#myModal2">
+              <!-- data-target的值由#myModal+变量id组成 -->
+                审稿专家联系方式
+              </a>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!-- div的id由myModal+变量id组成 -->
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"> 审稿专家联系方式</h4>
+                    </div>
+                    <div class="modal-body">
+                      姓名：张三<br>
+                      邮箱：123@qq.com<br>
+                      tel:18877779999
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 专家联系方式end -->
+            </td>
           </tr>
         </tbody>
       </table>
@@ -242,12 +269,12 @@
             <td>
     <!-- 审改意见 -->
             <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal2">
+              <a data-toggle="modal" data-target="#myModal3">
                 审改意见
-              </button>
+              </a>
 
               <!-- Modal -->
-              <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -262,8 +289,34 @@
               </div>
 
     <!-- 审改意见end -->
-
               </td>
+              <td>
+            <!-- 专家联系方式 -->
+              <!-- Button trigger modal -->
+              <a data-toggle="modal" data-target="#myModal4">
+              <!-- data-target的值由#myModal+变量id组成 -->
+                审稿专家联系方式
+              </a>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!-- div的id由myModal+变量id组成 -->
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"> 审稿专家联系方式</h4>
+                    </div>
+                    <div class="modal-body">
+                      姓名：李斯<br>
+                      邮箱：123@qq.com<br>
+                      tel:18877779999
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 专家联系方式end -->
+            </td>
             <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
                 删除
               </button></td>

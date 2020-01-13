@@ -1,9 +1,9 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:60:"F:\journal\public/../application/index\view\index\index.html";i:1578562131;s:50:"F:\journal\application\index\view\public\head.html";i:1578463323;s:51:"F:\journal\application\index\view\public\right.html";i:1578636027;s:50:"F:\journal\application\index\view\public\foot.html";i:1578449367;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:60:"F:\journal\public/../application/index\view\index\index.html";i:1578880137;s:50:"F:\journal\application\index\view\public\head.html";i:1578463323;s:51:"F:\journal\application\index\view\public\right.html";i:1578636027;s:50:"F:\journal\application\index\view\public\foot.html";i:1578449367;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>学报期刊管理系统</title>
 	
 	<link rel="stylesheet" href="http://www.journal.com/static/index/css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://www.journal.com/static/index/css/index.css">

@@ -49,6 +49,7 @@ p {
 /* Links */
 
 a {
+
   color: #3bc492;
   word-wrap: break-word;
   -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
@@ -62,6 +63,7 @@ a:hover, a:focus {
   color: #c0392b;
   text-decoration: none;
   outline: 0;
+  cursor: pointer;
 }
 
 a:before, a:after {
