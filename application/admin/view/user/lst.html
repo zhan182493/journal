@@ -17,8 +17,17 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
-
     
+
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <script type="text/javascript" src="__ADMIN__/jquery/jquery-3.4.1.min.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+
 </head>
 <body>
     <!-- 头部 -->
@@ -46,91 +55,54 @@
 
 <!-- Page Body -->
 <div class="page-body">
-                    
-<button type="button" tooltip="添加用户" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:url('user/add')}'" style="float: right;"> <i class="fa fa-plus"></i> Add
-</button>
+<button class="btn btn-sm btn-azure btn-addon" style="float: right;" tooltip="添加用户"><a class="add" style="color: white;"> <i class="fa fa-plus"></i> Add
+</a></button>
 <select name="" class="btn btn-sm btn-azure btn-addon">
-    <option value="1">主编</option>
-    <option value="2">编辑</option>
-    <option value="3">专家</option>
-    <option value="4" selected="selected">作者</option>
+{volist name="role" id="vo"}
+    <option value="{$vo['id']}">
+    <a class="link-del" href="#" onClick="del({$vo['id']});return false">{$vo['role']}</a></option>
+{/volist}
 </select>
 <div class="row">
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="widget-body">
                 <div class="flip-scroll">
-                    <table class="table table-bordered table-hover zuozhe" style="display: none;">
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th class="text-center">ID</th>
                                 <th class="text-center">用户名</th>
                                 <th class="text-center">姓名</th>
                                 <th class="text-center">角色</th>
+                                <th class="text-center zhuanjia">审稿类型</th>
                                 <th class="text-center">电话</th>
                                 <th class="text-center">操作</th>
                             </tr>
                         </thead>
                         <tbody>
+                        {volist name="user" id="vo"}
                         <tr>
-                            <td align="center">6</td>
-                            <td align="center">zhangsan</td>
-                            <td align="center">张三</td>
-                            <td align="center">作者</td>
-                            <td align="center">15588889999</td>
+                            <td align="center">{$vo['id']}</td>
+                            <td align="center">{$vo['uname']}</td>
+                            <td align="center">{$vo['name']}</td>
+                            <td align="center">{$vo['role']}</td>
+                            <td align="center" class="zhuanjia">{$vo['acatename']}</td>
+                            <td align="center">{$vo['tel']}</td>
                             <td align="center">
-                                <a href="/admin/user/edit/id/6.html" class="btn btn-primary btn-sm shiny">
+                                <a href="{:url('user/edit',array('id'=>$vo['id']
+                                ))}" class="btn btn-primary btn-sm shiny">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
-                                <a href="#" onClick="warning('确实要删除吗', '/admin/user/del/id/6.html')" class="btn btn-danger btn-sm shiny">
+                                <a href="{:url('user/del',array('id'=>$vo['id']
+                                ))}" class="btn btn-danger btn-sm shiny">
                                     <i class="fa fa-trash-o"></i> 删除
                                 </a>
                             </td>
                         </tr>
+                        {/volist}
                         </tbody>
                     </table>
-
-
-                    <table class="table table-bordered table-hover bianji" style="display: none;">
-                        <thead>
-                            <tr>
-                                <th>编辑</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="table table-bordered table-hover zhubian" style="display: none;">
-                        <thead>
-                            <tr>
-                                <th>主编</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="table table-bordered table-hover zhuanjia" style="display: none;">
-                        <thead>
-                            <tr>
-                                <th>专家</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-
                 </div>
             </div>
         </div>
@@ -146,30 +118,38 @@
         </div>  
     </div>
 
-        <!--Basic Scripts-->
-<script src="__ADMIN__/style/jquery_002.js"></script>
-<script src="__ADMIN__/style/bootstrap.js"></script>
-<script src="__ADMIN__/style/jquery.js"></script>
-<!--Beyond Scripts-->
-<script src="__ADMIN__/style/beyond.js"></script>
 
 <script>
     $(function(){
-        $('.zuozhe').show();
+        $('.zhuanjia').hide();
+        $('select').bind("change",function(){
+            if(this.value==3){
+                $('.zhuanjia').show();
+            }else{
+                $('.zhuanjia').hide();
+            }
+        });
 
-        // $('select').bind("change",function(){
-        //     if(this.value=="1"){
-        //         $('.zuozhe').hide();
-        //         $('.zhubian').show();
-        //     }else if(this.value=="2"){
-        //         $('.zhubian').hide();
-        //         $('.bianji').show();
-        //     }else if(){
-        //         $('.bianji').hide();
-        //         $('.zuozhe').show();
-        //     }
-            
-        // });
+        function del(roleid){
+            alert(111);
+            $.ajax({
+                type:"POST",
+                data:{'id':roleid},
+                url:"{:url('lst')}",
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);
+                }
+            });
+        }
+
+        $(".add").click(function(){
+            if($('select').val()==3){
+                $(".add").attr("href","{:url('add',array('id'=>3))}");
+            }else{
+                $(".add").attr("href","{:url('add',array('id'=>1))}");
+            }
+        });
 
         
     });

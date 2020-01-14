@@ -36,8 +36,8 @@
                 <!-- Page Breadcrumb -->
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
-                        <li><a href="#">首页</a></li>
-                        <li><a href="#">账号管理</a></li>
+                        <li><a href="{:url('index/index')}">首页</a></li>
+                        <li><a href="{:url('user/lst')}">账号管理</a></li>
                         <li class="active">添加用户</li>
                     </ul>
                 </div>
@@ -55,55 +55,68 @@
             <div class="widget-body">
                 <div id="horizontal-form">
                     <form class="form-horizontal" role="form" action="{:url('user/add')}" method="post">
+                    <input type="hidden" name="acateid" value="{$id}">
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">用户名</label>
+                            <label for="uname" class="col-sm-2 control-label no-padding-right">用户名</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="username" placeholder="请输入用户名" name="username" required="" type="text">
+                                <input class="form-control" id="uname" placeholder="请输入用户名" name="uname" required="" type="text">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">真实姓名</label>
+                            <label for="pwd" class="col-sm-2 control-label no-padding-right">密码</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="username" placeholder="请输入真实姓名" name="username" required="" type="text">
+                                <input class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required="" type="password">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="group_id" class="col-sm-2 control-label no-padding-right">用户角色</label>
+                            <label for="rpwd" class="col-sm-2 control-label no-padding-right">确认密码</label>
                             <div class="col-sm-6">
-                                <select name="group_id" style="width: 100%;">
-                                <option selected="selected" value="8">管理员</option>
-                                <option value="8">主编</option>
-                                <option value="8">编辑</option>
-                                <option value="8">专家</option>
+                                <input class="form-control" id="rpwd" placeholder="请确认密码" name="rpwd" required="" type="password">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label no-padding-right">真实姓名</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="name" placeholder="请输入真实姓名" name="name" required="" type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tel" class="col-sm-2 control-label no-padding-right">电话</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="tel" placeholder="请输入电话" name="tel" required="" type="text">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        
+                        {if condition="$id eq 3"}
+                        <div class="form-group">
+                            <label for="acateid" class="col-sm-2 control-label  no-padding-right">审稿类型</label>
+                            <div class="col-sm-6">
+                                <select name="acateid" style="width: 100%;">
+                                <option selected="selected" value="1">自然科学</option>
+                                <option value="2">社会科学</option>
+                                <option value="3">物理</option>
+                                <option value="4">化学</option>
                                 </select>
                             </div>
-                        </div> 
-
-                        <div class="form-group">
-                            <label for="password" class="col-sm-2 control-label no-padding-right">密码</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" id="password" placeholder="请输入密码" name="password" required="" type="password">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
-
-                        <div class="form-group">
-                            <label for="password" class="col-sm-2 control-label no-padding-right">确认密码</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" id="password" placeholder="请确认密码" name="password" required="" type="password">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
+                        {/if}
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">保存信息</button>
+                                <button type="submit" class="btn btn-success">提交</button>
+                                <a href="{:url('user/lst')}" type="button" class="btn btn-info">返回</a>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
