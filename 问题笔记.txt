@@ -1,0 +1,32 @@
+/*******************************2020/01/15*******************************/
+下拉菜单change事件执行Ajax异步请求无响应（jquery-3.4.1.min.js）
+
+<select name="" class="btn btn-sm btn-azure btn-addon">
+{volist name="role" id="vo"}
+    <option value="{$vo['id']}">{$vo['role']}</option>
+    {/volist}
+</select>
+
+<script>
+    $(function(){
+        $('.zhuanjia').hide();
+        $('select').bind("change",function(){
+            alert(this.value);
+            if(this.value==3){
+                $('.zhuanjia').show();
+            }else{
+                $('.zhuanjia').hide();
+            }
+
+            $.ajax({
+                type:"POST",
+                data:{'id':this.value},
+                url:"{:url('lst')}",
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);
+                }
+            });
+        });
+    });
+</script>

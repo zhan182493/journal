@@ -101,10 +101,9 @@
                             <label for="acateid" class="col-sm-2 control-label  no-padding-right">审稿类型</label>
                             <div class="col-sm-6">
                                 <select name="acateid" style="width: 100%;">
-                                <option selected="selected" value="1">自然科学</option>
-                                <option value="2">社会科学</option>
-                                <option value="3">物理</option>
-                                <option value="4">化学</option>
+                                {volist name="acate" id="vo"}
+                                <option selected="selected" value="{$vo['id']}">{$vo['acatename']}</option>
+                                {/volist}
                                 </select>
                             </div>
                         </div>

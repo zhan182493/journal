@@ -18,16 +18,6 @@
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
     
-
-    <!--Basic Scripts-->
-    <script src="__ADMIN__/style/jquery_002.js"></script>
-    <script src="__ADMIN__/style/bootstrap.js"></script>
-    <script src="__ADMIN__/style/jquery.js"></script>
-    <script type="text/javascript" src="__ADMIN__/jquery/jquery-3.4.1.min.js"></script>
-    <!--Beyond Scripts-->
-    <script src="__ADMIN__/style/beyond.js"></script>
-    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
-
 </head>
 <body>
     <!-- 头部 -->
@@ -59,10 +49,10 @@
 </a></button>
 <select name="" class="btn btn-sm btn-azure btn-addon">
 {volist name="role" id="vo"}
-    <option value="{$vo['id']}">
-    <a class="link-del" href="#" onClick="del({$vo['id']});return false">{$vo['role']}</a></option>
-{/volist}
+    <option value="{$vo['id']}">{$vo['role']}</option>
+    {/volist}
 </select>
+
 <div class="row">
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
@@ -83,14 +73,18 @@
                         <tbody>
                         {volist name="user" id="vo"}
                         <tr>
-                            <td align="center">{$vo['id']}</td>
+                            <td align="center">{$vo['uid']}</td>
                             <td align="center">{$vo['uname']}</td>
                             <td align="center">{$vo['name']}</td>
                             <td align="center">{$vo['role']}</td>
+                            {if condition="isset($vo['acatename'])"}
                             <td align="center" class="zhuanjia">{$vo['acatename']}</td>
+                            {else /}
+                            <td align="center" class="zhuanjia">\</td>
+                            {/if}
                             <td align="center">{$vo['tel']}</td>
                             <td align="center">
-                                <a href="{:url('user/edit',array('id'=>$vo['id']
+                                <a href="{:url('user/edit',array('rid'=>$vo['id'],'uid'=>$vo['uid']
                                 ))}" class="btn btn-primary btn-sm shiny">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
@@ -119,29 +113,36 @@
     </div>
 
 
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <!-- <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script> -->
+<!--     <script type="text/javascript" src="__ADMIN__/jquery/jquery-3.4.1.min.js"></script> -->
 <script>
     $(function(){
         $('.zhuanjia').hide();
         $('select').bind("change",function(){
+            // alert(this.value);
             if(this.value==3){
                 $('.zhuanjia').show();
             }else{
                 $('.zhuanjia').hide();
             }
-        });
 
-        function del(roleid){
-            alert(111);
             $.ajax({
                 type:"POST",
-                data:{'id':roleid},
+                data:{'id':this.value},
                 url:"{:url('lst')}",
                 dataType: 'json',
                 success: function (res) {
-                    console.log(res);
+                    console.log(res.msg);
                 }
             });
-        }
+        });
 
         $(".add").click(function(){
             if($('select').val()==3){
@@ -155,6 +156,5 @@
     });
 </script>
 
-
-
-</body></html>
+</body>
+</html>

@@ -97,17 +97,21 @@
                             
                         </div>
                         
+                        {if condition="$role eq 3"}
                         <div class="form-group">
                             <label for="acateid" class="col-sm-2 control-label  no-padding-right">审稿类型</label>
                             <div class="col-sm-6">
                                 <select name="acateid" style="width: 100%;">
-                                <option selected="selected" value="1">自然科学</option>
-                                <option value="2">社会科学</option>
-                                <option value="3">物理</option>
-                                <option value="4">化学</option>
+                                {volist name="acate" id="vo"}
+                                <option 
+                                {if condition="$vo['id'] eq $zhuanjia['acateid']"}
+                                selected="selected"
+                                {/if} value="{$vo['id']}">{$vo['acatename']}</option>
+                                {/volist}
                                 </select>
                             </div>
                         </div>
+                        {/if}
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
