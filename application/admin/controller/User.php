@@ -6,15 +6,34 @@ class User extends Common
 {
 	public function lst(){
 		// dump(input('id'));
-		$role=db('auth_group')->select();
-		$this->assign('role',$role);
+		$rolelst=db('auth_group')->select();
+		$this->assign('rolelst',$rolelst);
 		if(request()->isPost()){
-			dump(input('id'));die;
-			$roleid=input('roleid');
+			// dump(input('rid'));die;
+			
+			$roleid=input('rid');
 			$user=db('user')->alias('u')->join('auth_group_access ra','ra.uid=u.id')->join('auth_group r','r.id=ra.group_id')->where('group_id',$roleid)->select();
+			if(!$user){
+				$this->assign('role',input('role'));
+				$this->assign('user','');
+				return view();
+			}
+			$acate=db('user')->alias('u')->join('acate a','u.acateid=a.id')
+			->field(['a.acatename','u.acateid'])
+			->select();
+			for ($i=0; $i < count($user); $i++) {
+				for($j=0;$j<count($acate); $j++){
+					if($acate[$j]['acateid']==$user[$i]['acateid']){
+						$user[$i]['acatename']=$acate[$j]['acatename'];
+					}
+				}
+			}
+			// dump($user);die;
+			$this->assign('role',input('role'));
 			$this->assign('user',$user);
-			return json(['code' => 1 , 'msg' => 'ok！']);
+			return view();
 		}
+
 		
 		//三表查询user--auth_group_access--auth_group得到用户角色
 		// $user2=db('user')->alias('u')->join('auth_group_access ra','ra.uid=u.id')->join('auth_group r','r.id=ra.group_id')->where('group_id','3')->select();
@@ -39,7 +58,7 @@ class User extends Common
 		}
 		// dump($role);
 		// dump($user);die;
-		
+		$this->assign('role','全部');
 		$this->assign('user',$user);
 		$this->assign('acate',$acate);
 		
@@ -47,31 +66,45 @@ class User extends Common
 	}
 
 	public function add(){
-		$role=input('id');
 
+		$role=input('role');
+		// dump($role);die;
 		$acate=db('acate')->select();
 		if(request()->isPost()){
 			// dump($_POST);die;
 			$data=$_POST;
+			$id=db('auth_group')->where('role',$data['role'])->field('id')->find();
+			$rid=$id['id'];
+			unset($data['role']);
+			// dump($rid);die;
+			if(!$data['pwd']==$data['rpwd']){
+				return $this->error('两次密码不一致！');
+			}
 			unset($data['rpwd']);
-			if(!$role==3){
-				unset($data['acateid']);
+			if(!$role=='专家'){
+				$data['acateid']=0;
 			}
 			// dump($data);die;
-			if(db('user')->insert($data)){
-				return $this->success('添加成功！','lst');
+			$uid=db('user')->insertGetid($data);
+			// dump($uid);die;
+			if($uid){
+				if(db('auth_group_access')->insert(['uid'=>$uid,'group_id'=>$rid])){
+					// dump(111);die;
+					return $this->success('添加成功！','lst');
+				}else{
+					return $this->error('添加失败');
+				}
 			}else{
 				return $this->error('添加失败');
 			}
-			return;
 		}
-		$this->assign('id',$role);
+		$this->assign('role',$role);
 		$this->assign('acate',$acate);
 		return view();
 	}
 
 	public function edit(){
-		$role=input('rid');
+		$rid=input('rid');
 
 		$uid=input('uid');
 
@@ -81,12 +114,19 @@ class User extends Common
 		// dump($user);die;
 		if(request()->isPost()){
 			$data=$_POST;
-			unset($data['rpwd']);
 			if($data['pwd']==''){
 				$data['pwd']=$user['pwd'];
+			}else{
+				if(!$data['pwd']==$data['rpwd']){
+					return $this->error('两次密码不一致！');
+				}
 			}
+			
+			unset($data['rpwd']);
+			unset($data['rid']);
+			unset($data['uid']);
 			// dump($data);die;
-			if(db('user')->update($data)){
+			if(db('user')->where('id',input('uid'))->update($data)!==false){
 				return $this->success('修改成功！','lst');
 			}else{
 				return $this->error('修改失败');
@@ -96,17 +136,56 @@ class User extends Common
 		// dump($user);die;
 		$this->assign('user',$user);
 		$this->assign('zhuanjia',$zhuanjia);
-		$this->assign('role',$role);
+		$this->assign('rid',$rid);
 		$this->assign('acate',$acate);
 		return view();
 	}
 
 	public function del(){
-		// dump(input('id'));
-		if(db('user')->delete(input('id'))){
-			return $this->success('删除成功！','lst');
+		// dump(input('id'));die;
+		if(db('auth_group_access')->delete(input('uid'))){
+			if(db('user')->delete(input('uid'))){
+				return json(['code'=>1,'msg'=>'删除成功!']);
+			}else{
+				return json(['code'=>2,'msg'=>'删除失败!']);
+			} 
 		}else{
-			return $this->error('删除失败');
+			return json(['code'=>2,'msg'=>'删除失败!']);
 		}
+	}
+
+	public function search(){
+
+		$user=db('auth_group_access')
+		->alias('ra')
+		->join('user u','ra.uid=u.id')
+		
+		->join('auth_group r','r.id=ra.group_id')
+		->where('name',input('name'))
+		// ->where('group_id','3')
+		->select();
+
+		//两表查询user--acate得到专家审核类型
+		$acate=db('user')->alias('u')->join('acate a','u.acateid=a.id')
+		->where('name',input('name'))
+		->field(['a.acatename','u.acateid'])
+		->select();
+		// dump($user);die;
+		//循环合并数组
+		for ($i=0; $i < count($user); $i++) {
+			for($j=0;$j<count($acate); $j++){
+				if($acate[$j]['acateid']==$user[$i]['acateid']){
+					$user[$i]['acatename']=$acate[$j]['acatename'];
+				}
+			}
+		}
+		// dump($role);
+		// dump($user);die;
+		$this->assign('user',$user);
+		$this->assign('acate',$acate);
+		$rolelst=db('auth_group')->select();
+		$this->assign('rolelst',$rolelst);
+		$this->assign('name',input('name'));
+		return view();
 	}
 }

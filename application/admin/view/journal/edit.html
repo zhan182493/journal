@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html><head>
+        <meta charset="utf-8">
+    <title>重庆工商大学派斯学院学报期刊后台管理系统</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+
+</head>
+<body>
+    <!-- 头部 -->
+    {include file="public/head" /}
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/left" /}
+        <!-- /Page Sidebar -->
+
+        
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li><a href="{:url('index/index')}">首页</a></li>
+                        <li><a href="{:url('lst')}">期刊列表</a></li>
+                        <li class="active">创建期刊</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-header bordered-bottom bordered-blue">
+                <span class="widget-caption">创建期刊</span>
+            </div>
+            <div class="widget-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" action="{:url('edit')}" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="id" value="{$journal['id']}">
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label no-padding-right">期刊名称</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="title" placeholder="请输入期刊名称" name="title" required="" type="text" value="{$journal['title']}">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="uid" class="col-sm-2 control-label no-padding-right">责任主编</label>
+                            <div class="col-sm-6">
+                                <select name="uid" id="uid" style="width: 100%;">
+                                <option value="{$journal['uid']}">张三</option>
+                                </select>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="col-sm-2 control-label no-padding-right">期刊简介</label>
+                            <div class="col-sm-6">
+                            <textarea name="message" id="message" cols="66" rows="5" placeholder="请输入期刊简介" >{$journal['message']}</textarea>
+                                <!-- <input class="form-control" id="message" placeholder="请输入期刊简介" name="message" required="" type="text"> -->
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cycle" class="col-sm-2 control-label no-padding-right">周期类型</label>
+                            <div class="col-sm-6">
+                                <select name="cycle" id="cycle" style="width: 100%;">
+                                <option value="周刊" {if condition="$journal['cycle'] eq '周刊'"}selected="selected"{/if}>周刊</option>
+                                <option value="旬刊" {if condition="$journal['cycle'] eq '旬刊'"}selected="selected"{/if}>旬刊</option>
+                                <option value="半月刊" {if condition="$journal['cycle'] eq '半月刊'"}selected="selected"{/if}>半月刊</option>
+                                <option value="月刊" {if condition="$journal['cycle'] eq '月刊'"}selected="selected"{/if}>月刊</option>
+                                <option value="季刊" {if condition="$journal['cycle'] eq '季刊'"}selected="selected"{/if}>季刊</option>
+                                <option value="半年刊" {if condition="$journal['cycle'] eq '半年刊'"}selected="selected"{/if}>半年刊</option>
+                                <option value="年刊" {if condition="$journal['cycle'] eq '年刊'"}selected="selected"{/if}>年刊</option>
+                                </select>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="issn" class="col-sm-2 control-label no-padding-right">国际标准标号ISSN</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="issn" placeholder="请输入ISSN号" name="issn" required="" type="text" value="{$journal['issn']}">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cn" class="col-sm-2 control-label no-padding-right">国内统一刊号CN</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="cn" placeholder="请输入CN号" name="cn" required="" type="text" value="{$journal['cn']}">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jclassid" class="col-sm-2 control-label no-padding-right">期刊分类号</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="jclassid" placeholder="请输入期刊分类号" name="jclassid" required="" type="text" value="{$journal['jclassid']}">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pic" class="col-sm-2 control-label no-padding-right">封面</label>
+                            <div class="col-sm-6">
+                             <input id="pic" name="pic"  type="file" value="{$journal['pic']}">
+                            <div ><img src="{$journal['pic']}" alt="" class="img" style="width: 200px;height: 270px;"></div>
+                            <span class="help-block  red">*图片尺寸为200(宽)x270(高)，图片大小<2MB</span>
+
+                            </div>
+                            
+                        </div>                  
+
+                        
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">提交</button>
+                                <a href="{:url('lst')}" type="button" class="btn btn-info">返回</a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>  
+    </div>
+
+        <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+    
+<script>
+$("#pic").click(function(){
+    if($("#pic").val()){
+        $("#pic").val('');
+        $(".img").attr("src","");
+        $(".img").css({"width":"0","height":"0"});
+    }
+    $("#pic").on('change',function(){
+        $(".img").attr("src",URL.createObjectURL($(this)[0].files[0]));
+        $(".img").css({"width":"200px","height":"270px"});
+    });
+});
+
+    </script>
+
+</body></html>

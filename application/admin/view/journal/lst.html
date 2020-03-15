@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html><head>
+        <meta charset="utf-8">
+    <title>重庆工商大学派斯学院学报期刊后台管理系统</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <style>
+        .qishu{cursor: pointer;text-decoration:none;width: 30px;margin-right: 10px;}
+        .qishu:hover{color: orange;}
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    {include file="public/head" /}
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/left" /}
+        <!-- /Page Sidebar -->
+
+        
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li><a href="{:url('index/index')}">首页</a>
+                </li>
+                <li class="active">期刊列表</li>
+            </ul>
+            </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+                <div class="btn-group" style="float: left;">
+<a class="btn btn-sm btn-azure btn-addon" href="{:url('add')}" tooltip="创建期刊"><i class="fa fa-plus"></i>创建期刊</a>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center">封面</th>
+                            <th class="text-center">信息</th>
+                            <th class="text-center">期数</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                        {volist name="journal" id="vo"}
+                            <tr>
+                                <td class="text-center" style="vertical-align: middle!important;"><img src="{$vo['pic']}" alt="" style="width: 200px;height: 270px;"></td>
+                                <td class="text-center" style="vertical-align: middle!important;">
+                                <p>期刊标题：{$vo['title']}</p>
+                                <p>周期类型：{$vo['cycle']}</p>
+                                <p>ISSN：{$vo['issn']}</p>
+                                <p>CN：{$vo['cn']}</p>
+                                <p>期刊分类号：{$vo['jclassid']}</p>
+                                <p>责任主编：{$vo['uid']}</p>
+                                </td>
+                                <td class="text-center" style="vertical-align: middle!important;">
+                                <table>
+                                {volist name="$vo['qishu']" id="val"}
+                                <a href="{:url('qishulst',array('qishu'=>$val,'jname'=>$vo['title'],'jid'=>$vo['id']))}" class="qishu" >NO.{$val}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                {if condition="$val%6 eq 0"}
+                                </br>
+                                {/if}
+                                {/volist}
+                                <form id="addqishu" action="{:url('qishulst')}" method="post">
+                                <input type="hidden" name="jname" value="{$vo['title']}">
+                                <input type="hidden" name="jid" value="{$vo['id']}">
+                                <input type="hidden" name="qishu" value="" id="qishu">
+                                <a href="javascript:void(0);" class="addqishu"><i class="fa fa-plus"></i>添加</a></form>
+                                </table>
+                                </td>
+                                <td class="text-center" style="vertical-align: middle!important;">
+                                <p><a href="{:url('edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-sm shiny">
+                                    <i class="fa fa-edit"></i> 编辑
+                                </a></p>
+                                <!-- <a href="{:url('del')}" class="btn btn-danger btn-sm shiny del">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a> -->
+                                <p><a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" rid="{$vo['id']}">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a></p>
+                                </td>
+                            </tr>
+                            {/volist}
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>  
+    </div>
+
+        <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+    <!-- <script type="text/javascript" src="__ADMIN__/layui/layui.js"></script> -->
+<script>
+    $(function(){
+        //异步删除
+        $('.del').on('click',function(){
+            var rid=$(this).attr('rid');
+            //询问框
+            layer.confirm('确认删除？', {
+                title:'提示',
+                btn: ['确认','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url:"{:url('del')}",
+                    type:"post",
+                    data:{id:rid},
+                    datatype:"json",
+                    success:function(data){
+                        if(data.code==1){
+                            layer.msg(data.msg,{icon:1,time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }else if(data.code==2){
+                            layer.msg(data.msg,{
+                            icon:2,
+                            time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+        }); 
+
+        $('.addqishu').click(function(){
+            var qishu=$(this).parent().children('.qishu').length+1;
+            // alert(qishu);
+            $('#qishu').val(qishu);
+            $('#addqishu').submit();
+        });
+
+    });
+</script>
+
+
+</body></html>

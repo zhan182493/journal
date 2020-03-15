@@ -11,6 +11,7 @@
     <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
     <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
     <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+    <!-- <link href="__ADMIN__/layui/css/layui.css" rel="stylesheet"> -->
 
     <!--Beyond styles-->
     <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
@@ -36,7 +37,7 @@
             <!-- Page Breadcrumb -->
             <div class="page-breadcrumbs">
                 <ul class="breadcrumb">
-                    <li><a href="#">首页</a>
+                    <li><a href="{:url('index/index')}">首页</a>
                 </li>
                 <li class="active">账号管理</li>
             </ul>
@@ -45,19 +46,66 @@
 
 <!-- Page Body -->
 <div class="page-body">
-<button class="btn btn-sm btn-azure btn-addon" style="float: right;" tooltip="添加用户"><a class="add" style="color: white;"> <i class="fa fa-plus"></i> Add
-</a></button>
-<select name="" class="btn btn-sm btn-azure btn-addon">
-{volist name="role" id="vo"}
-    <option value="{$vo['id']}">{$vo['role']}</option>
+
+<div class="btn-group">
+   <button type="button" class="btn btn-sm btn-azure btn-addon" data-toggle="dropdown"> {$role} <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu" role="menu" style="min-width: 73px;">
+    <a href="{:url('lst')}" class="btn btn-block btn-azure" type="submit">全部</a>
+    {volist name="rolelst" id="vo"}
+    <form action="{:url('lst')}" method="post" id="roleform">
+    <input type="hidden" name="role" value="{$vo['role']}">
+    <li>
+    <!-- <a href="#" class="role" onclick="document:roleform.submit();return false;" value="{$vo['id']}"><b>{$vo['role']}</b></a> -->
+    <input type="hidden" name="rid" value="{$vo['id']}">
+    <button  class="btn btn-block btn-azure" type="submit">{$vo['role']}</button>
+    </li></form>
     {/volist}
-</select>
+   </ul>
+</div>
+
+
+<div class="btn-group" style="width: 200px;height: 26px;">
+<form action="{:url('search')}" method="post">
+    <div class="input-group">
+        <input type="text" name="name" class="form-control" placeholder="输入姓名搜素" style="height: 26px;">
+        <span class="input-group-btn" >
+            <button type="submit" class="btn btn-azure" style="height: 26px;padding-top: 2px;" >搜索</button>
+        </span>
+    </div>
+     </form>
+</div>
+
+{if condition="$role eq '全部'"}
+<div class="btn-group" style="float:right;">
+   <button type="button" class="btn btn-sm btn-azure btn-addon" data-toggle="dropdown" ><i class="fa fa-plus"></i> ADD <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu" role="menu" style="min-width: 86px;">
+    {volist name="rolelst" id="vo"}
+    <li style="outline-style: left;">
+    {if condition="$vo['role'] neq '作者'"}
+    <a href="{:url('add',array('role'=>$vo['role']))}" class="btn btn-block btn-azure">{$vo['role']}</a>
+    {else /}
+    <a href="javascript:void(0);" class="btn btn-block btn-azure zuozhe">{$vo['role']}</a>
+    {/if}
+    </li>
+    {/volist}
+   </ul>
+</div>
+{else /}
+<div class="btn-group" style="float: right;">
+   <a class="btn btn-sm btn-azure btn-addon" href="{:url('add',array('role'=>$role))}"  style="float: right;" tooltip="添加用户"><i class="fa fa-plus"></i> ADD</a>
+</div>
+{/if}
 
 <div class="row">
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="widget-body">
                 <div class="flip-scroll">
+                {if condition="$user eq ''"}
+                    无
+                {else /}
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -65,7 +113,9 @@
                                 <th class="text-center">用户名</th>
                                 <th class="text-center">姓名</th>
                                 <th class="text-center">角色</th>
+                                {if condition="$role eq '专家'"}
                                 <th class="text-center zhuanjia">审稿类型</th>
+                                {/if}
                                 <th class="text-center">电话</th>
                                 <th class="text-center">操作</th>
                             </tr>
@@ -77,19 +127,20 @@
                             <td align="center">{$vo['uname']}</td>
                             <td align="center">{$vo['name']}</td>
                             <td align="center">{$vo['role']}</td>
+                            {if condition="$role eq '专家'"}
                             {if condition="isset($vo['acatename'])"}
                             <td align="center" class="zhuanjia">{$vo['acatename']}</td>
                             {else /}
                             <td align="center" class="zhuanjia">\</td>
                             {/if}
+                            {/if}
                             <td align="center">{$vo['tel']}</td>
                             <td align="center">
-                                <a href="{:url('user/edit',array('rid'=>$vo['id'],'uid'=>$vo['uid']
+                                <a href="{:url('edit',array('rid'=>$vo['id'],'uid'=>$vo['uid']
                                 ))}" class="btn btn-primary btn-sm shiny">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
-                                <a href="{:url('user/del',array('id'=>$vo['id']
-                                ))}" class="btn btn-danger btn-sm shiny">
+                                <a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" uid="{$vo['uid']}">
                                     <i class="fa fa-trash-o"></i> 删除
                                 </a>
                             </td>
@@ -97,6 +148,7 @@
                         {/volist}
                         </tbody>
                     </table>
+                    {/if}
                 </div>
             </div>
         </div>
@@ -118,41 +170,52 @@
     <script src="__ADMIN__/style/bootstrap.js"></script>
     <script src="__ADMIN__/style/jquery.js"></script>
     
+
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-    <!-- <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script> -->
-<!--     <script type="text/javascript" src="__ADMIN__/jquery/jquery-3.4.1.min.js"></script> -->
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+    <!-- <script type="text/javascript" src="__ADMIN__/layui/layui.js"></script> -->
 <script>
     $(function(){
-        $('.zhuanjia').hide();
-        $('select').bind("change",function(){
-            // alert(this.value);
-            if(this.value==3){
-                $('.zhuanjia').show();
-            }else{
-                $('.zhuanjia').hide();
-            }
-
-            $.ajax({
-                type:"POST",
-                data:{'id':this.value},
-                url:"{:url('lst')}",
-                dataType: 'json',
-                success: function (res) {
-                    console.log(res.msg);
-                }
+        $('.del').on('click',function(){
+            var uid=$(this).attr('uid');
+            //询问框
+            layer.confirm('确认删除？', {
+                title:'提示',
+                btn: ['确认','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url:"{:url('del')}",
+                    type:"post",
+                    data:{uid:uid},
+                    datatype:"json",
+                    success:function(data){
+                        if(data.code==1){
+                            layer.msg(data.msg,{
+                            icon:1,
+                            time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }else if(data.code==2){
+                            layer.msg(data.msg,{
+                            icon:2,
+                            time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+                layer.close(index);
             });
+        });   
+
+        $('.zuozhe').click(function(){
+            alert('添加作者请在前台注册！');
         });
 
-        $(".add").click(function(){
-            if($('select').val()==3){
-                $(".add").attr("href","{:url('add',array('id'=>3))}");
-            }else{
-                $(".add").attr("href","{:url('add',array('id'=>1))}");
-            }
-        });
 
-        
     });
 </script>
 

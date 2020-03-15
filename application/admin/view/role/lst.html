@@ -34,17 +34,69 @@
             <!-- Page Content -->
             <div class="page-content">
                 <!-- Page Breadcrumb -->
-                <div class="page-breadcrumbs" style="">
-                    <ul class="breadcrumb">
-                    <li class="active">面包屑导航</li>
-                    </ul>
-                </div>
+                <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li><a href="{:url('index/index')}">首页</a>
+                </li>
+                <li class="active">角色管理</li>
+            </ul>
+            </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
                     
-                文章列表
+                <div class="btn-group" style="float: right;">
+<a class="btn btn-sm btn-azure btn-addon" href="{:url('add')}"  style="float: right;" tooltip="添加用户"><i class="fa fa-plus"></i> ADD</a>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">角色名</th>
+                                <th class="text-center">权限</th>
+                                <th class="text-center">是否启用</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="role" id="vo"}
+                        <tr>
+                            <td align="center">{$vo['id']}</td>
+                            <td align="center">{$vo['role']}</td>
+                            <td align="center">{$vo['rules']}</td>
+                        
+                            <td align="center"><label>
+                            
+                                <input rid="{$vo['id']}" class="checkbox-slider slider-icon colored-success status" type="checkbox" name="status" {if condition="$vo['status'] eq 1"}checked="checked"{/if}>
+                            
+                                <span class="text"></span>
+                            </label></td>
+                            
+                            <td align="center">
+                                <a href="{:url('edit',array('rid'=>$vo['id']
+                                ))}" class="btn btn-primary btn-sm shiny">
+                                    <i class="fa fa-edit"></i> 编辑
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" rid="{$vo['id']}">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
                 </div>
                 
@@ -62,7 +114,74 @@
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-    
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+    <!-- <script type="text/javascript" src="__ADMIN__/layui/layui.js"></script> -->
+<script>
+    $(function(){
+        $('.del').on('click',function(){
+            var rid=$(this).attr('rid');
+            //询问框
+            layer.confirm('确认删除？', {
+                title:'提示',
+                btn: ['确认','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url:"{:url('del')}",
+                    type:"post",
+                    data:{rid:rid},
+                    datatype:"json",
+                    success:function(data){
+                        if(data.code==1){
+                            layer.msg(data.msg,{icon:1,time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }else if(data.code==2){
+                            layer.msg(data.msg,{
+                            icon:2,
+                            time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+        }); 
+
+        //异步修改状态
+        $(".status").click(function(){
+            var id=$(this).attr('rid');
+            if($(this).attr('checked')=='checked'){
+                var status=0;
+            }else{
+                var status=1;
+            }
+            $.ajax({
+                url:"{:url('edstatus')}",
+                type:"post",
+                data:{id:id,status:status},
+                datatype:"json",
+                success:function(data){
+                    if(data.code==1){
+                        layer.msg(data.msg,{icon:1,time:500,},
+                        function(){
+                            location.reload();
+                        });
+                    }else if(data.code==2){
+                        layer.msg(data.msg,{
+                        icon:2,
+                        time:500,},
+                        function(){
+                            location.reload();
+                        });
+                    }
+                }
+            });
+        });       
+    });
+</script>
 
 
 </body></html>

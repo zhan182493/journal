@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html><head>
+        <meta charset="utf-8">
+    <title>重庆工商大学派斯学院学报期刊后台管理系统</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 头部 -->
+    {include file="public/head" /}
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/left" /}
+        <!-- /Page Sidebar -->
+
+        
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li><a href="{:url('index/index')}">首页</a>
+                </li>
+                <li class="active"><a href="{:url('lst')}">期刊列表</a></li>
+                </li>
+                <li class="active">{$jname}第{$qishu}期文章列表</li>
+            </ul>
+            </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+                <div class="btn-group" style="float: left;">
+<a class="btn btn-sm btn-azure btn-addon" href="{:url('article/add',array('qishu'=>$qishu,'jname'=>$jname))}" tooltip="创建期刊"><i class="fa fa-plus"></i>添加文章</a>
+</div>
+
+
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">标题</th>
+                            <th class="text-center">编辑</th>
+                            <th class="text-center">作者</th>
+                            <th class="text-center">所属分类</th>
+                            <th class="text-center">浏览量</th>
+                            <th class="text-center">下载量</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                        {volist name="qishulst" id="vo"}
+                            <tr>
+                                <td>{$vo['id']}</td>
+                                <td>{$vo['atitle']}</td>
+                                <td>{$vo['eid']}</td>
+                                <td>{$vo['aid']}</td>
+                                <td>{$vo['acateid']}</td>
+                                <td>{$vo['click']}</td>
+                                <td>{$vo['download']}</td>
+                                <td class="text-center" style="vertical-align: middle!important;">
+                                <a href="{:url('article/edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-sm shiny">
+                                    <i class="fa fa-edit"></i> 编辑
+                                </a>
+                                <!-- <a href="{:url('del')}" class="btn btn-danger btn-sm shiny del">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a> -->
+                                <a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" rid="{$vo['id']}">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a>
+                                </td>
+                            </tr>
+                            {/volist}
+                        </thead>
+                    </table>
+                </div>
+
+            </div>
+            <div class="btn-group" style="float: left;">
+<a class="btn btn-sm btn-success" href="{:url('')}"><i class="fa   fa-eject"></i>发布</a>
+</div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>  
+    </div>
+
+        <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+    <!-- <script type="text/javascript" src="__ADMIN__/layui/layui.js"></script> -->
+<script>
+    $(function(){
+        //异步删除
+        $('.del').on('click',function(){
+            var rid=$(this).attr('rid');
+            //询问框
+            layer.confirm('确认删除？', {
+                title:'提示',
+                btn: ['确认','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url:"{:url('article/del')}",
+                    type:"post",
+                    data:{id:rid},
+                    datatype:"json",
+                    success:function(data){
+                        if(data.code==1){
+                            layer.msg(data.msg,{icon:1,time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }else if(data.code==2){
+                            layer.msg(data.msg,{
+                            icon:2,
+                            time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+        }); 
+
+    });
+</script>
+
+
+</body></html>

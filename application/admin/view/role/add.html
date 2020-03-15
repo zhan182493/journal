@@ -1,183 +1,45 @@
 <!DOCTYPE html>
 <html><head>
-	    <meta charset="utf-8">
-    <title>童老师ThinkPHP交流群：484519446</title>
+        <meta charset="utf-8">
+    <title>重庆工商大学派斯学院学报期刊后台管理系统</title>
 
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!--Basic Styles-->
-    <link href="style/bootstrap.css" rel="stylesheet">
-    <link href="style/font-awesome.css" rel="stylesheet">
-    <link href="style/weather-icons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
 
     <!--Beyond styles-->
-    <link id="beyond-link" href="style/beyond.css" rel="stylesheet" type="text/css">
-    <link href="style/demo.css" rel="stylesheet">
-    <link href="style/typicons.css" rel="stylesheet">
-    <link href="style/animate.css" rel="stylesheet">
-    
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+
 </head>
 <body>
-	<!-- 头部 -->
-	<div class="navbar">
-    <div class="navbar-inner">
-        <div class="navbar-container">
-            <!-- Navbar Barnd -->
-            <div class="navbar-header pull-left">
-                <a href="#" class="navbar-brand">
-                    <small>
-                            <img src="images/logo.png" alt="">
-                        </small>
-                </a>
-            </div>
-            <!-- /Navbar Barnd -->
-            <!-- Sidebar Collapse -->
-            <div class="sidebar-collapse" id="sidebar-collapse">
-                <i class="collapse-icon fa fa-bars"></i>
-            </div>
-            <!-- /Sidebar Collapse -->
-            <!-- Account Area and Settings -->
-            <div class="navbar-header pull-right">
-                <div class="navbar-account">
-                    <ul class="account-area">
-                        <li>
-                            <a class="login-area dropdown-toggle" data-toggle="dropdown">
-                                <div class="avatar" title="View your public profile">
-                                    <img src="images/adam-jansen.jpg">
-                                </div>
-                                <section>
-                                    <h2><span class="profile"><span>admin</span></span></h2>
-                                </section>
-                            </a>
-                            <!--Login Area Dropdown-->
-                            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
-                                <li class="username"><a>David Stevenson</a></li>
-                                <li class="dropdown-footer">
-                                    <a href="/admin/user/logout.html">
-                                            退出登录
-                                        </a>
-                                </li>
-                                <li class="dropdown-footer">
-                                    <a href="/admin/user/changePwd.html">
-                                            修改密码
-                                        </a>
-                                </li>
-                            </ul>
-                            <!--/Login Area Dropdown-->
-                        </li>
-                        <!-- /Account Area -->
-                        <!--Note: notice that setting div must start right after account area list.
-                            no space must be between these elements-->
-                        <!-- Settings -->
-                    </ul>
-                </div>
-            </div>
-            <!-- /Account Area and Settings -->
-        </div>
-    </div>
-</div>
+    <!-- 头部 -->
+    {include file="public/head" /}
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/left" /}
+        <!-- /Page Sidebar -->
 
-	<!-- /头部 -->
-	
-	<div class="main-container container-fluid">
-		<div class="page-container">
-			            <!-- Page Sidebar -->
-            <div class="page-sidebar" id="sidebar">
-                <!-- Page Sidebar Header-->
-                <div class="sidebar-header-wrapper">
-                    <input class="searchinput" type="text">
-                    <i class="searchicon fa fa-search"></i>
-                    <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
-                </div>
-                <!-- /Page Sidebar Header -->
-                <!-- Sidebar Menu -->
-                <ul class="nav sidebar-menu">
-                    <!--Dashboard-->
-                    <li>
-                        <a href="http://www.chuanke.com/s2260700.html" target="_blank" class="menu-dropdown">
-                            <i class="menu-icon fa fa-user"></i>
-                            <span class="menu-text">ThinkPHP5视频教程</span>
-                            <i class="menu-expand"></i>
-                        </a>                            
-                    </li> 
-                    <li>
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-user"></i>
-                            <span class="menu-text">管理员</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="/admin/document/index.html">
-                                    <span class="menu-text">
-                                        管理列表                                    </span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                        </ul>                            
-                    </li> 
-
-                    <li>
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-file-text"></i>
-                            <span class="menu-text">文档</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="/admin/document/index.html">
-                                    <span class="menu-text">
-                                        文章列表                                    </span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                        </ul>                            
-                    </li> 
-
-                    <li>
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-gear"></i>
-                            <span class="menu-text">系统</span>
-                            <i class="menu-expand"></i>
-                        </a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="/admin/document/index.html">
-                                    <span class="menu-text">
-                                        配置                                   </span>
-                                    <i class="menu-expand"></i>
-                                </a>
-                            </li>
-                        </ul>                            
-                    </li>  
-
-                    <li>
-                        <a href="http://www.chuanke.com/s2260700.html" class="menu-dropdown">
-                            <i class="menu-icon fa fa-gear"></i>
-                            <span class="menu-text">视频教程</span>
-                            <i class="menu-expand"></i>
-                        </a>                           
-                    </li>                          
-                    
-                </ul>
-                <!-- /Sidebar Menu -->
-            </div>
-            <!-- /Page Sidebar -->
+        
             <!-- Page Content -->
             <div class="page-content">
                 <!-- Page Breadcrumb -->
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
-                                        <li>
-                        <a href="#">系统</a>
-                    </li>
-                                        <li>
-                        <a href="#">用户管理</a>
-                    </li>
-                                        <li class="active">添加用户</li>
-                                        </ul>
+                        <li><a href="{:url('index/index')}">首页</a></li>
+                        <li><a href="{:url('lst')}">角色管理</a></li>
+                        <li class="active">添加角色</li>
+                    </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
 
@@ -188,32 +50,66 @@
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="widget-header bordered-bottom bordered-blue">
-                <span class="widget-caption">新增用户</span>
+                <span class="widget-caption">新增角色</span>
             </div>
             <div class="widget-body">
                 <div id="horizontal-form">
-                    <form class="form-horizontal" role="form" action="" method="post">
+                    <form class="form-horizontal" role="form" action="{:url('add')}" method="post">
                         <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label no-padding-right">用户名</label>
+                            <label for="name" class="col-sm-2 control-label no-padding-right">角色名</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="username" placeholder="" name="username" required="" type="text">
+                                <input class="form-control" id="name" placeholder="请输入角色名" name="role" required="" type="text">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
 
-                        <div class="form-group">
-                            <label for="group_id" class="col-sm-2 control-label no-padding-right">用户角色</label>
-                            <div class="col-sm-6">
-                                <select name="group_id" style="width: 100%;">
-                                                                        <option selected="selected" value="8">测试</option>
-                                                                    </select>
+                        <div class="form-group" >
+                            <label for="username" class="col-sm-2 control-label no-padding-right" style="float: left;">角色权限</label>
+                            <div class="col-sm-6" >
+                            <table class="table table-hover table-striped table-bordered" >
+                                <thead class="bordered-blueberry">
+                                    <tr>
+                                        <th>权限配置</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {volist name="ruletree" id="vo"}
+                                    <tr>
+                                        <td>
+                                        
+                                        <label>
+                                        <?php echo str_repeat('|---',$vo['level']);?>
+                                            <input dataid="id-{$vo.dataid}" type="checkbox" class="checkbox-parent 
+                                            {if condition="$vo['level'] neq 0"}checkbox-child{/if}" name="rules[]"
+                                            value="{$vo.id}">
+                                            <span {if condition="$vo['level'] eq 0"}style="font-weight:bold;font-size:16px;"{else /}style="color:#5B5B5B"{/if} class="text">{$vo.name}</span>
+                                        </label>
+
+                                        </td>
+                                    </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+               
                             </div>
-                        </div>  
+                            <p class="help-block col-sm-4 red" style="float: right">* 必选</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rpwd" class="col-sm-2 control-label no-padding-right">状态</label>
+                            <label style="margin:5px 0 0 10px;">
+                                <input class="checkbox-slider slider-icon colored-success" type="checkbox" name="status" checked="checked">
+                                <span class="text"></span>
+                            </label>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">保存信息</button>
+                                <button type="submit" class="btn btn-success">提交</button>
+                                <a href="{:url('lst')}" type="button" class="btn btn-info">返回</a>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -225,16 +121,62 @@
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
-		</div>	
-	</div>
+        </div>  
+    </div>
 
-	    <!--Basic Scripts-->
-    <script src="style/jquery_002.js"></script>
-    <script src="style/bootstrap.js"></script>
-    <script src="style/jquery.js"></script>
+        <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
-    <script src="style/beyond.js"></script>
+    <script src="__ADMIN__/style/beyond.js"></script>
     
+<script type="text/javascript">
+            /* 权限配置 */
+            $(function() {
+                //动态选择框，上下级选中状态变化
+                //选中父级，所有子级也选中
+                $('input.checkbox-parent').on('change', function() {
+                    //动态选择框，上下级选中状态变化
+                    var dataid = $(this).attr("dataid");
+                    console.log(dataid);
+                    $('input[dataid^=' + dataid + ']').prop('checked', $(this).is(':checked'));
+                    //[dataid^=value]匹配指定属性以value开始的input元素，和正则^以xx开始相似
+                    //prop()函数用于设置或返回当前jQuery对象所匹配的元素的属性值。
+                    //is() 根据选择器、元素或 jQuery 对象来检测匹配元素集合，如果这些元素中至少有一个元素匹配给定的参数，则返回 true。
+                });
 
-
+                //子级选择状态
+                $('input.checkbox-child').on('change', function() {
+                    //获取子元素的dataid值
+                    var dataid = $(this).attr("dataid");
+                    //截取子元素的dataid值以最后一个“-”为终
+                    dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                    var parent = $('input[dataid=' + dataid + ']');
+                    if($(this).is(':checked')) {
+                        parent.prop('checked', true);
+                        //循环到顶级
+                        while(dataid.lastIndexOf("-") != 2) {
+                            dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                            parent = $('input[dataid=' + dataid + ']');
+                            parent.prop('checked', true);
+                        }
+                    } else {
+                        //没子元素勾选，父级也取消勾选
+                        //父级
+                        if($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                            parent.prop('checked', false);
+                            //循环到顶级
+                            while(dataid.lastIndexOf("-") != 2) {
+                                dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                                parent = $('input[dataid=' + dataid + ']');
+                                if($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                                    parent.prop('checked', false);
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
 </body></html>

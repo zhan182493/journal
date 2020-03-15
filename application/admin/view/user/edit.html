@@ -55,13 +55,13 @@
             <div class="widget-body">
                 <div id="horizontal-form">
                     <form class="form-horizontal" role="form" action="{:url('user/edit')}" method="post">
-                    <input type="hidden" name="id" value="{$user['id']}">
+                    <input type="hidden" name="uid" value="{$user['id']}">
+
                         <div class="form-group">
                             <label for="uname" class="col-sm-2 control-label no-padding-right">用户名</label>
                             <div class="col-sm-6">
                                 <input class="form-control" id="uname" placeholder="{$user['uname']}" name="uname" required="" type="text" value="{$user['uname']}">
                             </div>
-                            
                         </div>
 
                         <div class="form-group">
@@ -97,7 +97,7 @@
                             
                         </div>
                         
-                        {if condition="$role eq 3"}
+                        {if condition="$rid eq 3"}
                         <div class="form-group">
                             <label for="acateid" class="col-sm-2 control-label  no-padding-right">审稿类型</label>
                             <div class="col-sm-6">

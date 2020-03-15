@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html><head>
+        <meta charset="utf-8">
+    <title>重庆工商大学派斯学院学报期刊后台管理系统</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    
+</head>
+<body>
+    <!-- 头部 -->
+    {include file="public/head" /}
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/left" /}
+        <!-- /Page Sidebar -->
+
+        
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Breadcrumb -->
+            <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                <li><a href="{:url('index/index')}">首页</a></li>
+                <li><a href="{:url('lst')}">账号管理</a></li>
+                <li class="active">搜索</li>
+            </ul>
+            </div>
+            <!-- /Page Breadcrumb -->
+
+<!-- Page Body -->
+<div class="page-body">
+
+
+
+<div class="btn-group" style="width: 200px;height: 26px;">
+<form action="{:url('search')}" method="post">
+    <div class="input-group">
+        <input type="text" name="name" class="form-control" placeholder="输入姓名搜素" style="height: 26px;" value="{$name}">
+        <span class="input-group-btn" >
+            <button type="submit" class="btn btn-azure" style="height: 26px;padding-top: 2px;" >搜索</button>
+        </span>
+    </div>
+     </form>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                {if condition="$user eq ''"}
+                    无
+                {else /}
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">用户名</th>
+                                <th class="text-center">姓名</th>
+                                <th class="text-center">角色</th>
+                                <th class="text-center zhuanjia">审稿类型</th>
+                                <th class="text-center">电话</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="user" id="vo"}
+                        <tr>
+                            <td align="center">{$vo['uid']}</td>
+                            <td align="center">{$vo['uname']}</td>
+                            <td align="center">{$vo['name']}</td>
+                            <td align="center">{$vo['role']}</td>
+                            {if condition="$vo['role'] eq '专家'"}
+                                {if condition="isset($vo['acatename'])"}
+                                <td align="center" class="zhuanjia">{$vo['acatename']}</td>
+                                {else /}
+                                <td align="center" class="zhuanjia">\</td>
+                                {/if}
+                            {else /}
+                                <td align="center" class="zhuanjia">\</td>
+                            {/if}
+                            <td align="center">{$vo['tel']}</td>
+                            <td align="center">
+                                <a href="{:url('user/edit',array('rid'=>$vo['id'],'uid'=>$vo['uid']
+                                ))}" class="btn btn-primary btn-sm shiny">
+                                    <i class="fa fa-edit"></i> 编辑
+                                </a>
+                                <!-- <a href="{:url('user/del',array('id'=>$vo['id']
+                                ))}" class="btn btn-danger btn-sm shiny">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a> -->
+                                <a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" uid="{$vo['uid']}">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- /Page Body -->
+            </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>  
+    </div>
+
+
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+    <!-- <script type="text/javascript" src="__ADMIN__/jquery/jquery-3.4.1.min.js"></script> -->
+<script>
+    $(function(){
+
+        $('.del').on('click',function(){
+            var uid=$(this).attr('uid');
+            $.ajax({
+                url:"{:url('del')}",
+                type:"post",
+                data:{uid:uid},
+                datatype:"json",
+                success:function(data){
+                    if(data.code==1){
+                        layer.msg(data.msg,{
+                        icon:1,
+                        time:1000,},
+                        function(){
+                            location.reload();
+                        });
+                    }else if(data.code==2){
+                        layer.msg(data.msg,{
+                        icon:2,
+                        time:1000,},
+                        function(){
+                            location.reload();
+                        });
+                    }
+                }
+            });
+        });
+        // $('.zhuanjia').hide();
+        /*
+        $('.role').on('click',function(){
+            var rid=$(this).attr("value");
+            // alert(rid);return;
+            $.ajax({
+                url:"{:url('lst')}",
+                data:{rid:rid},
+                type:"post",
+                datatype:"json",
+                success:function(data){
+                    if(data.code==1){
+                        layer.msg(data.msg,{
+                        icon:1,
+                        time:1000,},
+                        function(){
+                            location.reload();
+                        });
+                    } 
+                }
+            });
+
+        });
+        */
+        
+    });
+</script>
+
+</body>
+</html>

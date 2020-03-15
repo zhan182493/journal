@@ -11,16 +11,16 @@ body{
 	background:#fff;
 }
 
-.header{width:100%;min-width:1200px;height: 210px;background: #fff url(../images/topbg.jpg)no-repeat top center;padding-bottom: 20px;}
-.header{width:100%;min-width:1200px;height: 210px;background: #fff url(../images/topbg.jpg)no-repeat top center;padding-bottom: 20px;}
+.container{margin-top: 20px;}
+.header{width:100%;min-width:1200px;height: 190px;background: #0171bb top center;padding-bottom: 20px;}
 .banner,.footer{margin: 0 auto;width: 1200px;height: 150px;padding:0 15px;}
-.banner img{margin-top: 30px;}
 .nav{margin: 0 auto;height:40px;background-color: #2e619b;overflow:hidden;}
 .navson{margin: 0 auto;width: 1200px;height:40px;padding:0 15px;}
 .navMenu{margin: 0 auto;height:40px;float:right;}
 .navMenu li{padding: 0 17px 0;height:100%;float: left;position: relative;display: block;}
 .navMenu li a {padding:10px 10px 0 10px;line-height: 40px;color: #ffffff;font-size: 17px;}
 .navMenu li a:hover{font-weight:bold;padding:10px 10px 11px 10px;background-color: white;color: #2e619b;}
+.navMenu li a:active{font-weight:bold;padding:10px 10px 11px 10px;background-color: white;color: #2e619b;}
 .row div{padding:0;}
 .row .block{margin-bottom: 20px;}
 .title{background-color: red;height: 40px;width:100%;margin-bottom: 15px;}
@@ -249,7 +249,7 @@ A.txt_zhaiyao1:active {
 /*底*/
 .footer{width:100%;overflow: hidden;background:url(../images/footerbg.png);margin-top: 20px;}
 .banquan{width:1200px;margin:0 auto;overflow: hidden;padding:20px 0;text-align: center;}
-.banquan_xx_l{float:left;width:800px;color: #333;text-align: left;line-height: 26px;}
+.banquan_xx_l{width:800px;color: #333;text-align: center;line-height: 26px;margin:0 auto;font-size: 16px;}
 /*底end*/
 
 /*轮播图*/
