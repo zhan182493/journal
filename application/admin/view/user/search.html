@@ -51,7 +51,7 @@
 <div class="btn-group" style="width: 200px;height: 26px;">
 <form action="{:url('search')}" method="post">
     <div class="input-group">
-        <input type="text" name="name" class="form-control" placeholder="输入姓名搜素" style="height: 26px;" value="{$name}">
+        <input type="text" name="search" class="form-control" placeholder="输入姓名、用户名或电话关键字" style="height: 26px;width: 210px;" value="{$search}">
         <span class="input-group-btn" >
             <button type="submit" class="btn btn-azure" style="height: 26px;padding-top: 2px;" >搜索</button>
         </span>
@@ -168,30 +168,6 @@
                 }
             });
         });
-        // $('.zhuanjia').hide();
-        /*
-        $('.role').on('click',function(){
-            var rid=$(this).attr("value");
-            // alert(rid);return;
-            $.ajax({
-                url:"{:url('lst')}",
-                data:{rid:rid},
-                type:"post",
-                datatype:"json",
-                success:function(data){
-                    if(data.code==1){
-                        layer.msg(data.msg,{
-                        icon:1,
-                        time:1000,},
-                        function(){
-                            location.reload();
-                        });
-                    } 
-                }
-            });
-
-        });
-        */
         
     });
 </script>

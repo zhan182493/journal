@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- meta data -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!--font-family-->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
+        
+        <!-- title of site -->
+        <title>修改密码</title>
+
+        <!-- For favicon png -->
+		<link rel="shortcut icon" type="image/icon" href=" __ROOT__/favicon.ico"/>
+        <!--font-awesome.min.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/font-awesome.min.css">
+		<!--animate.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/animate.css">
+        <!--bootstrap.min.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/bootstrap.min.css">
+		<!-- bootsnav -->
+		<link rel="stylesheet" href=" __INDEX__/login/css/bootsnav.css" >
+        <!--style.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/style.css">
+        <!--responsive.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/responsive.css">
+        
+        <script src=" __INDEX__/login/js/jquery.js"></script>
+        <!--modernizr.min.js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+		<!--bootstrap.min.js-->
+        <script src=" __INDEX__/login/js/bootstrap.min.js"></script>
+		<!-- bootsnav js -->
+		<script src=" __INDEX__/login/js/bootsnav.js"></script>
+		<!-- jquery.sticky.js -->
+		<script src=" __INDEX__/login/js/jquery.sticky.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!--Custom JS-->
+        <script src=" __INDEX__/login/js/custom.js"></script>
+        <!-- captcha -->
+    	<script src=" __CAPTCHA__/captcha.js"></script>
+
+	<style>
+		.form-group{
+			text-align: center;
+		}
+		.form-control{
+			width: 300px;
+			margin-left: 170px;
+		}
+		#pwd,#rpwd{
+			text-transform: none;
+		}	
+	</style>
+    </head>
+	
+	<body>
+		
+		<!-- signin end -->
+		<section class="signin">
+			<div class="container">
+
+				<div class="sign-content">
+					<h2>修改密码</h2>
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="signin-form">
+								<form action="{:url('Login/editpwd')}" method="post">
+								<input type="hidden" name="id" value="{$uid}">
+									<div class="form-group">
+									    <label for="pwd">新密码</label>
+									    <input type="text" name="pwd" class="form-control" id="pwd" required minlength="6" placeholder="请输入新密码">
+									</div><!--/.form-group -->
+									<div class="form-group">
+										<label for="rpwd">确认密码</label>
+									    <input type="text" class="form-control" id="rpwd" placeholder="再次输入密码">
+									</div><!--/.form-group -->
+								
+							</div><!--/.signin-form -->
+						</div><!--/.col -->
+					</div><!--/.row -->
+
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="signin-footer">
+								<input type="submit" class="submit btn signin_btn" value="确认" style="width: 300px;margin-left: 170px;">
+							</div><!--/.signin-footer -->
+						</div><!--/.col-->
+					</div><!--/.row -->
+				</form><!--/form -->
+				</div><!--/.sign-content -->
+
+			</div><!--/.container -->
+
+		</section><!--/.signin -->
+		
+		<!-- signin end -->
+
+		<!--footer copyright start -->
+		<footer class="footer-copyright">
+			<div id="scroll-Top">
+				<i class="fa fa-angle-double-up return-to-top" id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
+			</div><!--/.scroll-Top-->
+
+		</footer><!--/.hm-footer-copyright-->
+		<!--footer copyright  end -->
+
+
+		 <!-- Include all js compiled plugins (below), or include individual files as needed -->
+
+	<script>
+	$(function(){
+		$('.submit').click(function(){
+			if($('#rpwd').val()!=$('#pwd').val()){
+				alert("两次密码不一致");
+				return false;
+			}
+		});
+		
+		// $('#rpwd').blur(function(){
+		// 	if($('#rpassword').val()!=$('#pwd').val()){
+		// 		alert("两次密码不一致");
+		// 	}
+		// });
+
+
+	});
+	</script>
+
+    </body>
+	
+</html>

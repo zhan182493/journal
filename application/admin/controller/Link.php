@@ -12,7 +12,19 @@ class Link extends Common
 
 	public function add(){
 		if(request()->isPost()){
-			if(db('link')->insert(input('post.'))){
+			$data=input('post.');
+			//图片上传
+			if($_FILES['pic']['tmp_name']){
+                //获取表单上传文件
+                $file=request()->file('pic');
+                //移动到框架应用根目录/public/uploads/fengmian目录下
+               $info = $file->move(ROOT_PATH . 'public' . DS . '/uploads/linkpic');
+                // dump($info); die;
+                $data['pic']='/uploads/linkpic/'.$info->getSaveName();
+                // dump($data); die;
+            }
+           
+			if(db('link')->insert($data)){
 				return $this->success('添加成功！','lst');
 			}else{
 				return $this->error('添加失败！');
@@ -24,7 +36,25 @@ class Link extends Common
 	public function edit(){
 		$link=db('link')->where('id',input('id'))->find();
 		if(request()->isPost()){
-			if(db('link')->update(input('post.'))!==false){
+			$data=input('post.');
+			if($_FILES['pic']['tmp_name']){
+                //删除原来的图
+                $path=ROOT_PATH.'public'.$link['pic'];
+                // dump($path); die;
+                @unlink($path);
+                // dump(@unlink($path)); die;
+                // echo SITE_URL.'/public/'.$article['pic'];
+                // die;
+                //获取表单上传文件
+                 $file=request()->file('pic');
+                //移动到框架应用根目录/public/uploads/目录下
+                $info = $file->move(ROOT_PATH . 'public' . DS . '/uploads/fengmian');
+                // dump($info);die;
+                // dump($info); die;
+                $data['pic']='/uploads/fengmian/'.$info->getSaveName();
+                // dump($data); die;
+            }
+			if(db('link')->update($data)!==false){
 				return $this->success('修改成功！','lst');
 			}else{
 				return $this->error('修改失败！');

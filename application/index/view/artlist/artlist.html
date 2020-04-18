@@ -27,22 +27,12 @@
 		<div class="wenzhang">
 			<dl>							
 				<div class="artlist">
+				{volist name="artlst" id="vo"}
 				<dd>
-					<a target="_blank" href="#" class="biaoti">关于全国两会期间期刊网站访问受限的公告</a>
-					<span class="time">[2020-01-08]</span>
+					<a target="_blank" href="{:url('page/article',array('id'=>$vo['id'],'title'=>$title))}" class="biaoti">{$vo['title']}</a>
+					<span class="time">{:date('Y-m-d',$vo['create_time'])}</span>
 				</dd>
-				<dd>
-					<a target="_blank" href="#" class="biaoti">李良玉教授受聘为我刊特邀编委并做专题讲座</a>
-					<span class="time">[2020-01-08]</span>
-				</dd>
-				<dd>
-					<a target="_blank" href="#" class="biaoti">杂志社赴南京大学中国社会科学研究评价中心调研学习</a>
-					<span class="time">[2020-01-08]</span>
-				</dd>
-				<dd>
-					<a target="_blank" href="#" class="biaoti">2017年高被引论文、优秀审稿专家、突出贡献团队评选结果揭晓</a>
-					<span class="time">[2020-01-08]</span>
-				</dd>
+				{/volist}
 				</div>
 			</dl>
 		</div>

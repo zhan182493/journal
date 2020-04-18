@@ -38,9 +38,10 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                         <li><a href="{:url('index/index')}">首页</a></li>
-                        {if condition="$qishu neq null"}
+                        {if condition="isset($qishu) AND isset($jname) AND isset($juan)"}
                         <li class="active"><a href="{:url('journal/lst')}">期刊列表</a></li>
-                        <li><a href="javascript:history.back(-1)">{$jname}第{$qishu}期文章列表</a></li>
+                        <li><a href="javascript:history.back(-1)">
+                        {$jname}第{$juan}卷第{$qishu}期文章列表</a></li>
                         {else /}
                         <li><a href="{:url('lst')}">文章列表</a></li>
                         {/if}
@@ -73,8 +74,9 @@
                             <label for="jid" class="col-sm-2 control-label no-padding-right">所属期刊</label>
                             <div class="col-sm-6">
                                 <select name="jid" id="jid" style="width: 100%;">
+
                                 {volist name="journal" id="vo"}
-                                    <option value="{$vo['id']}" {if condition="$jname neq null"}{if condition="$jname eq $vo['title']"}selected="selected"{/if}{/if}>{$vo['title']}</option>
+                                    <option value="{$vo['id']}" {if condition="isset($jname) neq false"}{if condition="$jname eq $vo['title']"}selected="selected"{/if}{/if}>{$vo['title']}</option>
                                 {/volist}
                                 </select>
                             </div>
@@ -84,15 +86,15 @@
                         <div class="form-group">
                             <label for="qishu" class="col-sm-2 control-label no-padding-right">期次</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="qishu" placeholder="请输入文章期次" name="qishu" required="" type="text" {if condition="$qishu neq null"}value="{$qishu}" {/if}>
+                                <input class="form-control" id="qishu" placeholder="请输入文章期次" name="qishu" required="" type="text" {if condition="isset($qishu) neq false"}value="{$qishu}" {/if}>
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="eid" class="col-sm-2 control-label no-padding-right">编辑</label>
+                            <label for="editor" class="col-sm-2 control-label no-padding-right">编辑</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="eid" placeholder="请输入编辑姓名" name="eid" required="" type="text">
+                                <input class="form-control" id="editor" placeholder="请输入编辑姓名" name="editor" required="" type="text">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
@@ -100,25 +102,10 @@
                         <div class="form-group">
                             <label for="draft" class="col-sm-2 control-label no-padding-right">选择稿件</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="draft" placeholder="" name="draftid" required="" type="text">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="aid" class="col-sm-2 control-label no-padding-right">作者</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" id="aid" placeholder="" name="aid" required="" type="text">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="acate" class="col-sm-2 control-label no-padding-right">所属分类</label>
-                            <div class="col-sm-6">
-                                <select name="acateid" id="acate" style="width: 100%;">
-                                {volist name="acate" id="vo"}
-                                <option value="{$vo['id']}">{$vo['acatename']}</option>
+                                <select name="draftid" id="draft" style="width: 100%;">
+                                <option value="0">请选择稿件</option>
+                                {volist name="draft" id="vo"}
+                                <option value="{$vo['id']}">{$vo['title']}</option>
                                 {/volist}
                                 </select>
                             </div>
@@ -158,12 +145,28 @@
                         </div>
 
                         
+                        <div class="form-group">
+                            <label for="summary" class="col-sm-2 control-label no-padding-right">摘要</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" id="summary" placeholder="请编写文章摘要" name="summary" required=""  rows="5"></textarea> 
+                                
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="refrences" class="col-sm-2 control-label no-padding-right">参考文献</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" id="refrences" placeholder="请遵照标准写法，参考文献之间用逗号隔开" name="refrences" required="" rows="5"></textarea>
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
 
                         
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-success">提交</button>
-                                <a href="{:url('lst')}" type="button" class="btn btn-info">返回</a>
+                                <a href="javascript:history.go(-1);" type="button" class="btn btn-info">返回</a>
                             </div>
                         </div>
 

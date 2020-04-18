@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html><head>
+        <meta charset="utf-8">
+    <title>重庆工商大学派斯学院学报期刊后台管理系统</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
+    
+    <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
+    <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__ADMIN__/style/demo.css" rel="stylesheet">
+    <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
+    <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    
+    <link href="__ADMIN__/dataTable/css/dataTables.bootstrap.css" rel="stylesheet">
+    
+
+
+</head>
+<body>
+    <!-- 头部 -->
+    {include file="public/head" /}
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/left" /}
+        <!-- /Page Sidebar -->
+
+        
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li><a href="{:url('index/index')}">首页</a>
+                </li>
+                <li class="active">稿件列表</li>
+            </ul>
+            </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+
+                <div class="btn-group" style="width: 200px;height: 30px;">
+<form action="{:url('search')}" method="post">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="输入标题或作者关键字" style="width: 210px;bottom: 4px;">
+        <span class="input-group-btn" >
+            <button type="submit" class="btn btn-azure" style="height: 30px;padding-top: 2px;bottom: 4px;" >搜索</button>
+        </span>
+    </div>
+     </form>
+</div>
+
+                    
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="widget">
+            <div class="widget-body no-padding">
+                <table class="table table-bordered table-hover table-striped" id="searchable">
+                    <thead class="bordered-darkorange">
+                        <tr role="row">
+                            <th class="text-center">ID&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                <th class="text-center">标题</th>
+                                <th class="text-center">作者</th>
+                                <th class="text-center">分类</th>
+                                <th class="text-center">稿件</th>
+                                <th class="text-center">附件</th>
+                                <th class="text-center">是否重投</th>
+                                <th class="text-center">是否审核</th>
+                                <th class="text-center">审核专家</th>
+                                <th class="text-center">是否通过</th>
+                                <th class="text-center">是否支付</th>
+                                <th class="text-center">是否采用</th>
+                                <th class="text-center">投稿时间</th>
+                                <th class="text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name="draftlst" id="vo"}
+                        <tr>
+                            <td align="center">{$vo['id']}</td>
+                            <td align="center">{$vo['title']}</td>
+                            
+                    <td align="center">
+                    <!-- 作者卡片 -->
+              <!-- Button trigger modal -->
+              <a data-toggle="modal" data-target="#myModal{$vo['id']}" style="cursor: pointer;">
+              <!-- data-target的值由#myModal+变量id组成 -->
+                {$vo['author']}
+              </a>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="myModal{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!-- div的id由myModal+变量id组成 -->
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"> 作者联系方式</h4>
+                    </div>
+                    <div class="modal-body">
+                      姓名：{$vo['author']}<br>
+                      性别：{$vo['sex']}<br>
+                      年龄：{$vo['age']}<br>
+                      身份证号：{$vo['idnum']}<br>
+                      现住址：{$vo['nowaddress']}<br>
+                      学历：{$vo['edu']}<br>
+                      专业：{$vo['profession']}<br>
+                      工作单位：{$vo['company']}<br>
+                      职称：{$vo['position']}<br>
+                      研究方向：{$vo['direction']}<br>
+                      邮箱：{$vo['email']}<br>
+                      tel:{$vo['tel']}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 作者卡片end -->
+              </td>
+
+
+                            <td align="center">{$vo['acatename']}</td>
+                            <td><a href="{$vo['thumb']}" target="block">查看稿件</a></td>
+            <td><a href="{$vo['fthumb']}" target="block">查看附件</a></td>
+                            <td align="center">
+                            {if condition="$vo['is_repeat'] eq 1"}
+                            <span class="label label-maroon graded"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">重投</font></font></span>
+                            {else /}
+                            <span class="label label-sky graded"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">首投
+                            </font></font></span>
+                            {/if}
+                            </td>
+
+            {if condition="$vo['is_check'] eq 0"}
+                            <td align="center">
+                            <span class="label label-warning"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">未审核</font></font></span></td>
+                            <td align="center">\</td>
+                            <td align="center">\</td>
+                            <td align="center">\</td>
+                            <td align="center">\</td>
+
+                    {else /}
+                            <td align="center"><span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">已审核</font></font></span></td>
+                            
+                            <td align="center">
+                    <!-- 专家卡片 -->
+              <!-- Button trigger modal -->
+              <a data-toggle="modal" data-target="#myModal2{$vo['id']}" style="cursor: pointer;">
+              <!-- data-target的值由#myModal+变量id组成 -->
+                {$vo['z_name']}
+              </a>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="myModal2{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!-- div的id由myModal+变量id组成 -->
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"> 审稿专家联系方式</h4>
+                    </div>
+                    <div class="modal-body">
+                      姓名：{$vo['z_name']}<br>
+                      邮箱：{$vo['z_email']}<br>
+                      tel:{$vo['z_tel']}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 专家卡片end -->
+              </td>
+        
+                            <td align="center">
+                            {if condition="$vo['is_pass'] eq 0"}
+                            <span class="label label-danger"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">未通过</font></font></span>
+                            {else /}
+                            <span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">已通过</font></font></span>
+                            {/if}
+                            </td>
+                        
+                            <td align="center">
+                            {if condition="$vo['is_pay'] eq 0"}
+                            <span class="label label-warning"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">未支付</font></font></span>
+                            {else /}
+                            <span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">已支付</font></font></span>
+                            {/if}</td>
+                            <td align="center">
+                            {if condition="$vo['is_use'] eq 0"}
+                            <span class="label label-warning"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">未采用</font></font></span>
+                            {else /}
+                            <span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">已采用</font></font></span>
+                            {/if}</td>
+                    {/if} 
+                            <td align="center">{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                    
+                            <td align="center">
+                                <a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" did="{$vo['id']}">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                </table>
+                {$draftlst->render()}
+            </div>
+        </div>
+    </div>
+</div>
+                
+
+    </div>
+
+
+    </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>  
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="__ADMIN__/style/jquery_002.js"></script>
+    <script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="__ADMIN__/style/beyond.js"></script>
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+
+    <!--dataTable-->
+    <script src="__ADMIN__/dataTable/js/jquery.dataTables.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/ZeroClipboard.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.tableTools.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.bootstrap.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/datatables-init.js"></script>
+    <script>
+        InitiateSimpleDataTable.init();
+        InitiateEditableDataTable.init();
+        InitiateExpandableDataTable.init();
+        InitiateSearchableDataTable.init();
+    </script>
+    
+<script>
+    $(function(){
+        //异步删除
+        $('.del').on('click',function(){
+            var did=$(this).attr('did');
+            //询问框
+            layer.confirm('确认删除？', {
+                title:'提示',
+                btn: ['确认','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url:"{:url('del')}",
+                    type:"post",
+                    data:{id:did},
+                    datatype:"json",
+                    success:function(data){
+                        if(data.code==1){
+                            layer.msg(data.msg,{icon:1,time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }else if(data.code==2){
+                            layer.msg(data.msg,{
+                            icon:2,
+                            time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+        }); 
+
+    });
+</script>
+
+
+</body></html>

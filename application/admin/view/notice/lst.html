@@ -18,6 +18,8 @@
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
 
+    <link href="__ADMIN__/dataTable/css/dataTables.bootstrap.css" rel="stylesheet">
+
 </head>
 <body>
     <!-- 头部 -->
@@ -45,6 +47,19 @@
 
                 <!-- Page Body -->
                 <div class="page-body">
+
+
+            <div class="btn-group" style="width: 200px;height: 30px;">
+<form action="{:url('search')}" method="post">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="输入标题关键字" style="width: 210px;bottom: 4px;">
+        <span class="input-group-btn" >
+            <button type="submit" class="btn btn-azure" style="height: 30px;padding-top: 2px;bottom: 4px;" >搜索</button>
+        </span>
+    </div>
+     </form>
+</div>
+
                     
                 <div class="btn-group" style="float: right;">
 <a class="btn btn-sm btn-azure btn-addon" href="{:url('add')}"  style="float: right;" tooltip="添加公告"><i class="fa fa-plus"></i> ADD</a>
@@ -55,8 +70,9 @@
         <div class="widget">
             <div class="widget-body">
                 <div class="flip-scroll">
-                    <table class="table table-bordered table-hover">
-                        <thead>
+                    
+<table class="table table-bordered table-hover table-striped" id="searchable">
+                    <thead class="bordered-darkorange">
                             <tr>
                                 <th class="text-center">ID</th>
                                 <th class="text-center">公告标题</th>
@@ -111,6 +127,20 @@
     <script src="__ADMIN__/style/beyond.js"></script>
     <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
     <!-- <script type="text/javascript" src="__ADMIN__/layui/layui.js"></script> -->
+
+
+    <!--dataTable-->
+    <script src="__ADMIN__/dataTable/js/jquery.dataTables.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/ZeroClipboard.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.tableTools.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.bootstrap.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/datatables-init.js"></script>
+    <script>
+        InitiateSimpleDataTable.init();
+        InitiateEditableDataTable.init();
+        InitiateExpandableDataTable.init();
+        InitiateSearchableDataTable.init();
+    </script>
 <script>
     $(function(){
         //异步删除
@@ -157,9 +187,10 @@
                 success:function(data){
                     if(data.code==1){
                         layer.open({
+                            title:'内容',
                             type: 1,
                             area: ['893px', '600px'],
-                            content: data.data
+                            content:data.data
                         });
                     }else if(data.code==2){
                         layer.msg(data.msg,{

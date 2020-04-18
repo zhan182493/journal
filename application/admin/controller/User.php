@@ -155,19 +155,37 @@ class User extends Common
 	}
 
 	public function search(){
-
-		$user=db('auth_group_access')
-		->alias('ra')
-		->join('user u','ra.uid=u.id')
+		//输入为中文
+		if (preg_match('/^[\x{4e00}-\x{9fa5}]+$/u',input('search'))) {
+        	$user=db('auth_group_access')
+			->alias('ra')
+			->join('user u','ra.uid=u.id')
+			
+			->join('auth_group r','r.id=ra.group_id')
+			->where('name','like','%'.input('search').'%')
+			// ->where('group_id','3')
+			->select();
+	    } 
+	    //输入为数字
+	    elseif(preg_match('/^\d+$/i',input('search'))) {
+	        $user=db('auth_group_access')
+			->alias('ra')
+			->join('user u','ra.uid=u.id')
+			->join('auth_group r','r.id=ra.group_id')
+			->where('tel','like','%'.input('search').'%')
+			->select();
+	    }else{
+	    	$user=db('auth_group_access')
+			->alias('ra')
+			->join('user u','ra.uid=u.id')
+			->join('auth_group r','r.id=ra.group_id')
+			->where('uname','like','%'.input('search').'%')
+			->select();
+	    }
 		
-		->join('auth_group r','r.id=ra.group_id')
-		->where('name',input('name'))
-		// ->where('group_id','3')
-		->select();
 
 		//两表查询user--acate得到专家审核类型
 		$acate=db('user')->alias('u')->join('acate a','u.acateid=a.id')
-		->where('name',input('name'))
 		->field(['a.acatename','u.acateid'])
 		->select();
 		// dump($user);die;
@@ -185,7 +203,7 @@ class User extends Common
 		$this->assign('acate',$acate);
 		$rolelst=db('auth_group')->select();
 		$this->assign('rolelst',$rolelst);
-		$this->assign('name',input('name'));
+		$this->assign('search',input('search'));
 		return view();
 	}
 }

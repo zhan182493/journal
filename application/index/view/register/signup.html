@@ -1,265 +1,287 @@
-
-<!doctype html>
-<html  lang="en">
+ <!DOCTYPE html>
+<html>
 
     <head>
         <!-- meta data -->
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
         <!--font-family-->
-		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
-        
+		
         <!-- title of site -->
         <title>作者注册</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="__ROOT__/favicon.ico"/>
-       
         <!--font-awesome.min.css-->
         <link rel="stylesheet" href=" __INDEX__/login/css/font-awesome.min.css">
-		
 		<!--animate.css-->
         <link rel="stylesheet" href=" __INDEX__/login/css/animate.css">
-		
         <!--bootstrap.min.css-->
         <link rel="stylesheet" href=" __INDEX__/login/css/bootstrap.min.css">
-		
-		
-		
 		<!-- bootsnav -->
 		<link rel="stylesheet" href=" __INDEX__/login/css/bootsnav.css" >	
-        
         <!--style.css-->
         <link rel="stylesheet" href=" __INDEX__/login/css/style.css">
-        
         <!--responsive.css-->
         <link rel="stylesheet" href=" __INDEX__/login/css/responsive.css">
-
         <!-- icheck-bootstrap.css -->
         <link rel="stylesheet" href=" __INDEX__/css/icheck-bootstrap.css">
-        
         <!--bootstrap.css-->
         <link rel="stylesheet" href=" __INDEX__/login/css/bootstrap.css">
+    	
 
-        <script src="__INDEX__/js/jquery.min.js"></script>
 
+    	<script src=" __INDEX__/login/js/jquery.js"></script>
+        <!--modernizr.min.js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+		<!--bootstrap.min.js-->
+        <script src=" __INDEX__/login/js/bootstrap.min.js"></script>
+		<!-- bootsnav js -->
+		<script src=" __INDEX__/login/js/bootsnav.js"></script>
+		<!-- jquery.sticky.js -->
+		<script src=" __INDEX__/login/js/jquery.sticky.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!--Custom JS-->
+        <script src=" __INDEX__/login/js/custom.js"></script>
+        <!-- captcha -->
+    	<script src=" __CAPTCHA__/captcha.js"></script>
+	<style>
+		.title{
+			color: blue;
+			font-size:20px;
+		}
+		table td{
+			text-align: center;
+			width: 300px;
+		}
 
-		<script src="__INDEX__/js/bootstrap.min.js"></script>
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		.kongge{
+			width: 20px;
+		}
 		
-        <!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+		.signin-form input[type="text"], .signin-form input[type="email"], .signin-form input[type="password"]{
+			text-transform: none;
+			margin-bottom: 20px;
+		}	
+		.signin-form input[type="text"]::-webkit-autofill {
+      		-webkit-box-shadow: 0 0 0px 1000px white inset !important;
+      		box-shadow: 0 0 0px 1000px white inset !important;
+		}
+		.signin-form .error{
+			color: red;
+		    font-size: 15px;
+		    font-weight: 500;
+		    text-transform: capitalize;
+		    margin-bottom: 15px;
+		}
+		.signin-form label{
+			margin-bottom: 1px;
+		}
+		.slidercaptcha{
+			height: 200px;
+		}
+		.signup {
+		    padding: 80px 0;
+		    background-image: url("__INDEX__/picture/bg2.jpg");
+		    width: 100%;
+		    background-repeat: no-repeat;
+		    background-size:cover;
+		}
 
+	</style>
     </head>
-	
 	<body>
-		<!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
-		
-		<!-- signin end -->
-		<section class="signin signup">
+		<!-- signin -->
+		<section class="signup">
 			<div class="container">
-
 				<div class="sign-content">
 					<h2>作者注册</h2>
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="signin-form">
-								<form action="signin.html">
-									<div class="form-col">
-										<div class="form-group">
-										    <label for="signin_form">用户名</label>
-										    <input type="text" class="form-control" id="signin_form" placeholder="请输入用户名">
-										</div><!--/.form-group -->
-									</div><!--/.form-col -->
-									<div class="form-col1">
-										<div class="form-group">
-											<label for="signin_form">真实姓名</label>
-										    <input type="text" class="form-control" id="signin_form" placeholder="请输入真实姓名">
-										</div><!--/.form-group -->
-									</div><!--/.form-col1 -->
-								<div class="form-col">
-									<div class="form-group">
-										<label for="signin_form">密码</label>
-									    <input type="password" class="form-control" id="signin_form" placeholder="请输入密码">
-									</div><!--/.form-group -->
-								</div><!--/.form-group -->
-								<div class="form-col1">
-									<div class="form-group">
-										<label for="signin_form"> 确认密码</label>
-									    <input type="password" class="form-control" id="signin_form" placeholder="请确认密码">
-									</div><!--/.form-group -->
-								</div><!--/.form-col1 -->
 
-								<div class="form-col">
-									<div class="form-group">
-										<label for="signin_form">性别</label>
-										<div class="form-control" id="signin_form" style="border:0;">
-									    <div class="radio icheck-primary" style="float: left;">
-										<input type="radio" id="men" name="sex" checked="">
-										<label for="men">男</label>
-										</div>
-									    <div class="radio icheck-primary" style="float: left;margin-left: 20px;">
-										<input type="radio"  id="women" name="sex">
-										<label for="women">女</label>
-										</div>
-										</div>
-									</div><!--/.form-group -->
-								</div><!--/.form-group -->
-								<div class="form-col1">
-									<div class="form-group">
-										<label for="signin_form">年龄</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入年龄">
-									</div><!--/.form-group -->
-								</div><!--/.form-col1 -->
+	<form action="" method="post" id="register">
+	<table>
+		<tbody>
+			<tr>
+				<td><label for="uname"><span class="title">用户名</span></label><input type="text" class="form-control" id="uname" name="uname" placeholder="请输入用户名" 
+				pattern="[-_a-zA-Z0-9]{4,16}" 
+				oninvalid="setCustomValidity('只能输入4-16位字母、数字、下划线');" oninput="setCustomValidity('');"
+				required></td>
+				<td class="kongge"></td>
+				<td><label for="name"><span class="title">真实姓名</span></label><input type="text" class="form-control" id="name" name="name" placeholder="请输入真实姓名" 
+				required pattern="^[a-zA-Z\u4E00-\u9FA5]+{2,10}$"
+				oninvalid="setCustomValidity('请输入真实姓名');" 
+				oninput="setCustomValidity('');"></td>
+			</tr>
+			<tr>
+				<td><label for="password"><span class="title">密码</span></label>
+		    	<input type="password" name="password" class="form-control" id="password" placeholder="请输入密码" 
+		    	required minlength="6"></td>
+				<td class="kongge"></td>
+				<td><label for="rpassword"><span class="title">确认密码</span></label>
+		    	<input type="password" class="form-control" id="rpassword" placeholder="请确认密码" required ></td>
+			</tr>
+			<tr>
+				<td><label for="signin_form"><span class="title">性别</span></label>
+				<div class="form-control" id="signin_form" style="border:0;padding: 0 90px;">
+			    <div class="radio icheck-primary" style="float: left;">
+				<input type="radio" id="men" name="men" checked="">
+				<label for="men">男</label>
+				</div>
+			    <div class="radio icheck-primary" style="float: left;margin-left: 20px;">
+				<input type="radio"  id="women" name="women">
+				<label for="women">女</label>
+				</div>
+				</div></td>
+				<td class="kongge"></td>
+				<td><label for="age" name="age"><span class="title">年龄</span></label>
+		   	 	
+		   	 	<input type="text" class="form-control" id="age" name="age" placeholder="请输入年龄" 
+		    	required pattern="^\d{1,2}$" oninvalid="setCustomValidity('请正确输入年龄');" 
+		   	 	oninput="setCustomValidity('');"></td>
+			</tr>
+			<tr>
+				<td><label for="email"><span class="title">Email</span></label>
+		    	<input type="email" class="form-control" id="email" name="email" placeholder="请输入邮箱" required style="text-transform: none;"></td>
+				<td class="kongge"></td>
+				<td><label for="tel"><span class="title">电话</span></label>
+		    	<input type="tel" class="form-control" id="tel" name="tel" placeholder="请输入电话号" 
+		    	required pattern="^1[3456789]\d{9}$" 
+		    	oninvalid="setCustomValidity('请正确输入手机号码');" 
+		    	oninput="setCustomValidity('');"></td>
+			</tr>
+			<tr>
+				<td><label for="idnum"><span class="title">身份证号</span></label>
+		    	<input type="text" class="form-control" id="idnum" name="idnum" placeholder="请输入身份证号" 
+		    	required pattern="^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$" 
+		    	oninvalid="setCustomValidity('请正确输入身份证号');" 
+		    	oninput="setCustomValidity('');"></td>
+				<td class="kongge"></td>
+				<td><label for="address"><span class="title">籍贯</span></label>
+		    	<input type="text" class="form-control" id="address" name="address" placeholder="请输入籍贯" 
+		    	required pattern="^[a-zA-Z0-9\u4E00-\u9FA5]+$" 
+		    	oninvalid="setCustomValidity('请输入中英文或数字');" 
+		    	oninput="setCustomValidity('');"></td>
+			</tr>
+			<tr>
+				<td><label for="nowaddress"><span class="title">现住址</span></label>
+		    	<input type="text" class="form-control" id="nowaddress" name="nowaddress" placeholder="请输入现住址" 
+		    	required pattern="^[a-zA-Z0-9\u4E00-\u9FA5]+$" 
+		    	oninvalid="setCustomValidity('请输入中英文或数字');" 
+		    	oninput="setCustomValidity('');"></td>
+				<td class="kongge"></td>
+				<td><label for="edu"><span class="title">学历</span></label>
+		    	<input type="text" class="form-control" id="edu" name="edu" placeholder="请输入学历" 
+		    	required pattern="^[a-zA-Z\u4E00-\u9FA5]+$" 
+		    	oninvalid="setCustomValidity('请输入中英文或数字');" 
+		    	oninput="setCustomValidity('');"></td>
+			</tr>
+			<tr>
+				<td><label for="profession"><span class="title">专业</span></label>
+		    	<input type="text" class="form-control" id="profession" name="profession" placeholder="请输入专业" 
+		    	required pattern="^[a-zA-Z\u4E00-\u9FA5]+$" 
+		    	oninvalid="setCustomValidity('请输入中英文或数字');" 
+		    	oninput="setCustomValidity('');"></td>
+				<td class="kongge"></td>
+				<td><label for="company"><span class="title">工作单位</span></label>
+		    	<input type="text" class="form-control" id="company" name="company" placeholder="请输入工作单位" 
+		    	required pattern="^[a-zA-Z0-9\u4E00-\u9FA5]+$" 
+		    	oninvalid="setCustomValidity('请输入中英文或数字');" 
+		    	oninput="setCustomValidity('');"></td>
+			</tr>
+			<tr>
+				<td><label for="position"><span class="title">职称</span></label>
+		    	<input type="text" class="form-control" id="position" name="position" placeholder="请输入职称" 
+		    	required pattern="^[a-zA-Z\u4E00-\u9FA5]+$" 
+		    	oninvalid="setCustomValidity('请输入中英文或数字');" 
+		    	oninput="setCustomValidity('');"></td>
+				<td class="kongge"></td>
+				<td><label for="direction"><span class="title">研究方向</span></label>
+		    	<input type="text" class="form-control" id="direction" name="direction" placeholder="请输入研究方向" 
+		    	required pattern="^[a-zA-Z0-9\u4E00-\u9FA5]+$" 
+		    	oninvalid="setCustomValidity('请输入中英文或数字');" 
 
-								<div class="form-col">
-									<div class="form-group">
-										<label for="signin_form">Email</label>
-									    <input type="email" class="form-control" id="signin_form" placeholder="请输入邮箱">
-									</div><!--/.form-group -->
-								</div><!--/.form-group -->
-								<div class="form-col1">
-									<div class="form-group">
-										<label for="signin_form"> 电话</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入电话号">
-									</div><!--/.form-group -->
-								</div><!--/.form-col1 -->
-
-								<div class="form-col">
-									<div class="form-group">
-										<label for="signin_form">身份证号</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入身份证号">
-									</div><!--/.form-group -->
-								</div><!--/.form-group -->
-								<div class="form-col1">
-									<div class="form-group">
-										<label for="signin_form">籍贯</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入籍贯">
-									</div><!--/.form-group -->
-								</div><!--/.form-col1 -->
-
-								<div class="form-col">
-									<div class="form-group">
-										<label for="signin_form">现住址</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入现住址">
-									</div><!--/.form-group -->
-								</div><!--/.form-group -->
-								<div class="form-col1">
-									<div class="form-group">
-										<label for="signin_form">学历</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入学历">
-									</div><!--/.form-group -->
-								</div><!--/.form-col1 -->
-
-								<div class="form-col">
-									<div class="form-group">
-										<label for="signin_form">专业</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入专业">
-									</div><!--/.form-group -->
-								</div><!--/.form-group -->
-								<div class="form-col1">
-									<div class="form-group">
-										<label for="signin_form">工作单位</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入工作单位">
-									</div><!--/.form-group -->
-								</div><!--/.form-col1 -->
-
-								<div class="form-col">
-									<div class="form-group">
-										<label for="signin_form">职称</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入职称">
-									</div><!--/.form-group -->
-								</div><!--/.form-group -->
-								<div class="form-col1">
-									<div class="form-group">
-										<label for="signin_form">研究方向</label>
-									    <input type="text" class="form-control" id="signin_form" placeholder="请输入研究方向">
-									</div><!--/.form-group -->
-								</div><!--/.form-col1 -->
-
-								</form><!--/form -->
-							</div><!--/.signin-form -->
-						</div><!--/.col -->
-					</div><!--/.row -->
-					
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="signin-password">
-								<div class="awesome-checkbox-list">
-									<ul class="unstyled centered">
-
-										<li>
-										    <div class="checkbox icheck-success">
-											<input type="checkbox" checked="" id="success" checked="checked">
-											<label for="success">勾选代表你同意 
-											<a href="">《注册声明》</a>
-											<a href="">《版权声明》</a>
-											<a href="">《隐私声明》</a></label>
-											</div>
-										</li>
-
-										<li></li>
-
-									</ul>
-								</div><!--/.awesome-checkbox-list -->
-							</div><!--/.signin-password -->
-						</div><!--/.col -->
-					</div><!--/.row -->
-
-
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="signin-footer">
-								<button type="button" class="btn signin_btn">
-								注册
-								</button>
-								<p>
-									已经注册 ?
-									<a href="signin.html">登录</a>
-								</p>
-							</div><!--/.signin-footer -->
-						</div><!--/.col-->
-					</div><!--/.row -->
+		    	oninput="setCustomValidity('');"></td>
+			</tr>
+			<tr>
+			<td><label for="question"><span class="title">安全问题</span></label>
+		    	<input type="text" class="form-control" id="question" name="question" placeholder="请输入安全问题（用于找回密码）" required pattern="^[\u4e00-\u9fa5_a-zA-Z0-9]+$" 
+		    	oninvalid="setCustomValidity('请输入中英文或数字');" 
+		    	oninput="setCustomValidity('');" 
+		    	required ></td>
+			<td class="kongge"></td>
+			<td><label for="answer"><span class="title">答案</span></label>
+		    	<input type="text" class="form-control" id="answer" name="answer" placeholder="请输入安全问题答案" 
+		    	required pattern="^[\u4e00-\u9fa5_a-zA-Z0-9]+$" 
+		    	oninvalid="('请输入中英文或数字');" 
+		    	oninput="setCustomValidity('');"></td>
+			</tr>
+			<tr>
+				<td><div id="v_container" class="form-control" style="width: 300px;height: 50px;"></div>
+				</td>
+				<td class="kongge"></td>
+				<td><label for="direction"><span class="title">验证码</span></label><input type="text" class="form-control" id="code_input"  placeholder="请输入验证码"/>            
+				</td></tr>
+            <tr><td colspan=3>
+            </td></tr>
+			<tr><td colspan=3><div class="checkbox icheck-success">
+					<input type="checkbox" id="success" checked="checked" required>
+					<label for="success" style="margin-left: -24px;">勾选代表你同意 
+					<a href="">《注册声明》</a>
+					<a href="">《版权声明》</a>
+					<a href="">《隐私声明》</a></label>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=3>
+					<input type="submit" class="submit btn signin_btn" value="注册">
+					<p style="margin-top: 15px;margin-left: 10px;">
+						已有账号 ?
+						<a href="{:url('Login/signin')}"><i><u>登录</u></i></a>
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</form><!--/form -->
+			</div><!--/.signin-form -->
+	</div><!--/.col -->
+</div><!--/.row -->
 
 				</div><!--/.sign-content -->
-
 			</div><!--/.container -->
-
 		</section><!--/.signin -->
-		
 		<!-- signin end -->
+<script>
+	$(function(){
+		//禁止历史
+		// $('input').attr('autocomplete','off');
 
+		var verifyCode = new GVerify("v_container");
+		//密码验证
+		$('.submit').click(function(){
+			if($('#rpassword').val()!=$('#password').val()){
+ 					alert("两次密码不一致");
+ 					return false;
+			}
+			var res = verifyCode.validate(document.getElementById("code_input").value);
+			if(!res){
+				alert("验证码错误");
+				return false;
+			}
+		});
 		
+		$('#rpassword').blur(function(){
+ 			if($('#rpassword').val()!=$('#password').val()){
+ 					alert("两次密码不一致");
+			}
+		});
+		
+	});
 
-
-		 <!-- Include all js compiled plugins (below), or include individual files as needed -->
-
-		<script src=" __INDEX__/login/js/jquery.js"></script>
-        
-        <!--modernizr.min.js-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-		
-		<!--bootstrap.min.js-->
-        <script src=" __INDEX__/login/js/bootstrap.min.js"></script>
-		
-		<!-- bootsnav js -->
-		<script src=" __INDEX__/login/js/bootsnav.js"></script>
-		
-		<!-- jquery.sticky.js -->
-		<script src=" __INDEX__/login/js/jquery.sticky.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-		
-        
-        <!--Custom JS-->
-        <script src=" __INDEX__/login/js/custom.js"></script>
+</script>
 
     </body>
 	

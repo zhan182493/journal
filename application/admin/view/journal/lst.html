@@ -41,17 +41,18 @@
                 <ul class="breadcrumb">
                     <li><a href="{:url('index/index')}">首页</a>
                 </li>
-                <li class="active">期刊列表</li>
+                <li class="active">期刊信息</li>
             </ul>
             </div>
                 <!-- /Page Breadcrumb -->
 
                 <!-- Page Body -->
                 <div class="page-body">
-                    
-                <div class="btn-group" style="float: left;">
+   {if condition="$journal eq 0" }                 
+<div class="btn-group" style="float: left;">
 <a class="btn btn-sm btn-azure btn-addon" href="{:url('add')}" tooltip="创建期刊"><i class="fa fa-plus"></i>创建期刊</a>
 </div>
+{/if}
 
 <div class="row">
     <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -63,9 +64,11 @@
                         <tr>
                             <th class="text-center">封面</th>
                             <th class="text-center">信息</th>
-                            <th class="text-center">期数</th>
+                            <th class="text-center">卷</th>
                             <th class="text-center">操作</th>
                         </tr>
+                        </thead>
+                         {if condition="$journal neq 0" }  
                         {volist name="journal" id="vo"}
                             <tr>
                                 <td class="text-center" style="vertical-align: middle!important;"><img src="{$vo['pic']}" alt="" style="width: 200px;height: 270px;"></td>
@@ -78,33 +81,37 @@
                                 <p>责任主编：{$vo['uid']}</p>
                                 </td>
                                 <td class="text-center" style="vertical-align: middle!important;">
+                                
                                 <table>
-                                {volist name="$vo['qishu']" id="val"}
-                                <a href="{:url('qishulst',array('qishu'=>$val,'jname'=>$vo['title'],'jid'=>$vo['id']))}" class="qishu" >NO.{$val}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                {if condition="$vo['juan'][0] neq ''"}
+                                {volist name="$vo['juan']" id="val"}
+                                <a href="{:url('juanlst',array('juan'=>$val,'jname'=>$vo['title'],'jid'=>$vo['id']))}" class="juan" >第{$val}卷</a>&nbsp;&nbsp;&nbsp;&nbsp;
                                 {if condition="$val%6 eq 0"}
                                 </br>
                                 {/if}
                                 {/volist}
-                                <form id="addqishu" action="{:url('qishulst')}" method="post">
-                                <input type="hidden" name="jname" value="{$vo['title']}">
-                                <input type="hidden" name="jid" value="{$vo['id']}">
-                                <input type="hidden" name="qishu" value="" id="qishu">
-                                <a href="javascript:void(0);" class="addqishu"><i class="fa fa-plus"></i>添加</a></form>
+                                {else /}
+                                无
+                                {/if}
+                                
+                                
                                 </table>
+                                
                                 </td>
                                 <td class="text-center" style="vertical-align: middle!important;">
                                 <p><a href="{:url('edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-sm shiny">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a></p>
-                                <!-- <a href="{:url('del')}" class="btn btn-danger btn-sm shiny del">
-                                    <i class="fa fa-trash-o"></i> 删除
-                                </a> -->
+                                
                                 <p><a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" rid="{$vo['id']}">
                                     <i class="fa fa-trash-o"></i> 删除
                                 </a></p>
                                 </td>
                             </tr>
                             {/volist}
+                            {else /}
+                            <tr><td colspan="4" class="text-center">无</td></tr>
+                            {/if}
                         </thead>
                     </table>
                 </div>
@@ -166,12 +173,7 @@
             });
         }); 
 
-        $('.addqishu').click(function(){
-            var qishu=$(this).parent().children('.qishu').length+1;
-            // alert(qishu);
-            $('#qishu').val(qishu);
-            $('#addqishu').submit();
-        });
+       
 
     });
 </script>

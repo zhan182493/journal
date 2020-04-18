@@ -77,16 +77,15 @@
 		<!-- 投稿须知 -->
 			<div class="dmessage block">
 				<div class="title tgxz">
-					<div class="title_1">投稿须知<a href="#" class="more-a">&gt;</a></div>
+					<div class="title_1">学报公告<a href="#" class="more-a">&gt;</a></div>
 				</div>
 				<div class="content tgxa-c">
 				
 				<ul>
-					<li><a href="#" target="_blank" class="icon_list1">蓝牙4.0标准规范下的模糊指纹定位算法</a></li>
-					<li><a href="#" target="_blank" class="icon_list1">叶片疲劳寿命神经网络近似计算模型数值实验</a></li>
-					<li><a href="#" target="_blank" class="icon_list1">荷叶生物碱对胰脂肪酶的抑制作用</a></li>
-					<li><a href="#" target="_blank" class="icon_list1">增强虚拟现实技术研究及其应用</a></li>
-					<li><a href="#" target="_blank" class="icon_list1">轴流泵模拟中湍流模式可用性的研究</a></li>
+				{volist name="notice" id="vo"}
+					<li><a href="{:url('page/article',array('id'=>$vo['id'],'title'=>'学报公告'))}" target="_blank" class="icon_list1">{$vo['title']}</a></li>
+				{/volist}
+					
 				</ul>
 				</div>
 			</div>
@@ -96,37 +95,13 @@
 					<div class="title_2">友情链接</div>
 				</div>
 				<div class="content yqlj-con">
-							<dl>
-				
-								<dd>
-				<a href="http://www.cujs.com/" target="_blank" class="lanse">
-				<img src="http://www.journal.shu.edu.cn/fileup/1007-2861/ITEM/20190813115825.png" width="300" height="75">
-				</a>
-				</dd>
-								<dd>
-				<a href="http://check.cnki.net/amlc/" target="_blank" class="lanse">
-				<img src="http://www.journal.shu.edu.cn/fileup/1007-2861/ITEM/20190813115721.jpg" width="300" height="75">
-				</a>
-				</dd>
-
-				<dd>
-				<a href="http://www.cqast.cn/" target="_blank" class="lanse">
-				<img src="__INDEX__/picture/cessp.png" width="300" height="75">
-				</a>
-				</dd>
-
-				<dd>
-				<a href="http://www.cqast.cn/" target="_blank" class="lanse">
-				<img src="__INDEX__/picture/cqast.png" width="300" height="75">
-				</a>
-				</dd>
-		
-								<dd>
-				<a href="http://www.paisi.edu.cn/" target="_blank" class="lanse">
-				<img src="__INDEX__/picture/20190813115523.jpg" width="300" height="75">
-				</a>
-				</dd>
-							</dl>
+					<dl>
+					{volist name="linklst" id="vo"}
+						<dd><a href="http://{$vo['url']}/" target="_blank" class="lanse">
+						<img src="{$vo['pic']}" width="300" height="75" alt="{$vo['name']}">
+						</a></dd>
+					{/volist}
+					</dl>
 				</div>
 			</div>
 		</div>

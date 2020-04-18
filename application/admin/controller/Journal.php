@@ -1,34 +1,134 @@
 <?php
 namespace app\admin\controller;
 use app\admin\controller\Common;
+use app\admin\model\Journal as JouModel;
 
 class Journal extends Common
 {
 	public function lst(){
 		$res=db('journal')->select();
+		if(!$res){
+			$this->assign('journal',0);
+		return view();
+		}
 		foreach ($res as $k => $v) {
-			$qishu=db('article')->alias('a')->join('journal j','j.id=a.jid')->where('a.jid',$v['id'])->field('a.qishu')->Distinct(true)->select();
-			foreach ($qishu as $key => $val) {
-				$v['qishu'][]=$val['qishu'];
+			$juan=db('article')->alias('a')->join('journal j','j.id=a.jid')->where('a.jid',$v['id'])->field('a.juan')->Distinct(true)->order('a.juan asc')->select();//关键词 DISTINCT 用于返回唯一不同的值
+			// dump($juan);die;
+			if($juan){
+				foreach ($juan as $key => $val) {
+					$v['juan'][]=$val['juan'];
+				}
+				$journal[]=$v;
+			}else{
+				$v['juan'][]='';
+				$journal[]=$v;
 			}
-			$journal[]=$v;
+			
 		}
 		
 		// dump($journal);die;
-		$this->assign('qishu',$qishu);
+		// $this->assign('qishu',$qishu);
 		$this->assign('journal',$journal);
 		return view();
 	}
 
-	public function qishulst(){
-		// dump(input('jid'));die;
-			$qishulst=db('article')->where('jid',input('jid'))->where('qishu',input('qishu'))->select();
+	public function juanlst(){
+		if(request()->isGet()){
+			// dump(input('juan'));die;
+			$jid=input('jid');
+			$juan=input('juan');
+			$jname=input('jname');
+			$artlst=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->select();
+			$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
+			$qishulst=[];
+			foreach ($qishures as $k => $v) {
+				$qishulst[]=$v;
+				// dump($qishulst);die;
+			}
+			$fabu=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->field('is_use')->find();
+			$this->assign('fabu',$fabu['is_use']);
+			$this->assign('juan',$juan);
+			$this->assign('artlst',$artlst);
+			$this->assign('qishulst',$qishulst);
+			$this->assign('jname',$jname);
+			$this->assign('jid',$jid);
+			$this->assign('qishu',1);
+			return view();
+		}
 
-		$this->assign('qishu',input('qishu'));
+		$juan=1;
+		$jres=db('journal')->find();
+		$jname=$jres['title'];
+		$jid=$jres['id'];
+		$artlst=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->select();
+		// dump($artlst);die;
+		$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
+		$qishulst=[];
+		foreach ($qishures as $k => $v) {
+			$qishulst[]=$v;
+			// dump($qishulst);die;
+		}
+		$fabu=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->field('is_use')->find();
+		$this->assign('fabu',$fabu['is_use']);
+		$this->assign('juan',$juan);
+		$this->assign('artlst',$artlst);
 		$this->assign('qishulst',$qishulst);
-		$this->assign('jname',input('jname'));
+		$this->assign('jname',$jname);
+		$this->assign('jid',$jid);
+		$this->assign('qishu',1);
 		return view();
 	}
+
+	public function artlst(){
+		if(request()->isPost()){
+			$jid=input('jid');
+			$juan=input('juan');
+			$jname=input('jname');
+			$qishu=input('qishu');
+			$artlst=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',$qishu)->select();
+			$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
+			$qishulst=[];
+			foreach ($qishures as $k => $v) {
+				$qishulst[]=$v;
+				// dump($qishulst);die;
+			}
+			$fabu=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',$qishu)->field('is_use')->find();
+			$this->assign('fabu',$fabu['is_use']);
+			$this->assign('juan',$juan);
+			$this->assign('artlst',$artlst);
+			$this->assign('qishulst',$qishulst);
+			$this->assign('jname',$jname);
+			$this->assign('jid',$jid);
+			$this->assign('qishu',input('qishu'));
+			return view('juanlst');
+		}
+	}
+
+	public function qishufabu(){
+		$ids = trim($_POST['ids']);
+		$ids=json_decode($ids);
+		$ids = implode(",", $ids);
+		$time=time();
+		// return json(['code'=>1,'msg'=>$ids]);
+		if(db('article')->where('id','in',$ids)->update(['is_use'=>1,'use_time'=>$time])){
+			return json(['code'=>1,'msg'=>'发布成功！']);
+		}else{
+			return json(['code'=>2,'msg'=>'发布失败！']);
+		}
+	}	
+
+	public function quxiaofabu(){
+		$ids = trim($_POST['ids']);
+		$ids=json_decode($ids);
+		$ids = implode(",", $ids);
+		// return json(['code'=>1,'msg'=>$ids]);
+		if(db('article')->where('id','in',$ids)->update(['is_use'=>0,'use_time'=>0])){
+			return json(['code'=>1,'msg'=>'已取消！']);
+		}else{
+			return json(['code'=>2,'msg'=>'取消失败！']);
+		}
+	}
+
 
 	public function add(){
 		$zhubian=db('auth_group_access')
@@ -51,8 +151,8 @@ class Journal extends Common
                 $data['pic']='/uploads/fengmian/'.$info->getSaveName();
                 // dump($data); die;
             }
-
-			if(db('journal')->insert($data)){
+            $journal=new JouModel;
+			if($journal->save($data)){
 				return $this->success('创建成功！','lst');
 			}else{
 				return $this->error('创建失败！');
@@ -84,7 +184,8 @@ class Journal extends Common
                 $data['pic']='/uploads/fengmian/'.$info->getSaveName();
                 // dump($data); die;
             }
-			if(db('journal')->update($data)){
+            $journal=new JouModel;
+			if($journal->update($data)){
 				return $this->success('修改成功！','lst');
 			}else{
 				return $this->error('修改失败！');

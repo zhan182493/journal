@@ -54,7 +54,7 @@
             </div>
             <div class="widget-body">
                 <div id="horizontal-form">
-                    <form class="form-horizontal" action="{:url('add')}" method="post">
+                    <form class="form-horizontal" action="{:url('add')}" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label no-padding-right">链接名称</label>
                             <div class="col-sm-6">
@@ -72,9 +72,20 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="pic" class="col-sm-2 control-label no-padding-right">图片</label>
+                            <div class="col-sm-6">
+                             <input id="pic" name="pic"  type="file">
+                            <div style=""><img src="" alt="" class="img"></div>
+                            <span class="help-block  red">*图片比例为300(宽)：75(高)，图片大小<2MB</span>
+
+                            </div>
+                            
+                        </div>  
+
+                        <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-success">提交</button>
-                                <a href="{:url('lst')}" type="button" class="btn btn-info">返回</a>
+                                <a href="javascript:history.go(-1);" type="button" class="btn btn-info">返回</a>
                             </div>
                         </div>
 
@@ -98,7 +109,21 @@
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
-    
+
+    <script>
+$("#pic").click(function(){
+    if($("#pic").val()){
+        $("#pic").val('');
+        $(".img").attr("src","");
+        $(".img").css({"width":"0","height":"0"});
+    }
+    $("#pic").on('change',function(){
+        $(".img").attr("src",URL.createObjectURL($(this)[0].files[0]));
+        $(".img").css({"width":"300px","height":"75px"});
+    });
+});
+
+    </script>
 
 
 </body></html>

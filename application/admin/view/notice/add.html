@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-success">提交</button>
-                                <a href="{:url('lst')}" type="button" class="btn btn-info">返回</a>
+                                <a href="javascript:history.go(-1);" type="button" class="btn btn-info">返回</a>
                             </div>
                         </div>
 
@@ -106,6 +106,7 @@
 //实例化编辑器
     //工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('content')就能拿到相关实例
     UE.getEditor('content',{initialFrameWitdth:1000,initialFrameHeight:400,});
+    ue.execCommand('insertHtml',content);
     
 </script>
     

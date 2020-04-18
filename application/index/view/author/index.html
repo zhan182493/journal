@@ -31,6 +31,12 @@
     Author: TemplateMag.com
     License: https://templatemag.com/license/
   ======================================================= -->
+
+  <style>
+    .signin-form input[type="text"], .signin-form input[type="email"], .signin-form input[type="password"]{
+      text-transform: none;
+    }
+  </style>
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#navigation">
@@ -63,7 +69,7 @@
       <div class="container">
         <div class="row centered">
           <div class="col-lg-12">
-            <h3>欢迎 <b>作者</b></h3>
+            <h3>欢迎 <b>{$user['name']}</b></h3>
             <br>
           </div>
 
@@ -76,20 +82,20 @@
             <table class="table">
               <tbody>
                 <tr>
-                  <td scope="row">作者：张三</td>
-                  <td scope="row">电话：888888</td></tr>
-                  <td scope="row">邮箱：123@qq.com</td>
-                  <td scope="row">专业：计算机</td>
+                  <td scope="row">作者：{$user['name']}</td>
+                  <td scope="row">电话：{$user['tel']}</td></tr>
+                  <td scope="row">邮箱：{$user['email']}</td>
+                  <td scope="row">专业：{$user['profession']}</td>
                 </tr>
                 <tr>
-                  <td scope="row">已投稿件&nbsp;&nbsp;<span class="badge badge-primary">10</span></td>
-                  <td scope="row">未审核稿件&nbsp;&nbsp;<span class="badge badge-warning">3</span></td></tr>
-                  <td scope="row">已通过稿件&nbsp;&nbsp;<span class="badge badge-success">4</span></td>
-                  <td scope="row">未通过稿件&nbsp;&nbsp;<span class="badge badge-danger">3</span></td>
+                  <td scope="row">已投稿件&nbsp;&nbsp;<span class="badge badge-primary">{$num_all}</span></td>
+                  <td scope="row">未审核稿件&nbsp;&nbsp;<span class="badge badge-warning">{$num_nshenhe}</span></td></tr>
+                  <td scope="row">已通过稿件&nbsp;&nbsp;<span class="badge badge-success">{$num_pass}</span></td>
+                  <td scope="row">未通过稿件&nbsp;&nbsp;<span class="badge badge-danger">{$num_npass}</span></td>
                 </tr>
                 <tr>
-                  <td><a href="{:url('index/index')}">返回网站主页</a></td>
-                  <td><a href="">注销账号</a></td>
+                  
+                  <td><a href="{:url('Login/logout',array('uid'=>$user['id']))}">退出并注销账号</a></td>
                 </tr>
               </tbody>
             </table>
@@ -109,36 +115,41 @@
     <div id="intro">
       <div class="container">
         <div class="row centered">
-          <h1>在线投稿</h1>
-          <form action="">
+          <h1>投稿</h1>
+          <form action="{:url('add')}" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="author" value="{$user['name']}">
+          <input type="hidden" name="uid" value="{$user['id']}">
           <br>
+
           <div class="col-lg-4">
             <img class="tougao"  src="__INDEX__/author/img/intro01.png" alt="">
             <h3>选择稿件</h3>
             <p><div class="input-group">
-               <input id='location' class="form-control" onclick="$('#i-file').click();" style="width: 360px;">
-              <input type="file" name="file" id='i-file'  accept=".xls, .xlsx" onchange="$('#location').val($('#i-file').val());" style="display: none">
+               <input id='location' class="form-control" onclick="$('#i-file').click();" style="width: 360px;cursor: pointer;" placeholder="请选择稿件(仅支持.pdf、.wps、.doc类型)">
+              <input type="file" name="thumb" id='i-file'  accept="
+.pdf,.wps,.doc" onchange="$('#location').val($('#i-file').val());" style="display: none">
                </div></p>
           </div>
+
           <div class="col-lg-4">
             <img class="tougao" src="__INDEX__/author/img/intro02.png" alt="">
-            <h3>选择附件</h3>
+            <h3>选择附件（可选）</h3>
             <p><div class="input-group">
-               <input id='location2' class="form-control" onclick="$('#i-file2').click();" style="width: 360px;">
-              <input type="file" name="file" id='i-file2'  accept=".xls, .xlsx" onchange="$('#location2').val($('#i-file2').val());" style="display: none">
+               <input id='location2' class="form-control" onclick="$('#i-file2').click();" style="width: 360px;cursor: pointer;" placeholder="请选择附件(仅支持.pdf、.wps、.doc类型)">
+              <input type="file" name="fthumb" id='i-file2'  accept=".pdf,.wps,.doc" onchange="$('#location2').val($('#i-file2').val());" style="display: none">
                </div></p>
           </div>
+
           <div class="col-lg-4">
-            <p><input type="text" placeholder="请输入标题"></p>
-            <p><input type="text" placeholder="请输入作者"></p>
-            <p><select name="" id="" style="width: 100%;height: 34px;">
-              <option value="">请选择类型</option>
-              <option value="">文学</option>
-              <option value="">物理</option>
-              <option value="">生物</option>
-              <option value="">数学</option>
+            <p><input type="text" name="title" placeholder="请输入标题" style="margin-top: 50px;"></p>
+            
+            <p><select name="acateid" id="" style="width: 100%;height: 34px;margin-top:40px;">
+              <option value="0">请选择类型</option>
+              {volist name="acate" id="vo"}
+              <option value="{$vo['id']}">{$vo['acatename']}</option>
+              {/volist}
             </select></p>
-                <p><input type="submit" class="form-control" style="width: 100%;background-color: #43CD80;margin-top:100px;" ></p>
+                <p><input type="submit" class="form-control" style="width: 100%;background-color: #43CD80;margin-top:70px;" ></p>
           </div>
           </br>
           </form>
@@ -159,23 +170,23 @@
   <div class="panel panel-default">
     <div class="panel-heading">
     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed" aria-expanded="false">
-      <h4 class="panel-title">已通过稿件&nbsp;&nbsp;<span class="badge badge-primary">10</span></h4>
+      <h4 class="panel-title">已通过稿件&nbsp;&nbsp;<span class="badge badge-primary">{$num_pass}</span></h4>
     </a>
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" aria-expanded="false">
       <table class="table">
         <tbody>
+        {volist name="pass" id="vo"}
         <tr>
-            <td>标题111111</td>
+            <td>{$vo['title']}</td>
             <td><span class="badge badge-success">通过</span></td>
-            <td>所属类型</td>
-            <td><!-- 审改意见 -->
-            <!-- Button trigger modal -->
+            <td>{:date('Y-m-d H:i:s',$vo['create_time'])}投</td>
+            <td>{:date('Y-m-d H:i:s',$vo['update_time'])}审</td>
+            
+            <!-- <td>
               <a data-toggle="modal" data-target="#myModal">
                 摘要
               </a>
-
-              <!-- Modal -->
               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -189,37 +200,16 @@
                   </div>
                 </div>
               </div>
-
-    <!-- 审改意见end --></td>
-            <td><span class="badge badge-success">已支付</span></td>
+            </td> -->
             <td>
-            <!-- 专家联系方式 -->
-              <!-- Button trigger modal -->
-              <a data-toggle="modal" data-target="#myModal2">
-              <!-- data-target的值由#myModal+变量id组成 -->
-                审稿专家联系方式
-              </a>
-  
-              <!-- Modal -->
-              <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <!-- div的id由myModal+变量id组成 -->
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel"> 审稿专家联系方式</h4>
-                    </div>
-                    <div class="modal-body">
-                      姓名：张三<br>
-                      邮箱：123@qq.com<br>
-                      tel:18877779999
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 专家联系方式end -->
+            {if condition="$vo['is_pay'] eq 1"}
+            <span class="badge badge-success">已支付</span>
+            {else /}
+            <span class="badge badge-danger">未支付</span>
+            {/if}
             </td>
           </tr>
+          {/volist}
         </tbody>
       </table>
     </div>
@@ -227,28 +217,32 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
-      <h4 class="panel-title">待审核稿件&nbsp;&nbsp;<span class="badge badge-success">4</h4>
+      <h4 class="panel-title">待审核稿件&nbsp;&nbsp;<span class="badge badge-success">{$num_nshenhe}</h4>
     </a>
     </div>
     <div id="collapseTwo" class="panel-collapse collapse in" aria-expanded="false">
       <table class="table">
         <tbody>
-        <form action=""></form>
+        
+        {volist name="nshenhe" id="vo"}
           <tr>
-            <td>标题222222222</td>
+            <td>{$vo['title']}</td>
             <td><span class="badge badge-warning">待审</span></td>
-            <td>所属类型</td>
-            <td><div class="input-group">
-               <input id="location3" class="form-control" onclick="$('#i-file3').click();"  placeholder="修改稿件">
-              <input type="file" name="file" id="i-file3" accept=".xls, .xlsx" onchange="$('#location3').val($('#i-file3').val());" style="display: none">
-               </div></td>
-               <td><div class="input-group">
-               <input id="location4" class="form-control" onclick="$('#i-file4').click();"  placeholder="修改附件">
-              <input type="file" name="file" id="i-file4" accept=".xls, .xlsx" onchange="$('#location4').val($('#i-file4').val());" style="display: none">
-               </div></td>
-            <td><input type="submit" class="form-control btn btn-success btn-sm" style="width:46px;height: 30px;"></td>
-            <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">删除</button></td>
+            <td>{:date('Y-m-d H:i:s',$vo['create_time'])}投</td>
+            <td>
+              <a href="__ROOT__{$vo['thumb']}" target="block">查看稿件</a>
+              </td>
+            <td>
+            {if condition="$vo['fthumb'] neq ''"}
+            <a href="__ROOT__{$vo['fthumb']}" target="block">查看附件</a>
+            {else /}
+            无附件
+            {/if}
+            </td>
+            
+            <td><a href="javascript:void(0);" class="btn btn-danger btn-sm del" did="{$vo['id']}" >删除</a></td>
           </tr>
+          {/volist}
         </tbody>
       </table>
     </div>
@@ -256,25 +250,26 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="" aria-expanded="true">
-      <h4 class="panel-title">未通过稿件&nbsp;&nbsp;<span class="badge badge-danger">3</h4>
+      <h4 class="panel-title">未通过稿件&nbsp;&nbsp;<span class="badge badge-danger">{$num_npass}</span></h4>
     </a>
     </div>
     <div id="collapseThree" class="panel-collapse collapse in" aria-expanded="true" style="">
       <table class="table">
         <tbody>
+        {volist name="npass" id="vo"}
           <tr>
-            <td>标题3333333</td>
+            <td>{$vo['title']}</td>
             <td><span class="badge badge-danger">未通过</span></td>
-            <td>所属类型</td>
+            <td>{:date('Y-m-d H:i:s',$vo['update_time'])}审</td>
             <td>
     <!-- 审改意见 -->
             <!-- Button trigger modal -->
-              <a data-toggle="modal" data-target="#myModal3">
+              <a data-toggle="modal" data-target="#myModal1{$vo['id']}">
                 审改意见
               </a>
 
               <!-- Modal -->
-              <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal fade" id="myModal1{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -282,7 +277,7 @@
                       <h4 class="modal-title" id="myModalLabel">审改意见</h4>
                     </div>
                     <div class="modal-body">
-                      这里是审改意见
+                      {$vo['position']}
                     </div>
                   </div>
                 </div>
@@ -293,13 +288,13 @@
               <td>
             <!-- 专家联系方式 -->
               <!-- Button trigger modal -->
-              <a data-toggle="modal" data-target="#myModal4">
+              <a data-toggle="modal" data-target="#myModal2{$vo['id']}">
               <!-- data-target的值由#myModal+变量id组成 -->
                 审稿专家联系方式
               </a>
   
               <!-- Modal -->
-              <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal fade" id="myModal2{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <!-- div的id由myModal+变量id组成 -->
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -308,19 +303,20 @@
                       <h4 class="modal-title" id="myModalLabel"> 审稿专家联系方式</h4>
                     </div>
                     <div class="modal-body">
-                      姓名：李斯<br>
-                      邮箱：123@qq.com<br>
-                      tel:18877779999
+                      姓名：{$vo['name']}<br>
+                      邮箱：{$vo['email']}<br>
+                      tel:{$vo['tel']}
                     </div>
                   </div>
                 </div>
               </div>
               <!-- 专家联系方式end -->
             </td>
-            <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
+            <td><a href="javascript:void(0);" class="btn btn-danger btn-sm del" did="{$vo['id']}" data-toggle="modal" data-target="#myModal">
                 删除
-              </button></td>
+              </a></td>
           </tr>
+          {/volist}
         </tbody>
       </table>
     </div>
@@ -336,7 +332,7 @@
   </section>
 
 
-  <section id="message" name="message">
+  <section id="message" name="message" >
     <div id="footerwrap">
       <div class="container">
       <div class="row ">
@@ -344,42 +340,46 @@
         <div class="col-lg-8">
           <h3 class="centered">修改信息</h3>
           <div class="signin-form">
-          <form action="">
+          <form action="{:url('edit')}" method="post">
+          <input type="hidden" name="id" value="{$user['id']}">
                   <div class="form-col">
                     <div class="form-group">
-                        <label for="signin_form">用户名</label>
-                        <input type="text" class="form-control" id="signin_form" placeholder="请输入用户名">
+                        <label for="uname">用户名</label>
+                        <input type="text" class="form-control" id="uname" name="uname" value="{$user['uname']}" pattern="^[-_a-zA-Z0-9]{4,16}$" 
+                        oninvalid="setCustomValidity('请输入4-16位字母、数字、下划线');"
+                        required>
                     </div><!--/.form-group -->
                   </div><!--/.form-col -->
                   <div class="form-col1">
                     <div class="form-group">
-                      <label for="signin_form">真实姓名</label>
-                        <input type="text" class="form-control" id="signin_form" placeholder="请输入真实姓名">
+                      <label for="name">真实姓名</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{$user['name']}" required pattern="^[\u0391-\uFFE5]\w{2,10}+$"
+                        oninvalid="setCustomValidity('请输入真实姓名');">
                     </div><!--/.form-group -->
                   </div><!--/.form-col1 -->
                 <div class="form-col">
                   <div class="form-group">
-                    <label for="signin_form">密码</label>
-                      <input type="password" class="form-control" id="signin_form" placeholder="请输入密码">
+                    <label for="pwd">新密码</label>
+                      <input type="password" class="form-control" id="pwd" name="pwd" placeholder="请输入新密码" required minlength="6">
                   </div><!--/.form-group -->
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
-                    <label for="signin_form"> 确认密码</label>
-                      <input type="password" class="form-control" id="signin_form" placeholder="请确认密码">
+                    <label for="rpwd"> 确认密码</label>
+                      <input type="password" class="form-control" id="rpwd" placeholder="请确认密码"  required>
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
 
                 <div class="form-col">
                   <div class="form-group">
-                    <label for="signin_form">性别</label>
-                    <div class="form-control" id="signin_form" style="border:0;">
+                    <label for="sex">性别</label>
+                    <div class="form-control" id="sex" style="border:0;">
                       <div class="radio icheck-primary" style="float: left;">
-                    <input type="radio" id="men" name="sex" checked="">
+                    <input type="radio" id="men" name="men" {if condition="$user['sex'] eq 1"}checked="checked"{/if}>
                     <label for="men">男</label>
                     </div>
                       <div class="radio icheck-primary" style="float: left;margin-left: 20px;">
-                    <input type="radio"  id="women" name="sex">
+                    <input type="radio"  id="women" name="women" {if condition="$user['sex'] eq 2"}checked="checked"{/if}>
                     <label for="women">女</label>
                     </div>
                     </div>
@@ -387,75 +387,90 @@
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
-                    <label for="signin_form">年龄</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入年龄">
+                    <label for="age">年龄</label>
+                      <input type="text" class="form-control" id="age" name="age" value="{$user['age']}" required pattern="^[0-9]{1-3}$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
 
                 <div class="form-col">
                   <div class="form-group">
-                    <label for="signin_form">Email</label>
-                      <input type="email" class="form-control" id="signin_form" placeholder="请输入邮箱">
+                    <label for="email">Email</label>
+                      <input type="email" class="form-control" id="email" name="email" value="{$user['email']}">
                   </div><!--/.form-group -->
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
-                    <label for="signin_form"> 电话</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入电话号">
+                    <label for="tel"> 电话</label>
+                      <input type="tel" class="form-control" id="tel" name="tel" value="{$user['tel']}" required pattern="^13(\d{9})$|^15(\d{9})$|^189(\d{8})$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
 
                 <div class="form-col">
                   <div class="form-group">
-                    <label for="signin_form">身份证号</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入身份证号">
+                    <label for="idnum">身份证号</label>
+                      <input type="text" class="form-control" id="idnum" name="idnum" value="{$user['idnum']}" required pattern="(^\d{18}$)|(^\d{17}(\d|X|x)$)" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
-                    <label for="signin_form">籍贯</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入籍贯">
+                    <label for="address">籍贯</label>
+                      <input type="text" class="form-control" id="address" name="address" value="{$user['address']}" required pattern="^[a-zA-Z0-9\u4E00-\u9FA5]+$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
 
                 <div class="form-col">
                   <div class="form-group">
-                    <label for="signin_form">现住址</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入现住址">
+                    <label for="nowaddress">现住址</label>
+                      <input type="text" class="form-control" id="nowaddress" name="nowaddress" value="{$user['nowaddress']}" required pattern="^[a-zA-Z0-9\u4E00-\u9FA5]+$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
-                    <label for="signin_form">学历</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入学历">
+                    <label for="edu">学历</label>
+                      <input type="text" class="form-control" id="edu" name="edu" value="{$user['edu']}" required pattern="^[a-zA-Z\u4E00-\u9FA5]+$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
 
                 <div class="form-col">
                   <div class="form-group">
-                    <label for="signin_form">专业</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入专业">
+                    <label for="profession">专业</label>
+                      <input type="text" class="form-control" id="profession" name="profession" value="{$user['profession']}" required pattern="^[a-zA-Z\u4E00-\u9FA5]+$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
-                    <label for="signin_form">工作单位</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入工作单位">
+                    <label for="company">工作单位</label>
+                      <input type="text" class="form-control" id="company" name="company" value="{$user['company']}" required pattern="^[a-zA-Z0-9\u4E00-\u9FA5]+$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
 
                 <div class="form-col">
                   <div class="form-group">
-                    <label for="signin_form">职称</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入职称">
+                    <label for="position">职称</label>
+                      <input type="text" class="form-control" id="position" name="position" value="{$user['position']}" required pattern="^[a-zA-Z\u4E00-\u9FA5]+$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
-                    <label for="signin_form">研究方向</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入研究方向">
+                    <label for="direction">研究方向</label>
+                      <input type="text" class="form-control" id="direction" name="direction" value="{$user['direction']}" required pattern="^[a-zA-Z\u4E00-\u9FA5]+$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
+
+                <div class="form-col">
+                  <div class="form-group">
+                    <label for="question">安全问题</label>
+                      <input type="text" class="form-control" id="question" name="question" value="{$user['question']}" required >
+                  </div><!--/.form-group -->
+                </div><!--/.form-group -->
+                <div class="form-col1">
+                  <div class="form-group">
+                    <label for="answer">答案</label>
+                      <input type="text" class="form-control" id="answer" name="answer" value="{$user['answer']}" required >
+                  </div><!--/.form-group -->
+                </div><!--/.form-col1 -->
+
+                
                 <input type="submit" class="form-control" style="width: 50%;background-color: #43CD80;margin:0 auto;" value="保存修改">
                 </form><!--/form -->
           </div>
@@ -471,25 +486,80 @@
         &copy; 重庆工商大学派斯学院 <strong>学报</strong>作者在线投稿系统
       </p>
       <div class="credits">
-        <!--
-          You are NOT allowed to delete the credit link to TemplateMag with free version.
-          You can delete the credit link only if you bought the pro version.
-          Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/pratt-app-landing-page-template/
-          Licensing information: https://templatemag.com/license/
-        -->
         Chongqing Institute of Technology<a href="#">Author Online Submission System</a>
       </div>
     </div>
   </div>
 
   <!-- JavaScript Libraries -->
-  <script src="__INDEX__/author/lib/jquery/jquery.min.js"></script>
   <script src="__INDEX__/author/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="__INDEX__/author/lib/jquery/jquery.min.js"></script>
+  
   <script src="__INDEX__/author/lib/php-mail-form/validate.js"></script>
   <script src="__INDEX__/author/lib/easing/easing.min.js"></script>
 
   <!-- Template Main Javascript File -->
   <script src="__INDEX__/author/js/main.js"></script>
+  <script src="__INDEX__/js/bootstrap.js"></script>
+    <script src="__INDEX__/js/jquery.js"></script>
+  <script type="text/javascript" src="__INDEX__/layer/layer.js"></script>
+    
+<script>
 
+
+
+    $(function(){
+
+      //密码验证
+    $('.submit').click(function(){
+
+      if($('#rpwd').val()!=$('#pwd').val()){
+          alert("两次密码不一致");
+          return false;
+      }
+      
+    });
+    
+    $('#rpwd').blur(function(){
+      if($('#rpwd').val()!=$('#pwd').val()){
+          alert("两次密码不一致");
+      }
+    });
+     
+        //异步删除
+        $('.del').on('click',function(){
+            var id=$(this).attr('did');
+            //询问框
+            layer.confirm('确认删除？', {
+                title:'提示',
+                btn: ['确认','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url:"{:url('del')}",
+                    type:"post",
+                    data:{id:id},
+                    datatype:"json",
+                    success:function(data){
+                        if(data.code==1){
+                            layer.msg(data.msg,{icon:1,time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }else if(data.code==2){
+                            layer.msg(data.msg,{
+                            icon:2,
+                            time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+        }); 
+
+    });
+</script>
 </body>
 </html>

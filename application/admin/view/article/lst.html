@@ -17,6 +17,7 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link href="__ADMIN__/dataTable/css/dataTables.bootstrap.css" rel="stylesheet">
 
 </head>
 <body>
@@ -48,15 +49,51 @@
                     
 <button type="button" tooltip="添加文章" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:url('add')}'"> <i class="fa fa-plus"></i> Add
 </button>
+
+<div class="btn-group" style="width: 200px;height: 30px;">
+<form action="{:url('search')}" method="post">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="输入标题或作者关键字" style="width: 210px;bottom: 4px;">
+        <span class="input-group-btn" >
+            <button type="submit" class="btn btn-azure" style="height: 30px;padding-top: 2px;bottom: 4px;" >搜索</button>
+        </span>
+    </div>
+     </form>
+</div>
+
+<div class="btn-group" style="width: 500px;height: 30px;margin-left: 100px;">
+<form action="{:url('search1')}" method="post">
+<div class="btn-group" style="width: 200px;height: 30px;">
+    <div class="input-group">
+        <select  name="jid" class="form-control"  style="width: 210px;bottom: 4px;">
+        <option value="0">请选择期刊</option>
+        {volist name="journal" id="vo"}
+        <option value="{$vo['id']}">{$vo['title']}</option>
+        {/volist}
+        </select>
+    </div>
+</div>
+<div class="btn-group" style="width: 200px;height: 30px;margin-left: 10px;">
+    <div class="input-group">
+        <input type="text" name="qishu" class="form-control" placeholder="输入期次（可选）" style="width: 210px;bottom: 4px;">
+        <span class="input-group-btn" >
+            <button type="submit" class="btn btn-azure" style="height: 30px;padding-top: 2px;margin-left: 10px;bottom: 4px;" >搜索</button>
+        </span>
+    </div>
+</div>
+
+</form>
+</div>
+
 <div class="row">
     <div class="col-lg-12 col-sm-12 col-xs-12">
         <div class="widget">
             <div class="widget-body">
                 <div class="flip-scroll">
-                    <table class="table table-bordered table-hover">
-                        <thead class="">
+                    <table class="table table-bordered table-hover table-striped" id="searchable">
+                    <thead class="bordered-darkorange">
                             <tr>
-                                <th class="text-center">ID</th>
+                                <th class="text-center">ID&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                 <th class="text-center">标题</th>
                                 <th class="text-center">作者</th>
                                 <th class="text-center">编辑</th>
@@ -64,7 +101,7 @@
                                 <th class="text-center">文献标识码</th>
                                 <th class="text-center">文章类型</th>
                                 <th class="text-center">期刊</th>
-                                <th class="text-center">期数</th>
+                                <th class="text-center">期数&nbsp;&nbsp;</th>
                                 <th class="text-center">浏览量</th>
                                 <th class="text-center">下载量</th>
                                 <th class="text-center">操作</th>
@@ -74,9 +111,69 @@
                         {volist name="article" id="vo"}
                             <tr>
                                 <td align="center">{$vo['id']}</td>
-                                <td align="center">{$vo['atitle']}</td>
-                                <td align="center">{$vo['aid']}</td>
-                                <td align="center">{$vo['eid']}</td>
+            <td> 
+            <!-- 点击标题查看摘要 -->
+                <!-- Button trigger modal -->
+              <a data-toggle="modal" data-target="#myModal2{$vo['id']}" style="cursor: pointer;">
+                {$vo['atitle']}
+              </a>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="myModal2{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">摘要</h4>
+                    </div>
+                    <div class="modal-body">
+                      {$vo['summary']}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>  
+
+                                
+                    <td align="center">
+                    <!-- 作者卡片 -->
+              <!-- Button trigger modal -->
+              <a data-toggle="modal" data-target="#myModal{$vo['id']}" style="cursor: pointer;">
+              <!-- data-target的值由#myModal+变量id组成 -->
+                {$vo['author']}
+              </a>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="myModal{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!-- div的id由myModal+变量id组成 -->
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"> 作者信息</h4>
+                    </div>
+                    <div class="modal-body">
+                      姓名：{$vo['author']}<br>
+                      性别：{$vo['sex']}<br>
+                      年龄：{$vo['age']}<br>
+                      身份证号：{$vo['idnum']}<br>
+                      现住址：{$vo['nowaddress']}<br>
+                      学历：{$vo['edu']}<br>
+                      专业：{$vo['profession']}<br>
+                      工作单位：{$vo['company']}<br>
+                      职称：{$vo['position']}<br>
+                      研究方向：{$vo['direction']}<br>
+                      邮箱：{$vo['email']}<br>
+                      tel:{$vo['tel']}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 作者卡片end -->
+              </td>
+
+
+                                <td align="center">{$vo['editor']}</td>
                                 <td align="center">{$vo['aclassid']}</td>
                                 <td align="center">{$vo['idcode']}</td>
                                 <td align="center">{$vo['acatename']}</td>
@@ -122,6 +219,19 @@
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
     <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+
+    <!--dataTable-->
+    <script src="__ADMIN__/dataTable/js/jquery.dataTables.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/ZeroClipboard.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.tableTools.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.bootstrap.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/datatables-init.js"></script>
+    <script>
+        InitiateSimpleDataTable.init();
+        InitiateEditableDataTable.init();
+        InitiateExpandableDataTable.init();
+        InitiateSearchableDataTable.init();
+    </script>
     
 <script>
     $(function(){

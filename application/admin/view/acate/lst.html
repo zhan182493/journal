@@ -18,6 +18,8 @@
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
 
+    <link href="__ADMIN__/dataTable/css/dataTables.bootstrap.css" rel="stylesheet">
+
 </head>
 <body>
     <!-- 头部 -->
@@ -55,8 +57,8 @@
         <div class="widget">
             <div class="widget-body">
                 <div class="flip-scroll">
-                    <table class="table table-bordered table-hover">
-                        <thead>
+                    <table class="table table-bordered table-hover table-striped" id="searchable">
+                    <thead class="bordered-darkorange">
                             <tr>
                                 <th class="text-center">ID</th>
                                 <th class="text-center">类型名称</th>
@@ -112,6 +114,19 @@
     <script src="__ADMIN__/style/beyond.js"></script>
     <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
     <!-- <script type="text/javascript" src="__ADMIN__/layui/layui.js"></script> -->
+
+    <!--dataTable-->
+    <script src="__ADMIN__/dataTable/js/jquery.dataTables.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/ZeroClipboard.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.tableTools.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.bootstrap.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/datatables-init.js"></script>
+    <script>
+        InitiateSimpleDataTable.init();
+        InitiateEditableDataTable.init();
+        InitiateExpandableDataTable.init();
+        InitiateSearchableDataTable.init();
+    </script>
 <script>
     $(function(){
         //异步删除

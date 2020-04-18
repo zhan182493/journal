@@ -4,46 +4,39 @@ use think\Controller;
 
 class Common extends Controller
 {
+	function _initialize(){
+		$this->linklst();
+		$this->noticelst();
+	}
+	
 	/*首页导航栏页面*/
 	/*列表页*/
 	public function news(){
+		$news=db('news')->select();
+		$this->assign('artlst',$news);
 		$this->assign('title','学报动态');
 		return view('artlist');
 	}
 
 	public function notice(){
+		$notice=db('notice')->select();
+		$this->assign('artlst',$notice);
 		$this->assign('title','学报公告');
 		return view('artlist');
 	}
-
-	public function helps(){
-		$this->assign('title','投稿指南');
-		return view('artlist');
-	}
 	
-	public function history(){
-		$this->assign('title','过刊浏览');
-		return view('joulist');
-	}
-
-	public function artlist2(){//当期文章目录
-		return view('artlist2');
-	}
-
-	public function datelist(){//当年期数目录
-		return view('datelist');
-	}
+	
 	/*列表页end*/
-	/*单页*/
-	public function desc(){
-		$this->assign('title','学报简介');
-		return view('page');
+	
+	public function linklst(){
+		$linklst=db('link')->select();
+    	$this->assign('linklst',$linklst);
 	}
 
-	public function call(){
-		$this->assign('title','联系我们');
-		return view('page');
+	public function noticelst(){
+		$notice=db('notice')->select();
+		$this->assign('notice',$notice);
+
 	}
-	/*单页end*/
 
 }

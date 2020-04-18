@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- meta data -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!--font-family-->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
+        
+        <!-- title of site -->
+        <title>安全验证</title>
+
+        <!-- For favicon png -->
+		<link rel="shortcut icon" type="image/icon" href=" __ROOT__/favicon.ico"/>
+        <!--font-awesome.min.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/font-awesome.min.css">
+		<!--animate.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/animate.css">
+        <!--bootstrap.min.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/bootstrap.min.css">
+		<!-- bootsnav -->
+		<link rel="stylesheet" href=" __INDEX__/login/css/bootsnav.css" >
+        <!--style.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/style.css">
+        <!--responsive.css-->
+        <link rel="stylesheet" href=" __INDEX__/login/css/responsive.css">
+        
+        <script src=" __INDEX__/login/js/jquery.js"></script>
+        <!--modernizr.min.js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+		<!--bootstrap.min.js-->
+        <script src=" __INDEX__/login/js/bootstrap.min.js"></script>
+		<!-- bootsnav js -->
+		<script src=" __INDEX__/login/js/bootsnav.js"></script>
+		<!-- jquery.sticky.js -->
+		<script src=" __INDEX__/login/js/jquery.sticky.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!--Custom JS-->
+        <script src=" __INDEX__/login/js/custom.js"></script>
+        <!-- captcha -->
+    	<script src=" __CAPTCHA__/captcha.js"></script>
+
+	<style>
+		.form-group{
+			text-align: center;
+		}
+		.form-control{
+			width: 300px;
+			margin-left: 170px;
+		}
+		.signin-form input[type="text"], .signin-form input[type="email"], .signin-form input[type="password"]{
+			text-transform: none;
+			
+		}	
+	</style>
+    </head>
+	
+	<body>
+		
+		<!-- signin end -->
+		<section class="signin">
+			<div class="container">
+
+				<div class="sign-content">
+					<h2>安全验证</h2>
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="signin-form">
+								<form action="{:url('findpwd')}" method="post">
+									<div class="form-group">
+									    <label for="msg">用户名或手机号</label>
+									    <input type="text" name="msg" class="form-control" id="msg" placeholder="请输入用户名或手机号获取问题">
+									    <input type="button" class="huoqu btn signin_btn" value="获取问题" style="width: 300px;margin-left: 20px;height: 50px;">
+									</div><!--/.form-group -->
+									<div class="form-group">
+									    <label for="question">问题</label>
+									    <input type="text" name="question" class="form-control" id="question" value="">
+									</div><!--/.form-group -->
+									<div class="form-group">
+										<label for="answer">答案
+										</label>
+									    <input type="text" name="answer"
+									     class="form-control" id="answer" placeholder="请输入答案" required>
+									</div><!--/.form-group -->
+							</div><!--/.signin-form -->
+						</div><!--/.col -->
+					</div><!--/.row -->
+
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="signin-footer">
+								<input type="submit" class="submit btn signin_btn" value="提交" style="width: 300px;margin-left: 170px;">
+							</div><!--/.signin-footer -->
+						</div><!--/.col-->
+					</div><!--/.row -->
+				</form><!--/form -->
+				</div><!--/.sign-content -->
+
+			</div><!--/.container -->
+
+		</section><!--/.signin -->
+		
+		<!-- signin end -->
+
+		<!--footer copyright start -->
+		<footer class="footer-copyright">
+			<div id="scroll-Top">
+				<i class="fa fa-angle-double-up return-to-top" id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
+			</div><!--/.scroll-Top-->
+
+		</footer><!--/.hm-footer-copyright-->
+		<!--footer copyright  end -->
+
+	<script>
+	$(function(){
+		
+		$(".huoqu").click(function(){
+			var question=$("#question").val();
+			// alert(question);
+			var msg=$("#msg").val();
+			$.ajax({
+				url:"{:url('Login/huoqu')}",
+				type:"post",
+				data:{msg:msg},
+				datatype:"text",
+				success:function(data){
+					if(data.code==1){
+						question=data.msg;
+						$("#question").val(question);
+						$("#question").attr("disabled","true");
+					}else{
+						alert(data.msg);
+					}
+					
+				}
+			});
+		});
+
+		
+
+	});
+	</script>
+
+    </body>
+	
+</html>

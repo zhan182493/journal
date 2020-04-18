@@ -18,6 +18,10 @@
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
 
+    <!--easyform  form validation-->
+    <link href="__EASYFORM__/platform-1.css" rel="stylesheet">
+
+
 </head>
 <body>
     <!-- 头部 -->
@@ -60,15 +64,15 @@
                         <div class="form-group">
                             <label for="uname" class="col-sm-2 control-label no-padding-right">用户名</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="uname" placeholder="请输入用户名" name="uname" required="" type="text">
+                                <input class="form-control" id="uname" placeholder="请输入用户名" name="uname" required="" type="text" easyform="length:4-10;char-normal;real-time;" message="用户名必须为4—10位的字母数字下划线" easytip="disappear:lost-focus;theme:blue;">
                             </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
+                            
                         </div>
 
                         <div class="form-group">
                             <label for="pwd" class="col-sm-2 control-label no-padding-right">密码</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required="" type="password">
+                                <input class="form-control" id="pwd" placeholder="请输入密码" name="pwd" required="" type="password" easyform="length:6-16;real-time;" message="密码至少6位，最高16位" easytip="disappear:lost-focus;theme:blue;">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
@@ -76,7 +80,7 @@
                         <div class="form-group">
                             <label for="rpwd" class="col-sm-2 control-label no-padding-right">确认密码</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="rpwd" placeholder="请确认密码" name="rpwd" required="" type="password">
+                                <input class="form-control" id="rpwd" placeholder="请确认密码" name="rpwd" required="" type="password" easyform="length:6-16;real-time;equal:#pwd;" message="两次密码不一致！" easytip="disappear:lost-focus;theme:blue;">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
@@ -84,15 +88,23 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label no-padding-right">真实姓名</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="name" placeholder="请输入真实姓名" name="name" required="" type="text">
+                                <input class="form-control" id="name" placeholder="请输入真实姓名" name="name" required="" type="text" easyform="length:1-16;real-time;" message="不能为空！" easytip="disappear:lost-focus;theme:blue;">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="tel" class="col-sm-2 control-label no-padding-right">电话</label>
+                            <label for="tel" class="col-sm-2 control-label no-padding-right">手机</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="tel" placeholder="请输入电话" name="tel" required="" type="text">
+                                <input class="form-control" id="tel" placeholder="请输入手机号" name="tel" required="" type="text" easyform="length:11;uint:0;real-time;" message="请正确输入手机号！" easytip="disappear:lost-focus;theme:blue;">
+                            </div>
+                            <p class="help-block col-sm-4 red">* 必填</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label no-padding-right">邮箱</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="email" placeholder="请输入邮箱地址" name="email" required="" type="text" easyform="email;real-time;" message="请正确输入邮箱！" easytip="disappear:lost-focus;theme:blue;">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
@@ -112,8 +124,8 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">提交</button>
-                                <a href="{:url('user/lst')}" type="button" class="btn btn-info">返回</a>
+                                <input type="submit" class="btn btn-success" value="提交" style="float: left;">
+                                <a href="javascript:history.go(-1);" type="button" class="btn btn-info" style="float: left;">返回</a>
                             </div>
                         </div>
 
@@ -131,13 +143,21 @@
         </div>  
     </div>
 
-        <!--Basic Scripts-->
+<!--Basic Scripts-->
     <script src="__ADMIN__/style/jquery_002.js"></script>
     <script src="__ADMIN__/style/bootstrap.js"></script>
     <script src="__ADMIN__/style/jquery.js"></script>
+    <script src="__ADMIN__/jquery/jquery-3.4.1.min.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
+    <!--easyform  form validation-->
+    <script src="__EASYFORM__/easyform.js"></script>
     
+    <script>
+    $(document).ready(function (){
+        $('.form-horizontal').easyform();
+    });
+    </script>
 
 
 </body></html>

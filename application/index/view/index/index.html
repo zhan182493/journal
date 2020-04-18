@@ -58,45 +58,19 @@
 			<!-- 滚动公告 -->
 				<div class="notice block">
 					<div class="title xbgg">
-						<div class="title_1">学报公告 <a href="#" class="more">查看更多&gt;&gt;</a></div>
+						<div class="title_1">学报动态 <a href="{:url('artlist/news')}" class="more">查看更多&gt;&gt;</a></div>
 					</div>
 					<div class="content">
 						<ul style="height: 148px;">
 			<marquee direction="up" height="148" width="100%" scrollamount="1" scrolldelay="100" onmouseout="this.start()" onmouseover="this.stop()">
-				<li><i>1</i>
-				<a href="">
-					《上海大学学报（自然科学版）》第六届编辑委员会成立大会顺利召开
+			{volist name="news" id="vo"}
+				<li>
+				<a href="{:url('page/article',array('id'=>$vo['id'],'title'=>'学报动态'))}">
+					{$vo['title']}
 				</a>
-				 <span class="date-time">(2019-08-22)</span>
+				 <span class="date-time">({:date('Y-m-d',$vo['create_time'])})</span>
 				</li>
-
-				<li><i>2</i>
-				<a href="../column/item546.shtml">
-					《上海大学学报（自然科学版）》已正式加入OSID开放科学计划
-				</a>
-				 <span class="date-time">(2019-07-05)</span>
-				</li>
-
-				<li><i>3</i>
-				<a href="../column/item59.shtml">
-					《上海大学学报（自然科学版）》第三届优秀审稿专家评选结果揭晓
-				</a>
-				 <span class="date-time">(2018-12-18)</span>
-				</li>
-
-				<li><i>4</i>
-				<a href="../column/item58.shtml">
-					喜讯！《上海大学学报（自然科学版）》被EBSCO学术数据库收录
-				</a>
-				 <span class="date-time">(2018-06-22)</span>
-				</li>
-
-				<li><i>5</i>
-				<a href="../column/item60.shtml">
-					《上海大学学报(自然科学版)》入选2017年全国“百强科技期刊”
-				</a>
-				 <span class="date-time">(2018-01-23)</span>
-				</li>
+			{/volist}
 			</marquee>
 		</ul>
 					</div>
@@ -106,55 +80,36 @@
 					<div class="title zxqlb" >
 						<div class="title_1">最新期列表 
 						
-						<a href="#" class="more">查看更多&gt;&gt;</a></div>
+						<a href="{:url('joulist/history')}" class="more">查看更多&gt;&gt;</a></div>
 					</div>
 					<div class="content">
 						<div class="jtitle">
-							<div class="njq">2019年 第25卷 第6期 &nbsp;&nbsp; 刊出日期：2019-12-30</div>
+							<div class="njq">{$year}年 第{$juan}卷 第{$qishu}期 &nbsp;&nbsp; 刊出日期：{$date}</div>
 						</div>
 <form id="AbstractList" action="" method=post target=_blank>
-	<div id='art17047' class=noselectrow>
+{volist name="artlst" id="vo"}
+	<div  class=noselectrow>
 		<div class="wenzhang">
 		<dl>							
 			<div class="dqml_qbwz">
 				<dd>
-					<a target="_blank" href="{:url('article/article')}" class="biaoti">资本市场中公众企业信息披露的Nash均衡</a>						
-				</dd>
-				<dd class="zuozhe">马嘉萌, 郭苏稼, 李远勤</dd>
-				<dd class="zhaiyao">
+					<a target="_blank" href="{:url('article/article',array('id'=>$vo['id']))}" class="biaoti">{$vo['atitle']}</a>	( <font color="red">{$vo['click']}</font> )&nbsp;&nbsp;					
+				{$vo['name']}
+				<div style="float: right;">
 					<img src="http://www.journal.shu.edu.cn/images/1007-2861/abstract2.png" width="16" height="16"> 
-					<a class="txt_zhaiyao1" href="javascript:void(0)" onclick="if (document.getElementById('Abstract17065').style.display=='block') document.getElementById('Abstract17065').style.display='none'; else document.getElementById('Abstract17065').style.display='block'">摘要</a> 
-					( <font color="red">5</font> )&nbsp;&nbsp;
+					<a class="txt_zhaiyao" href="javascript:void(0);" >摘要</a> 
 					<img src="http://www.journal.shu.edu.cn/images/1007-2861/pdf.png" width="16" height="16">
-					<a class="txt_zhaiyao1" href="#1" onclick="lsdy1('PDF','17065','http://www.journal.shu.edu.cn','2019','1221');return false;">PDF</a> (664KB)
-					(<font color="red">2</font>)&nbsp;&nbsp; 											
+					<a class="download" href="{$vo['thumb']}"  target="_blank">下载</a>
+					(<font color="red">{$vo['download']}</font>)&nbsp;&nbsp; 
+					</div>										
 				</dd>
-					<div id="Abstract17065" class="white_content zhaiyao">旨在探讨信息披露如何约束上市公司，为解释以前文献的争议提供思路.通过建立不同类型企业在融资过程中的博弈模型，考虑专业投资者的比例，对该模型中纯战略Nash均衡和混合战略Nash均衡展开分析，以揭示信息披露如何在保障资本市场正常运作中不可或缺.研究表明，懂得依据公司质量进行投资的专业投资者比例越小，强制信息披露带来的社会总收益增加越大；特别地，当专业投资者小于一定比例时，强制信息披露是维持市场稳定的必要机制，能有效避免市场的失灵.强制信息披露带来的社会总收益增加在以下情况中更大：投资回报率差异显著，投资规模较大，融资成本较高，市场对于不披露信息惩罚较大.</div>
+
+					<div id="summary{$vo['id']}" class="white_content zhaiyao">{$vo['summary']}</div>
 			</div>
 		</dl>
 		</div>
 	</div>
-	<div class=noselectrow>
-		<div class="wenzhang">
-		<dl>							
-			<div class="dqml_qbwz">
-				<dd>
-					<a target="_blank" href="http://www.journal.shu.edu.cn/CN/10.12066/j.issn.1007-2861.2117" class="biaoti">资本市场中公众企业信息披露的Nash均衡</a>						
-				</dd>
-				<dd class="zuozhe">马嘉萌, 郭苏稼, 李远勤</dd>
-				<dd class="zhaiyao">
-					<img src="http://www.journal.shu.edu.cn/images/1007-2861/abstract2.png" width="16" height="16"> 
-					<a class="txt_zhaiyao1" href="javascript:void(0)" onclick="if (document.getElementById('Abstract17065').style.display=='block') document.getElementById('Abstract17065').style.display='none'; else document.getElementById('Abstract17065').style.display='block'">摘要</a> 
-					( <font color="red">5</font> )&nbsp;&nbsp;
-					<img src="http://www.journal.shu.edu.cn/images/1007-2861/pdf.png" width="16" height="16">
-					<a class="txt_zhaiyao1" href="#1" onclick="lsdy1('PDF','17065','http://www.journal.shu.edu.cn','2019','1221');return false;">PDF</a> (664KB)
-					(<font color="red">2</font>)&nbsp;&nbsp; 											
-				</dd>
-					<div id="Abstract17065" class="white_content zhaiyao">旨在探讨信息披露如何约束上市公司，为解释以前文献的争议提供思路.通过建立不同类型企业在融资过程中的博弈模型，考虑专业投资者的比例，对该模型中纯战略Nash均衡和混合战略Nash均衡展开分析，以揭示信息披露如何在保障资本市场正常运作中不可或缺.研究表明，懂得依据公司质量进行投资的专业投资者比例越小，强制信息披露带来的社会总收益增加越大；特别地，当专业投资者小于一定比例时，强制信息披露是维持市场稳定的必要机制，能有效避免市场的失灵.强制信息披露带来的社会总收益增加在以下情况中更大：投资回报率差异显著，投资规模较大，融资成本较高，市场对于不披露信息惩罚较大.</div>
-			</div>
-		</dl>
-		</div>
-	</div>
+	{/volist}
 </form>
 					</div>
 				</div>
@@ -171,5 +126,22 @@
 	{include file="public/foot" /}
 <!-- foot结束 -->
 
+<script>
+	$(function(){
+
+
+		$(".txt_zhaiyao").click(function(){
+			var id="#"+$(this).parent().parent().next('.zhaiyao').attr('id');
+
+			if ($(id).css('display')=='block') {
+				$(id).css('display','none'); 
+			}else{
+				$(id).css('display','block');
+			} 
+		});
+
+
+	});
+</script>
 </body>
 </html>

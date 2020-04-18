@@ -17,6 +17,8 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+
+    <link href="__ADMIN__/dataTable/css/dataTables.bootstrap.css" rel="stylesheet">
 </head>
 <body>
     <!-- 头部 -->
@@ -39,7 +41,7 @@
                 </li>
                 <li class="active"><a href="{:url('lst')}">期刊列表</a></li>
                 </li>
-                <li class="active">{$jname}第{$qishu}期文章列表</li>
+                <li class="active">{$jname}第{$juan}卷第{$qishu}期文章列表</li>
             </ul>
             </div>
                 <!-- /Page Breadcrumb -->
@@ -47,9 +49,25 @@
                 <!-- Page Body -->
                 <div class="page-body">
                     
-                <div class="btn-group" style="float: left;">
-<a class="btn btn-sm btn-azure btn-addon" href="{:url('article/add',array('qishu'=>$qishu,'jname'=>$jname))}" tooltip="创建期刊"><i class="fa fa-plus"></i>添加文章</a>
+<div class="btn-group">
+   <button type="button" class="btn btn-sm btn-azure btn-addon" data-toggle="dropdown">第{$qishu}期<span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu" role="menu" style="min-width: 71px;">
+    {volist name="qishulst" id="vo"}
+    <form action="{:url('artlst')}" method="post" id="roleform">
+    <input type="hidden" name="qishu" value="{$vo['qishu']}">
+    <input type="hidden" name="jname" value="{$jname}">
+    <input type="hidden" name="juan" value="{$juan}">
+    <input type="hidden" name="jid" value="{$jid}">
+    <li><span class="val" hidden>{$vo['qishu']}</span>
+    <input class="btn btn-block btn-azure qishu" type="submit" value="第{$vo['qishu']}期">
+    </li></form>
+    {/volist} 
+   </ul>
 </div>
+
+    <button type="button" tooltip="添加文章" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:url('article/add',array('qishu'=>$qishu,'jname'=>$jname,'juan'=>$juan))}'" style="float: right;"> <i class="fa fa-plus"></i>添加文章
+    </button>
 
 
 
@@ -58,8 +76,9 @@
         <div class="widget">
             <div class="widget-body">
                 <div class="flip-scroll">
-                    <table class="table table-bordered table-hover">
-                        <thead>
+                    <table class="table table-bordered table-hover table-striped" id="searchable">
+                    <thead class="bordered-darkorange">
+
                         <tr>
                             <th class="text-center">ID</th>
                             <th class="text-center">标题</th>
@@ -70,11 +89,12 @@
                             <th class="text-center">下载量</th>
                             <th class="text-center">操作</th>
                         </tr>
-                        {volist name="qishulst" id="vo"}
-                            <tr>
+                        </thead>
+                        {volist name="artlst" id="vo"}
+                            <tr class="text-center">
                                 <td>{$vo['id']}</td>
                                 <td>{$vo['atitle']}</td>
-                                <td>{$vo['eid']}</td>
+                                <td>{$vo['editor']}</td>
                                 <td>{$vo['aid']}</td>
                                 <td>{$vo['acateid']}</td>
                                 <td>{$vo['click']}</td>
@@ -92,14 +112,17 @@
                                 </td>
                             </tr>
                             {/volist}
-                        </thead>
+                        
                     </table>
                 </div>
 
             </div>
             <div class="btn-group" style="float: left;">
-<a class="btn btn-sm btn-success" href="{:url('')}"><i class="fa   fa-eject"></i>发布</a>
-</div>
+<a class="btn btn-sm btn-success fabu" {if condition="$fabu eq 1"}style="display:none"{/if} href="javascript:void(0);"><i class="fa fa-eject"></i>发布</a>
+<a class="btn btn-sm btn-danger qxfb" {if condition="$fabu eq 0"}style="display:none"{/if}  href="javascript:void(0);">取消发布</a>
+
+<a href="javascript:history.go(-1);" type="button" class="btn btn-sm btn-info"><i class="fa  fa-arrow-left"></i>返回</a>
+</div> 
         </div>
     </div>
 </div>
@@ -122,6 +145,20 @@
     <script src="__ADMIN__/style/beyond.js"></script>
     <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
     <!-- <script type="text/javascript" src="__ADMIN__/layui/layui.js"></script> -->
+
+
+    <!--dataTable-->
+    <script src="__ADMIN__/dataTable/js/jquery.dataTables.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/ZeroClipboard.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.tableTools.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/dataTables.bootstrap.min.js"></script>
+    <script src="__ADMIN__/dataTable/js/datatables-init.js"></script>
+    <script>
+        InitiateSimpleDataTable.init();
+        InitiateEditableDataTable.init();
+        InitiateExpandableDataTable.init();
+        InitiateSearchableDataTable.init();
+    </script>
 <script>
     $(function(){
         //异步删除
@@ -156,6 +193,91 @@
                 layer.close(index);
             });
         }); 
+
+        //发布
+        $(".fabu").on('click',function(){
+            var arr=[];
+            // var tr=$('table').find('tr').neq(0);
+            $('table tr').each(function(){
+                var res=Number($(this).find('td').eq(0).text());
+                if( res != ''){
+                  arr.push(res);
+                }
+            });
+            var ids=JSON.stringify(arr);
+            // console.log(ids);return;
+
+            //询问框
+            layer.confirm('确认发布？', {
+                title:'提示',
+                btn: ['确认','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url:"{:url('journal/qishufabu')}",
+                    type:"post",
+                    data:{ids:ids},
+                    datatype:"json",
+                    success:function(data){
+                        if(data.code==1){
+                            layer.msg(data.msg,{icon:1,time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:2,time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+            
+        });
+
+        //取消发布
+        $(".qxfb").on('click',function(){
+            var arr=[];
+            // var tr=$('table').find('tr').neq(0);
+            $('table tr').each(function(){
+                var res=Number($(this).find('td').eq(0).text());
+                if( res != ''){
+                  arr.push(res);
+                }
+            });
+            var ids=JSON.stringify(arr);
+            // console.log(ids);return;
+
+            //询问框
+            layer.confirm('是否取消发布？', {
+                title:'提示',
+                btn: ['确认','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url:"{:url('journal/quxiaofabu')}",
+                    type:"post",
+                    data:{ids:ids},
+                    datatype:"json",
+                    success:function(data){
+                        if(data.code==1){
+                            layer.msg(data.msg,{icon:1,time:800,},
+                            function(){
+                                location.reload();
+                            });
+                        }else{
+                            layer.msg(data.msg,{icon:2,time:800,},
+                            function(){
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+            
+        });
+
 
     });
 </script>

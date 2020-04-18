@@ -48,6 +48,11 @@
 .panel-default>.panel-heading a:hover{
   color: #3bc492;
 }
+
+.signin-form input[type="text"], .signin-form input[type="email"], .signin-form input[type="password"]{
+  text-transform: none;
+}
+
 </style>
 </head>
 
@@ -81,7 +86,7 @@
       <div class="container">
         <div class="row centered">
           <div class="col-lg-12">
-            <h3>欢迎 <b>专家</b></h3>
+            <h3>欢迎 <b>{$user['name']}</b></h3>
             <br>
           </div>
 
@@ -94,20 +99,20 @@
             <table class="table">
               <tbody>
                 <tr>
-                  <td scope="row">电话：888888</td>
-                  <td scope="row">邮箱：123@qq.com</td>
-                  <td scope="row">审稿类型：自然科学</td>
+                  <td scope="row">电话：{$user['tel']}</td>
+                  <td scope="row">邮箱：{$user['email']}</td>
+                  <td scope="row">审稿类型：{$user['acatename']}</td>
                 </tr>
                 <tr>
                   <tr>
-                  <td scope="row">待审核稿件&nbsp;&nbsp;<span class="badge badge-warning">3</span></td>
-                  <td scope="row">已通过稿件&nbsp;&nbsp;<span class="badge badge-success">4</span></td>
-                  <td scope="row">未通过稿件&nbsp;&nbsp;<span class="badge badge-danger">3</span></td>
+                  <td scope="row">待审核稿件&nbsp;&nbsp;<span class="badge badge-warning">{$num_nshenhe}</span></td>
+                  <td scope="row">已通过稿件&nbsp;&nbsp;<span class="badge badge-success">{$num_pass}</span></td>
+                  <td scope="row">未通过稿件&nbsp;&nbsp;<span class="badge badge-danger">{$num_npass}</span></td>
                 </tr>
                 <tr>
-                  <td><a href="{:url('index/index')}">返回网站主页</a></td>
-                  <td><a href="">注销账号</a></td>
-                  <td>2020/01/10-14:22</td>
+                  
+                  <td><a href="{:url('Login/logout',array('id'=>$user['id']))}">退出并注销账号</a></td>
+                  
                 </tr>
               </tbody>
             </table>
@@ -128,20 +133,18 @@
       <div class="container">
         <div class="row centered">
           <h1>审稿</h1>
-          <form action="">
-            
             <div class="panel-group" id="accordion">
   
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
-      <h4 class="panel-title">待审核稿件&nbsp;&nbsp;<span class="badge badge-success">4</h4>
+      <!-- <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false"> -->
+      <h4 class="panel-title">待审核稿件&nbsp;&nbsp;<span class="badge badge-success">{$num_nshenhe}</h4>
     </a>
     </div>
     <div id="collapseTwo" class="panel-collapse collapse in" aria-expanded="false">
       <table class="table">
         <tbody>
-        <form action="" id="noview">
+        
         <tr>
           <th>投稿状态</th>
           <th>标题</th>
@@ -153,30 +156,43 @@
           <th>审改意见</th>
           <th>操作</th>
         </tr>
+
+        {volist name="nshenhe" id="vo"}
+        
           <tr>
-            <td><span class="badge badge-success">首投</span></td>
-            <td>标题222222222</td>
+            <td>
+            {if condition="$vo['is_repeat'] eq 0"}
+            <span class="badge badge-success">首投</span>
+            {else /}
+            <span class="badge badge-warning">重投</span>
+            {/if}
+            </td>
+            <td>{$vo['title']}</td>
             <td>
             <!-- 作者联系方式 -->
               <!-- Button trigger modal -->
-              <a class="" data-toggle="modal" data-target="#myModal">
-              <!-- data-target的值由#myModal+文章id组成 -->
-                作者1
+              <a class="" data-toggle="modal" data-target="#myModal{$vo['id']}">
+              <!-- data-target的值由#myModal+id组成 -->
+                {$vo['author']}
               </a>
   
               <!-- Modal -->
-              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <!-- div的id由myModal+文章id组成 -->
+              <div class="modal fade" id="myModal{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!-- div的id由myModal+id组成 -->
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel"> 作者1联系方式</h4>
+                      <h4 class="modal-title" id="myModalLabel">{$vo['author']}信息</h4>
                     </div>
                     <div class="modal-body">
-                      姓名：作者1<br>
-                      邮箱：123@qq.com<br>
-                      tel:18877779999
+                      姓名：{$vo['author']}<br>
+                      邮箱：{$vo['email']}<br>
+                      tel:{$vo['tel']}<br>
+                      学历:{$vo['edu']}<br>
+                      专业:{$vo['profession']}<br>
+                      职业:{$vo['position']}<br>
+                      研究方向:{$vo['direction']}<br>
                     </div>
                   </div>
                 </div>
@@ -184,37 +200,44 @@
               <!-- 作者联系方式end -->
             </td>
             <td><span class="badge badge-warning">待审</span></td>
-            <td>
-              <a href="http://www.journal.com/uploads/test.pdf" target="block">查看稿件</a>
-              </td>
-            <td><a href="http://www.journal.com/uploads/test.pdf" target="block">查看附件</a></td>
+            <td><a href="{$vo['thumb']}" target="block">查看稿件</a></td>
+            <td><a href="{$vo['fthumb']}" target="block">查看附件</a></td>
+
+        <form action="{:url('review')}" method="post" id="form{$vo['id']}">
+            <input type="hidden" name="id" value="{$vo['id']}">
+            <input type="hidden" name="zjid" value="6">
+
             <td>
               <div class="ckbx-style-11">
-                  <input type="checkbox" id="ckbx-style-11-1" value="0" name="ckbx-style-11">
-                  <label for="ckbx-style-11-1"></label>
+                  <input type="checkbox" id="ckbx-style-11-1{$vo['id']}" value="1" name="is_pass">
+                  <label for="ckbx-style-11-1{$vo['id']}"></label>
               </div>
             </td>
             <td>
-              <textarea name="" id="" cols="10" rows="1" class="review" placeholder="审改意见"></textarea>
+              <textarea name="position"  cols="10" rows="1" class="review" placeholder="审改意见"></textarea>
             </td>
-            <td><input type="submit" class="form-control btn btn-success btn-sm" style="width:46px;height: 30px;"></td>
+            <td><input type="submit" form="form{$vo['id']}" class="btn btn-success btn-sm" style="width:46px;height: 30px;"></td>
+        </form>
+
           </tr>
-          </form>
+          {/volist}
+          
         </tbody>
       </table>
+      {$nshenhe->render()}
     </div>
   </div>
 
   <div class="panel panel-default">
     <div class="panel-heading">
-    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed" aria-expanded="false">
-      <h4 class="panel-title">已通过稿件&nbsp;&nbsp;<span class="badge badge-primary">10</span></h4>
+    <!-- <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed" aria-expanded="false"> -->
+      <h4 class="panel-title">已通过稿件&nbsp;&nbsp;<span class="badge badge-primary">{$num_pass}</span></h4>
     </a>
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" aria-expanded="false">
       <table class="table">
         <tbody>
-        <form action="" id="pass">
+        
         <tr>
           <th>投稿状态</th>
           <th>标题</th>
@@ -226,30 +249,42 @@
           <th>审改意见</th>
           <th>操作</th>
         </tr>
+        {volist name="pass" id="vo"}
+
         <tr>
-            <td><span class="badge badge-warning">重投</span></td>
-            <td>标题1111111111111</td>
+            <td>
+            {if condition="$vo['is_repeat'] eq 0"}
+            <span class="badge badge-success">首投</span>
+            {else /}
+            <span class="badge badge-warning">重投</span>
+            {/if}
+            </td>
+            <td>{$vo['title']}</td>
             <td>
             <!-- 作者联系方式 -->
               <!-- Button trigger modal -->
-              <a class="" data-toggle="modal" data-target="#myModal2">
+              <a class="" data-toggle="modal" data-target="#myModal2{$vo['id']}">
               <!-- data-target的值由#myModal+文章id组成 -->
-                作者2
+                {$vo['author']}
               </a>
   
               <!-- Modal -->
-              <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal fade" id="myModal2{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <!-- div的id由myModal+文章id组成 -->
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel"> 作者2联系方式</h4>
+                      <h4 class="modal-title" id="myModalLabel">{$vo['author']}信息</h4>
                     </div>
                     <div class="modal-body">
-                      姓名：作者2<br>
-                      邮箱：123@qq.com<br>
-                      tel:18877779999
+                      姓名：{$vo['author']}<br>
+                      邮箱：{$vo['email']}<br>
+                      tel:{$vo['tel']}<br>
+                      学历:{$vo['edu']}<br>
+                      专业:{$vo['profession']}<br>
+                      职业:{$vo['position']}<br>
+                      研究方向:{$vo['direction']}<br>
                     </div>
                   </div>
                 </div>
@@ -258,35 +293,45 @@
             </td>
             <td><span class="badge badge-success">已审</span></td>
             <td>
-              <a href="http://www.journal.com/uploads/test.pdf" target="block">查看稿件</a>
+              <a href="{$vo['thumb']}" target="block">查看稿件</a>
               </td>
-            <td><a href="http://www.journal.com/uploads/test.pdf" target="block">查看附件</a></td>
+            <td><a href="{$vo['fthumb']}" target="block">查看附件</a></td>
+
+            <form action="{:url('review')}" method="post" id="form{$vo['id']}">
+            <input type="hidden" name="id" value="{$vo['id']}">
+            <input type="hidden" name="zjid" value="6">
             <td>
               <div class="ckbx-style-11">
-                  <input type="checkbox" id="ckbx-style-11-2" value="1" name="ckbx-style-11" checked="checked">
-                  <label for="ckbx-style-11-2"></label>
+                  <input type="checkbox" id="ckbx-style-11-1{$vo['id']}" value="1" name="is_pass" checked="checked">
+                  <label for="ckbx-style-11-1{$vo['id']}"></label>
               </div>
             </td>
-            <td><textarea name="" id="" cols="10" rows="1" class="review" placeholder="审改意见"></textarea></td>
-            <td><input type="submit" class="form-control btn btn-success btn-sm" style="width:46px;height: 30px;"></td>
+            <td>
+              <textarea name="position"  cols="10" rows="1" class="review" placeholder="审改意见"></textarea>
+            </td>
+            <td><input type="submit" form="form{$vo['id']}" class="btn btn-success btn-sm" style="width:46px;height: 30px;"></td>
+        </form>
+
           </tr>
-          </form>
+          
+          {/volist}
         </tbody>
       </table>
+      {$pass->render()}
     </div>
   </div>
 
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="" aria-expanded="true">
-      <h4 class="panel-title">未通过稿件&nbsp;&nbsp;<span class="badge badge-danger">3</h4>
+      <!-- <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="" aria-expanded="true"> -->
+      <h4 class="panel-title">未通过稿件&nbsp;&nbsp;<span class="badge badge-danger">{$num_npass}</h4>
     </a>
     </div>
     <div id="collapseThree" class="panel-collapse collapse in" aria-expanded="true" style="">
       <table class="table">
         <tbody>
-        <form action="" id="nopass">
+        
         <tr>
           <th>投稿状态</th>
           <th>标题</th>
@@ -299,30 +344,42 @@
        
           <th>操作</th>
         </tr>
+        {volist name="npass" id="vo"}
+
           <tr>
-            <td><span class="badge badge-success">首投</span></td>
-            <td>标题3333333</td>
+            <td>
+            {if condition="$vo['is_repeat'] eq 0"}
+            <span class="badge badge-success">首投</span>
+            {else /}
+            <span class="badge badge-warning">重投</span>
+            {/if}
+            </td>
+            <td>{$vo['title']}</td>
             <td>
             <!-- 作者联系方式 -->
               <!-- Button trigger modal -->
-              <a class="" data-toggle="modal" data-target="#myModal3">
+              <a class="" data-toggle="modal" data-target="#myModal3{$vo['id']}">
               <!-- data-target的值由#myModal+文章id组成 -->
-                作者3
+                {$vo['author']}
               </a>
   
               <!-- Modal -->
-              <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal fade" id="myModal3{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <!-- div的id由myModal+文章id组成 -->
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel"> 作者3联系方式</h4>
+                      <h4 class="modal-title" id="myModalLabel"> {$vo['author']}信息</h4>
                     </div>
                     <div class="modal-body">
-                      姓名：作者3<br>
-                      邮箱：123@qq.com<br>
-                      tel:18877779999
+                      姓名：{$vo['author']}<br>
+                      邮箱：{$vo['email']}<br>
+                      tel:{$vo['tel']}<br>
+                      学历:{$vo['edu']}<br>
+                      专业:{$vo['profession']}<br>
+                      职业:{$vo['position']}<br>
+                      研究方向:{$vo['direction']}<br>
                     </div>
                   </div>
                 </div>
@@ -331,21 +388,35 @@
             </td>
             <td><span class="badge badge-success">已审</span></td>
             <td>
-              <a href="http://www.journal.com/uploads/test.pdf" target="block">查看稿件</a>
+              <a href="{$vo['thumb']}" target="block">查看稿件</a>
               </td>
-            <td><a href="http://www.journal.com/uploads/test.pdf" target="block">查看附件</a></td>
+            <td>
+            {if condition="$vo['fthumb'] neq ''"}
+            <a href="{$vo['fthumb']}" target="block">查看附件</a>
+            {else /}
+            无附件
+            {/if}
+            </td>
+            <form action="{:url('review')}" method="post" id="form{$vo['id']}">
+            <input type="hidden" name="id" value="{$vo['id']}">
+            <input type="hidden" name="zjid" value="6">
             <td>
               <div class="ckbx-style-11">
-                  <input type="checkbox" id="ckbx-style-11-3" value="0" name="ckbx-style-11">
-                  <label for="ckbx-style-11-3"></label>
+                  <input type="checkbox" id="ckbx-style-11-1{$vo['id']}" value="1" name="is_pass">
+                  <label for="ckbx-style-11-1{$vo['id']}"></label>
               </div>
             </td>
-            <td><textarea name="" id="" cols="10" rows="1" class="review" placeholder="审改意见"></textarea></td>
-            <td><input type="submit" class="form-control btn btn-success btn-sm" style="width:46px;height: 30px;"></td>
+            <td>
+              <textarea name="position"  cols="10" rows="1" class="review" placeholder="审改意见"></textarea>
+            </td>
+            <td><input type="submit" form="form{$vo['id']}" class="btn btn-success btn-sm" style="width:46px;height: 30px;"></td>
+        </form>
           </tr>
-          </form>
+
+          {/volist}
         </tbody>
       </table>
+      {$npass->render()}
     </div>
   </div>
 </div>
@@ -368,64 +439,45 @@
         <div class="col-lg-8">
           <h3 class="centered">修改信息</h3>
           <div class="signin-form">
-          <form action="">
+          <form action="{:url('Reviewers/edit')}" method="post">
+          <input type="hidden" name="id" value="{$user['id']}">
                   <div class="form-col">
                     <div class="form-group">
-                        <label for="signin_form">用户名</label>
-                        <input type="text" class="form-control" id="signin_form" placeholder="请输入用户名">
+                        <label for="uname">用户名</label>
+                        <input type="text" class="form-control" id="uname" name="uname" value="{$user['uname']}" pattern="^[-_a-zA-Z0-9]{4,16}$" oninvalid="setCustomValidity('请输入4-16位字母、数字、下划线');" required>
                     </div><!--/.form-group -->
                   </div><!--/.form-col -->
                   <div class="form-col1">
                     <div class="form-group">
-                      <label for="signin_form">真实姓名</label>
-                        <input type="text" class="form-control" id="signin_form" placeholder="请输入真实姓名">
+                      <label for="name">真实姓名</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{$user['name']}" required pattern="^[\u0391-\uFFE5]\w{2,10}+$"
+                        oninvalid="setCustomValidity('请输入真实姓名');">
                     </div><!--/.form-group -->
                   </div><!--/.form-col1 -->
+                  
                 <div class="form-col">
                   <div class="form-group">
-                    <label for="signin_form">新密码</label>
-                      <input type="password" class="form-control" id="signin_form" placeholder="请输入密码">
+                    <label for="pwd">新密码</label>
+                      <input type="password" class="form-control" id="pwd" name="pwd" placeholder="请输入新密码" required minlength="6">
                   </div><!--/.form-group -->
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
-                    <label for="signin_form">确认密码</label>
-                      <input type="password" class="form-control" id="signin_form" placeholder="请确认密码">
+                    <label for="rpwd">确认密码</label>
+                      <input type="password" class="form-control" id="rpwd" placeholder="请确认密码">
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
 
                 <div class="form-col">
                   <div class="form-group">
-                    <label for="signin_form">性别</label>
-                    <div class="form-control" id="signin_form" style="border:0;">
-                      <div class="radio icheck-primary" style="float: left;">
-                    <input type="radio" id="men" name="sex" checked="">
-                    <label for="men">男</label>
-                    </div>
-                      <div class="radio icheck-primary" style="float: left;margin-left: 20px;">
-                    <input type="radio"  id="women" name="sex">
-                    <label for="women">女</label>
-                    </div>
-                    </div>
+                    <label for="email">Email</label>
+                      <input type="email" class="form-control" id="email" name="email" value="{$user['email']}" required>
                   </div><!--/.form-group -->
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
-                    <label for="signin_form">年龄</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入年龄">
-                  </div><!--/.form-group -->
-                </div><!--/.form-col1 -->
-
-                <div class="form-col">
-                  <div class="form-group">
-                    <label for="signin_form">Email</label>
-                      <input type="email" class="form-control" id="signin_form" placeholder="请输入邮箱">
-                  </div><!--/.form-group -->
-                </div><!--/.form-group -->
-                <div class="form-col1">
-                  <div class="form-group">
-                    <label for="signin_form"> 电话</label>
-                      <input type="text" class="form-control" id="signin_form" placeholder="请输入电话号">
+                    <label for="tel"> 电话</label>
+                      <input type="tel" class="form-control" id="tel" name="tel" value="{$user['tel']}" required pattern="^13(\d{9})$|^15(\d{9})$|^189(\d{8})$" oninvalid="setCustomValidity('输入错误');">
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
 
@@ -441,16 +493,10 @@
   <div id="copyrights">
     <div class="container">
       <p>
-        &copy; 重庆工商大学派斯学院 <strong>学报</strong>作者在线审稿系统
+        &copy; 重庆工商大学派斯学院 <strong>学报</strong>专家在线审稿系统
       </p>
       <div class="credits">
-        <!--
-          You are NOT allowed to delete the credit link to TemplateMag with free version.
-          You can delete the credit link only if you bought the pro version.
-          Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/pratt-app-landing-page-template/
-          Licensing information: https://templatemag.com/license/
-        -->
-        Chongqing Institute of Technology<a href="#">Author Online Review System</a>
+        Chongqing Institute of Technology<a href="#">Expert Online Review System</a>
       </div>
     </div>
   </div>
@@ -463,9 +509,43 @@
 
   <!-- Template Main Javascript File -->
   <script src="__INDEX__/reviewers/js/main.js"></script>
+  <script src="__INDEX__/js/jquery.cokie.js"></script>
   <script type="text/javascript">
 
-$(document).ready(function() {
+
+/*-----------页面刷新回到原来位置---------*/
+window.onbeforeunload = function () {
+
+var scrollPos;
+if (typeof window.pageYOffset != 'undefined') {
+scrollPos = window.pageYOffset;
+}
+else if (typeof document.compatMode != 'undefined' &&
+document.compatMode != 'BackCompat') {
+scrollPos = document.documentElement.scrollTop;
+}
+else if (typeof document.body != 'undefined') {
+scrollPos = document.body.scrollTop;
+}
+//存储滚动条位置到cookies中
+document.cookie = "scrollTop=" + scrollPos; 
+
+}
+
+
+window.onload = function () {
+  if (document.cookie.match(/scrollTop=([^;]+)(;|$)/) != null) {
+  var arr = document.cookie.match(/scrollTop=([^;]+)(;|$)/); //cookies中不为空，则读取滚动条位置
+  document.documentElement.scrollTop = parseInt(arr[1]);
+  document.body.scrollTop = parseInt(arr[1]);
+  }
+
+
+  
+}
+/*--------------------*/
+
+  
   /*审改意见文本框点击变大*/
     $(".review").focus(function(){
         $(this).animate({
@@ -478,8 +558,25 @@ $(document).ready(function() {
       "height" : "28px"
     })
   });
-});
-/*--------------------------------*/
+
+     //密码验证
+    $('.submit').click(function(){
+
+      if($('#rpwd').val()!=$('#pwd').val()){
+          alert("两次密码不一致");
+          return false;
+      }
+      
+    });
+    
+    $('#rpwd').blur(function(){
+      if($('#rpwd').val()!=$('#pwd').val()){
+          alert("两次密码不一致");
+      }
+    });
+
+
+
   </script>
 </body>
 </html>

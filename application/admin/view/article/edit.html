@@ -87,9 +87,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="eid" class="col-sm-2 control-label no-padding-right">编辑</label>
+                            <label for="editor" class="col-sm-2 control-label no-padding-right">编辑</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="eid" placeholder="请输入编辑姓名" name="eid" required="" type="text" value="{$article['eid']}">
+                                <input class="form-control" id="editor" placeholder="请输入编辑姓名" name="editor" required="" type="text" value="{$article['editor']}">
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
@@ -97,26 +97,10 @@
                         <div class="form-group">
                             <label for="draft" class="col-sm-2 control-label no-padding-right">选择稿件</label>
                             <div class="col-sm-6">
-                                <input class="form-control" id="draft" placeholder="" name="draftid" required="" type="text" value="{$article['draftid']}">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="aid" class="col-sm-2 control-label no-padding-right">作者</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" id="aid" placeholder="" name="aid" required="" type="text" value="{$article['aid']}">
-                            </div>
-                            <p class="help-block col-sm-4 red">* 必填</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="acate" class="col-sm-2 control-label no-padding-right">所属分类</label>
-                            <div class="col-sm-6">
-                                <select name="acateid" id="acate" style="width: 100%;">
-                                {volist name="acate" id="vo"}
-                                <option value="{$vo['id']}" 
-                                {if condition="$vo['id'] eq $article['acateid']"}selected="selected"{/if}>{$vo['acatename']}</option>
+                                <select name="draftid" id="draft" style="width: 100%;">
+                                <option value="0">请选择稿件</option>
+                                {volist name="draft" id="vo"}
+                                <option value="{$vo['id']}" {if condition="$article['draftid'] eq $vo['id']"} selected="selected"{/if}>{$vo['title']}</option>
                                 {/volist}
                                 </select>
                             </div>
@@ -158,7 +142,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-success">提交</button>
-                                <a href="{:url('lst')}" type="button" class="btn btn-info">返回</a>
+                                <a href="javascript:history.go(-1);" type="button" class="btn btn-info">返回</a>
                             </div>
                         </div>
 

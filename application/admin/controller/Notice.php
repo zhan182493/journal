@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 use app\admin\controller\Common;
+use app\admin\model\Notice as NoticeModel;
 
 class Notice extends Common
 {
@@ -11,13 +12,28 @@ class Notice extends Common
 		return view();
 	}
 
+	public function search(){
+		if(input('search')){
+			$noticelst=db('notice')->where('title','like','%'.input('search').'%')->order('id asc')->select();
+		$this->assign('noticelst',$noticelst);
+		$this->assign('search',input('search'));
+		return view();
+		}else{
+			$noticelst=db('notice')->order('id asc')->select();
+		$this->assign('noticelst',$noticelst);
+		$this->assign('search',input('search'));
+		return view();
+		}
+	}
+
 	public function add(){
 		if(request()->isPost()){
-			// dump(input('post.'));die;
+
 			$data=input('post.');
 
 			// dump($data);die;
-			if(db('notice')->insert($data)){
+			$model=new NoticeModel;
+			if($model->save($data)){
 				return $this->success('添加成功！','lst');
 			}else{
 				return $this->error('添加失败！');
@@ -29,7 +45,8 @@ class Notice extends Common
 	public function edit(){
 		$notice=db('notice')->where('id',input('id'))->find();
 		if(request()->isPost()){
-			if(db('notice')->update(input('post.'))!==false){
+			$model=new NoticeModel;
+			if($model->update(input('post.'))!==false){
 				return $this->success('修改成功！','lst');
 			}else{
 				return $this->error('修改失败！');
@@ -42,7 +59,7 @@ class Notice extends Common
 	public function chakan(){
 		$res=db('notice')->where('id',input('id'))->find();
 		if($res){
-			return json(['code'=>1,'data'=>$res['content']]);
+			return json(['code'=>1,'data'=>nl2br($res['content'])]);
 		}else{
 			return json(['code'=>2,'msg'=>'错误!']);
 		}

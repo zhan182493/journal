@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>跳转提示</title>
+	<script src="__ADMIN__/style/bootstrap.js"></script>
+    <script src="__ADMIN__/style/jquery.js"></script>
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+        (function(){
+            var msg = '<?php echo(strip_tags($msg));?>';
+            var iurl = '<?php echo($url);?>';
+            var wait = '<?php echo($wait);?>';
+         <?php
+             switch ($code) {
+                case 1:
+           ?>
+                  layer.msg(msg,{icon:"6",time:wait*1000});
+            <?php
+                   break;
+                case 0:
+             ?>
+                layer.msg(msg,{icon:"5",time:wait*1000});
+            <?php
+                 break;
+                }
+              ?>
+            setTimeout(function(){
+                location.href=iurl;
+            },1000)
+        })();
+    </script>
+</body>
+</html>
