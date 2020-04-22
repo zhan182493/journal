@@ -66,7 +66,6 @@
 
 				<div class="sign-content">
 					<h2>安全验证</h2>
-					
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="signin-form">
@@ -89,7 +88,6 @@
 							</div><!--/.signin-form -->
 						</div><!--/.col -->
 					</div><!--/.row -->
-
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="signin-footer">
@@ -98,10 +96,8 @@
 						</div><!--/.col-->
 					</div><!--/.row -->
 				</form><!--/form -->
-				</div><!--/.sign-content -->
-
+			</div><!--/.sign-content -->
 			</div><!--/.container -->
-
 		</section><!--/.signin -->
 		
 		<!-- signin end -->
@@ -131,7 +127,6 @@
 					if(data.code==1){
 						question=data.msg;
 						$("#question").val(question);
-						$("#question").attr("disabled","true");
 					}else{
 						alert(data.msg);
 					}

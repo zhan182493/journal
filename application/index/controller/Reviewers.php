@@ -30,32 +30,31 @@ class Reviewers extends Common{
 
 	public function index(){
 		if(!cookie('zjid')){
-			
-			return $this->error('请先登录！','Login/signin');
+			return view('Login/signin');
 		}
-		$uid=cookie('zjid');
-		$res=db('acate')->alias('a')->join('user u','a.id=u.acateid')->where('u.id',$uid)->field('u.*,a.acatename')->find();
+		$zjid=cookie('zjid');
+		$res=db('acate')->alias('a')->join('user u','a.id=u.acateid')->where('u.id',$zjid)->field('u.*,a.acatename')->find();
 		// dump($res);die;
 		$this->assign('user',$res);
 		//已通过
-		$pass=db('draft')->where('is_pass',1)->where('acateid',$res['acateid'])->order('create_time desc')->paginate(2,false,['var_page' => 'p1'])->each(function($v){return $this->fun($v);});
+		$pass=db('draft')->where('zjid',$zjid)->where('is_pass',1)->where('acateid',$res['acateid'])->order('create_time desc')->paginate(2,false,['var_page' => 'p1'])->each(function($v){return $this->fun($v);});
 
-		$num_pass=count(db('draft')->where('is_pass',1)->where('acateid',$res['acateid'])->order('create_time desc')->select());
+		$num_pass=count(db('draft')->where('zjid',$zjid)->where('is_pass',1)->where('acateid',$res['acateid'])->order('create_time desc')->select());
 		// dump($pass);die;
 		$this->assign('pass',$pass);
 		$this->assign('num_pass',$num_pass);
 
 		//待审核
-		$nshenhe=db('acate')->alias('a')->join('draft d','a.id=d.acateid')->where('d.is_check',0)->where('d.acateid',$res['acateid'])->order('d.create_time desc')->paginate(2,false,['var_page' => 'p2'])->each(function($v){return $this->fun($v);});
-		$num_nshenhe=count(db('acate')->alias('a')->join('draft d','a.id=d.acateid')->where('d.is_check',0)->where('d.acateid',$res['acateid'])->order('d.create_time desc')->select());
+		$nshenhe=db('acate')->alias('a')->join('draft d','a.id=d.acateid')->where('d.zjid',$zjid)->where('d.is_check',0)->where('d.acateid',$res['acateid'])->order('d.create_time desc')->paginate(2,false,['var_page' => 'p2'])->each(function($v){return $this->fun($v);});
+		$num_nshenhe=count(db('acate')->alias('a')->join('draft d','a.id=d.acateid')->where('d.zjid',$zjid)->where('d.is_check',0)->where('d.acateid',$res['acateid'])->order('d.create_time desc')->select());
 		// dump($nshenhe);die;
 		$this->assign('nshenhe',$nshenhe);
 		$this->assign('num_nshenhe',$num_nshenhe);
 		
 		//未通过
-		$npass=db('user')->alias('u')->join('draft d','u.id=d.zjid')->where('d.is_check',1)->where('d.is_pass',0)->where('d.acateid',$res['acateid'])->order('d.create_time desc')->paginate(2,false,['var_page' => 'p3'])->each(function($v){return $this->fun($v);});
+		$npass=db('user')->alias('u')->join('draft d','u.id=d.zjid')->where('d.zjid',$zjid)->where('d.is_check',1)->where('d.is_pass',0)->where('d.acateid',$res['acateid'])->order('d.create_time desc')->paginate(2,false,['var_page' => 'p3'])->each(function($v){return $this->fun($v);});
 		// dump($npass);die;
-		$num_npass=count(db('user')->alias('u')->join('draft d','u.id=d.zjid')->where('d.is_check',1)->where('d.is_pass',0)->where('d.acateid',$res['acateid'])->order('d.create_time desc')->select());
+		$num_npass=count(db('user')->alias('u')->join('draft d','u.id=d.zjid')->where('d.zjid',$zjid)->where('d.is_check',1)->where('d.is_pass',0)->where('d.acateid',$res['acateid'])->order('d.create_time desc')->select());
 		$this->assign('npass',$npass);
 		$this->assign('num_npass',$num_npass);
 		$num_all=$num_pass+$num_nshenhe+$num_npass;

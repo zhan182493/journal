@@ -18,8 +18,7 @@
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
 
-    <!--easyform  form validation-->
-    <link href="__EASYFORM__/platform-1.css" rel="stylesheet">
+    
 
 
 </head>
@@ -42,7 +41,7 @@
                     <ul class="breadcrumb">
                         <li><a href="{:url('index/index')}">首页</a></li>
                         <li><a href="{:url('user/lst')}">账号管理</a></li>
-                        <li class="active">添加用户</li>
+                        <li class="active">添加{$role}</li>
                     </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -60,6 +59,19 @@
                 <div id="horizontal-form">
                     <form class="form-horizontal" role="form" action="{:url('user/add')}" method="post">
                         <input type="hidden" name="role" value="{$role}">
+
+                        {if condition="$role eq '专家'"}
+                        <div class="form-group">
+                            <label for="acateid" class="col-sm-2 control-label  no-padding-right">审稿类型</label>
+                            <div class="col-sm-6">
+                                <select name="acateid" style="width: 100%;">
+                                {volist name="acate" id="vo"}
+                                <option selected="selected" value="{$vo['id']}">{$vo['acatename']}</option>
+                                {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        {/if}
 
                         <div class="form-group">
                             <label for="uname" class="col-sm-2 control-label no-padding-right">用户名</label>
@@ -84,7 +96,6 @@
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
-
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label no-padding-right">真实姓名</label>
                             <div class="col-sm-6">
@@ -108,19 +119,6 @@
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
-                        
-                        {if condition="$role eq '专家'"}
-                        <div class="form-group">
-                            <label for="acateid" class="col-sm-2 control-label  no-padding-right">审稿类型</label>
-                            <div class="col-sm-6">
-                                <select name="acateid" style="width: 100%;">
-                                {volist name="acate" id="vo"}
-                                <option selected="selected" value="{$vo['id']}">{$vo['acatename']}</option>
-                                {/volist}
-                                </select>
-                            </div>
-                        </div>
-                        {/if}
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">

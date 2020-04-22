@@ -104,9 +104,7 @@
         <div class="widget">
             <div class="widget-body">
                 <div class="flip-scroll">
-                {if condition="$user eq ''"}
-                    无
-                {else /}
+                
                     <table class="table table-bordered table-hover table-striped" id="searchable">
                     <thead class="bordered-darkorange">
                             <tr>
@@ -124,7 +122,11 @@
                         <tbody>
                         {volist name="user" id="vo"}
                         <tr>
+                            {if condition="$role eq '全部'"}
+                            <td align="center">{$vo['id']}</td>
+                            {else /}
                             <td align="center">{$vo['uid']}</td>
+                            {/if}
                             <td align="center">{$vo['uname']}</td>
                             <td align="center">{$vo['name']}</td>
                             <td align="center">{$vo['role']}</td>
@@ -137,19 +139,31 @@
                             {/if}
                             <td align="center">{$vo['tel']}</td>
                             <td align="center">
-                                <a href="{:url('edit',array('rid'=>$vo['id'],'uid'=>$vo['uid']
+                                {if condition="$role eq '全部'"}
+                                <a href="{:url('edit',array('uid'=>$vo['id']
+                                ))}" class="btn btn-primary btn-sm shiny">
+                                    <i class="fa fa-edit"></i> 编辑
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" uid="{$vo['id']}">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a>
+                                {else /}
+                                <a href="{:url('edit',array('uid'=>$vo['uid']
                                 ))}" class="btn btn-primary btn-sm shiny">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>
                                 <a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" uid="{$vo['uid']}">
                                     <i class="fa fa-trash-o"></i> 删除
                                 </a>
+                                {/if}
+                                
                             </td>
                         </tr>
                         {/volist}
                         </tbody>
                     </table>
-                    {/if}
+                    {$user->render()}
+                  
                 </div>
             </div>
         </div>

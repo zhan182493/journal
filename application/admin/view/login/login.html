@@ -14,12 +14,23 @@
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
 
+    
+
     <style>
     body:before{
         /*background-image: url("__ADMIN__/images/bg.jpg");
         background-repeat: no-repeat;
         background-size: 100%;*/
     }
+    .loginbox-title{
+        margin-bottom: 20px;
+    }
+    .form-control{
+        width: 220px;
+        margin:auto;
+        text-transform:none;
+    }
+
     </style>
 </head>
 <!--Head Ends-->
@@ -30,19 +41,24 @@
         <form action="{:url('login/logcheck')}" method="post">
             <div class="loginbox bg-white">
                 <div class="loginbox-title">登录</div>
-                <div class="loginbox-textbox">
-                    <input value="admin" class="form-control" placeholder="用户名" name="username" type="text">
-                </div>
-                <div class="loginbox-textbox">
-                    <input class="form-control" placeholder="密码" name="password" type="password">
-                </div>
-                <div class="loginbox-textbox">
-                    <input class="form-control" placeholder="验证码" name="chkcode" type="text">
-                </div>
+                <div class="loginbox-form">
+                    <div class="form-group">
+                        <input type="text" name="uname" class="form-control" id="uname" placeholder="请输入用户名" required style="text-transform:none;">
+                    </div><!--/.form-group -->
+                    <div class="form-group">
+                        <input type="password" name="pwd"
+                        pwd class="form-control" id="pwd" placeholder="请输入密码" required>
+                    </div><!--/.form-group -->
+                    <div class="form-group">
+                        <div id="v_container" class="form-control" style="height: 40px; "></div>
+                        <input type="text" class="form-control" id="code_input"  placeholder="请输入验证码" style="text-transform:none;"
+                        >
+                    </div><!--/.form-group -->
+            </div><!--/.signin-form -->
                 <div class="loginbox-submit">
-                    <input class="btn btn-primary btn-block" value="登录" type="submit">
+                    <input class="btn btn-primary btn-block submit" value="登录" type="submit">
                 </div>
-            
+            </div>
         </form>
     </div>
     <!--Basic Scripts-->
@@ -51,7 +67,26 @@
     <script src="__ADMIN__/style/jquery_002.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
+    <!-- captcha -->
+        <script src=" __CAPTCHA__/captcha.js"></script>
 
+<script>
+    $(function(){
+            var verifyCode = new GVerify("v_container");
+            $('#verifyCanvas').css({
+                "margin-left":"-12px",
+                "margin-top":"-7px"
+            });
+        //密码验证
+        $('.submit').click(function(){
+            var res = verifyCode.validate(document.getElementById("code_input").value);
+            if(!res){
+                alert("验证码错误");
+                return false;
+            }
+        });
+    });
+    </script>
 
 
 

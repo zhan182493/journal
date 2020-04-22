@@ -64,19 +64,21 @@
 <form action="{:url('search1')}" method="post">
 <div class="btn-group" style="width: 200px;height: 30px;">
     <div class="input-group">
-        <select  name="jid" class="form-control"  style="width: 210px;bottom: 4px;">
-        <option value="0">请选择期刊</option>
-        {volist name="journal" id="vo"}
-        <option value="{$vo['id']}" {if condition="$vo['id'] eq $jid"}selected="selected"{/if}>{$vo['title']}</option>
+        <select  name="juan" class="form-control juan"  style="width: 210px;bottom: 4px;">
+        <option value="0">请选择年份</option>
+        {volist name="juanlst" id="vo"}
+        <option value="{$vo['juan']}" {if condition="$juan eq $vo['juan']"}selected="selected"{/if}>{$vo['year']}</option>
         {/volist}
         </select>
     </div>
 </div>
 <div class="btn-group" style="width: 200px;height: 30px;margin-left: 10px;">
     <div class="input-group">
-        <input type="text" name="qishu" class="form-control" {if condition="$qishu neq ''"}placeholder="{$qishu}"{else /}placeholder="输入期次（可选）"{/if} style="width: 210px;bottom: 4px;">
+        <select class="form-control qishu" name="qishu" style="width: 210px;bottom: 4px;">
+            <option value="0" >请选择期数</option>
+        </select>
         <span class="input-group-btn" >
-            <button type="submit" class="btn btn-azure" style="padding-top: 2px;margin-left: 10px;bottom: 4px;" >搜索</button>
+            <button type="submit" class="btn btn-azure" style="height: 30px;padding-top: 2px;margin-left: 10px;bottom: 4px;" >搜索</button>
         </span>
     </div>
 </div>
@@ -154,7 +156,7 @@
                                 <td align="center">{$vo['aclassid']}</td>
                                 <td align="center">{$vo['idcode']}</td>
                                 <td align="center">{$vo['acatename']}</td>
-                                <td align="center">{$vo['title']}</td>
+                                <td align="center">{$vo['atitle']}</td>
                                 <td align="center">{$vo['qishu']}</td>
                                 <td align="center">{$vo['click']}</td>
                                 <td align="center">{$vo['download']}</td>
@@ -244,6 +246,47 @@
                 layer.close(index);
             });
         }); 
+
+
+        if($(".clear").length > 0){
+                $(".clear").remove();
+            }
+            var juan=$(".juan").val();
+            $.ajax({
+                url:"{:url('getqishu')}",
+                type:"post",
+                data:{juan:juan},
+                datatype:"json",
+                success:function(data){
+                    var qishu=data.msg.toString();
+                    qishu=qishu.split(",");
+                    for(var x in qishu){
+                        $(".qishu").append("<option class='clear' value='"+qishu[x]+"'>"+qishu[x]+"</option>");
+                    }
+                }
+            });
+
+         $(".juan").on('change',function(){
+            if($(".clear").length > 0){
+                $(".clear").remove();
+            }
+            var juan=$(".juan").val();
+            $.ajax({
+                url:"{:url('getqishu')}",
+                type:"post",
+                data:{juan:juan},
+                datatype:"json",
+                success:function(data){
+                    var qishu=data.msg.toString();
+                    qishu=qishu.split(",");
+                    for(var x in qishu){
+                        $(".qishu").append("<option class='clear' value='"+qishu[x]+"'>"+qishu[x]+"</option>");
+                    }
+                }
+            });
+         });
+
+            
 
     });
 </script>

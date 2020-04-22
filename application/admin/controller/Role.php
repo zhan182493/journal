@@ -19,14 +19,12 @@ class Role extends Common
 		$this->assign('ruletree',$ruletree);
 		if(request()->isPost()){
 			$data=input('post.');
-			
-			$data['rules']=implode(',',$data['rules']);
-			// dump($data);die;
-			if(!isset($data['status'])){
-				$data['status']=0;
+			if(isset($data['rules'])){
+				$data['rules']=implode(',',$data['rules']);
 			}else{
-				$data['status']=1;
+				$data['rules']='';
 			}
+			// dump($data);die;
 			// dump($data);die;
 			if(db('auth_group')->insert($data)){
 				return $this->success('添加成功！','lst');
@@ -44,13 +42,12 @@ class Role extends Common
 		$this->assign('ruletree',$ruletree);
 		if(request()->isPost()){
 			$data=input('post.');
-			$data['rules']=implode(',',$data['rules']);
-			// dump($data);die;
-			if(!isset($data['status'])){
-				$data['status']=0;
+			if(isset($data['rules'])){
+				$data['rules']=implode(',',$data['rules']);
 			}else{
-				$data['status']=1;
+				$data['rules']='';
 			}
+			// dump($data);die;
 			// dump($data);die;
 			if(db('auth_group')->update($data)!==false){
 				return $this->success('修改成功！','lst');
@@ -64,14 +61,7 @@ class Role extends Common
 		return view();
 	}
 
-	public function edstatus(){
-		$data=input("post.");
-		if(db('auth_group')->update($data)){
-			return json(['code'=>1,'msg'=>'修改成功!']);
-		}else{
-			return json(['code'=>2,'msg'=>'修改失败！']);
-		} 
-	}
+	
 
 	public function del(){
 		if(!db('auth_group_access')->where('group_id',input('rid'))->find()){

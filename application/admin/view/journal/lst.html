@@ -103,9 +103,9 @@
                                     <i class="fa fa-edit"></i> 编辑
                                 </a></p>
                                 
-                                <p><a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" rid="{$vo['id']}">
+                                <!-- <p><a href="javascript:void(0);" class="btn btn-danger btn-sm shiny del" rid="{$vo['id']}">
                                     <i class="fa fa-trash-o"></i> 删除
-                                </a></p>
+                                </a></p> -->
                                 </td>
                             </tr>
                             {/volist}
@@ -141,37 +141,37 @@
 <script>
     $(function(){
         //异步删除
-        $('.del').on('click',function(){
-            var rid=$(this).attr('rid');
-            //询问框
-            layer.confirm('确认删除？', {
-                title:'提示',
-                btn: ['确认','取消'] //按钮
-            }, function(index){
-                $.ajax({
-                    url:"{:url('del')}",
-                    type:"post",
-                    data:{id:rid},
-                    datatype:"json",
-                    success:function(data){
-                        if(data.code==1){
-                            layer.msg(data.msg,{icon:1,time:500,},
-                            function(){
-                                location.reload();
-                            });
-                        }else if(data.code==2){
-                            layer.msg(data.msg,{
-                            icon:2,
-                            time:500,},
-                            function(){
-                                location.reload();
-                            });
-                        }
-                    }
-                });
-                layer.close(index);
-            });
-        }); 
+        // $('.del').on('click',function(){
+        //     var rid=$(this).attr('rid');
+        //     //询问框
+        //     layer.confirm('确认删除？', {
+        //         title:'提示',
+        //         btn: ['确认','取消'] //按钮
+        //     }, function(index){
+        //         $.ajax({
+        //             url:"{:url('del')}",
+        //             type:"post",
+        //             data:{id:rid},
+        //             datatype:"json",
+        //             success:function(data){
+        //                 if(data.code==1){
+        //                     layer.msg(data.msg,{icon:1,time:500,},
+        //                     function(){
+        //                         location.reload();
+        //                     });
+        //                 }else if(data.code==2){
+        //                     layer.msg(data.msg,{
+        //                     icon:2,
+        //                     time:500,},
+        //                     function(){
+        //                         location.reload();
+        //                     });
+        //                 }
+        //             }
+        //         });
+        //         layer.close(index);
+        //     });
+        // }); 
 
        
 

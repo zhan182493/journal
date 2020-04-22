@@ -19,6 +19,8 @@
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
 
     <link href="__ADMIN__/dataTable/css/dataTables.bootstrap.css" rel="stylesheet">
+
+
 </head>
 <body>
     <!-- 头部 -->
@@ -61,24 +63,18 @@
                             <tr>
                                 <th class="text-center">ID</th>
                                 <th class="text-center">角色名</th>
-                                <th class="text-center">权限</th>
-                                <th class="text-center">是否启用</th>
+                                <th class="text-center" style="width: 60%;">权限</th>
                                 <th class="text-center">操作</th>
                             </tr>
                         </thead>
                         <tbody>
                         {volist name="role" id="vo"}
+                        {if condition="in_array($vo['role'],['作者','专家'])"}
+                        {else /}
                         <tr>
                             <td align="center">{$vo['id']}</td>
                             <td align="center">{$vo['role']}</td>
-                            <td align="center">{$vo['rules']}</td>
-                        
-                            <td align="center"><label>
-                            
-                                <input rid="{$vo['id']}" class="checkbox-slider slider-icon colored-success status" type="checkbox" name="status" {if condition="$vo['status'] eq 1"}checked="checked"{/if}>
-                            
-                                <span class="text"></span>
-                            </label></td>
+                            <td align="center" style="Word-break: break-all;">{$vo['rules']}</td>
                             
                             <td align="center">
                                 <a href="{:url('edit',array('rid'=>$vo['id']
@@ -90,6 +86,7 @@
                                 </a>
                             </td>
                         </tr>
+                        {/if}
                         {/volist}
                         </tbody>
                     </table>
@@ -164,36 +161,7 @@
             });
         }); 
 
-        //异步修改状态
-        $(".status").click(function(){
-            var id=$(this).attr('rid');
-            if($(this).attr('checked')=='checked'){
-                var status=0;
-            }else{
-                var status=1;
-            }
-            $.ajax({
-                url:"{:url('edstatus')}",
-                type:"post",
-                data:{id:id,status:status},
-                datatype:"json",
-                success:function(data){
-                    if(data.code==1){
-                        layer.msg(data.msg,{icon:1,time:500,},
-                        function(){
-                            location.reload();
-                        });
-                    }else if(data.code==2){
-                        layer.msg(data.msg,{
-                        icon:2,
-                        time:500,},
-                        function(){
-                            location.reload();
-                        });
-                    }
-                }
-            });
-        });       
+             
     });
 </script>
 

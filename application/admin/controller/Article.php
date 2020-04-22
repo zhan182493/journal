@@ -6,7 +6,7 @@ use app\admin\model\Article as ArtModel;
 
 class Article extends Common
 {
-	public function fun1($v){
+	public function fun($v){
 		if($v['aid']){
 			$author=db('user')->where('id',$v['aid'])->find();
 			if($author){
@@ -42,13 +42,11 @@ class Article extends Common
 	}
 
 	public function lst(){
-
-		$journal=db('journal')->select();
-		$article=db('article')->alias('a')->join('acate ac','ac.id=a.acateid')->join('journal j','j.id=a.jid')->field('a.*,j.title,ac.acatename')->order('a.id asc')->paginate(8)->each(function($v){return $this->fun1($v);});
+		$this->getjuan();
+		
+		$article=db('article')->alias('a')->join('acate ac','ac.id=a.acateid')->join('journal j','j.id=a.jid')->field('a.*,j.title,ac.acatename')->order('a.id asc')->paginate(8)->each(function($v){return $this->fun($v);});
 		// dump($article);die;
 		$this->assign('article',$article);
-		$this->assign('journal',$journal);
-		
 		return view();
 	}
 
@@ -125,9 +123,8 @@ class Article extends Common
 	}
 
 	public function search(){
-		$journal=db('journal')->select();
-		$this->assign('journal',$journal);
-		$all=db('article')->alias('a')->join('acate ac','ac.id=a.acateid')->join('journal j','j.id=a.jid')->field('a.*,j.title,ac.acatename')->order('a.id asc')->paginate(8)->each(function($v){return $this->fun1($v);});
+		$this->getjuan();
+		$all=db('article')->alias('a')->join('acate ac','ac.id=a.acateid')->field('a.*,ac.acatename')->order('a.id asc')->paginate(8)->each(function($v){return $this->fun($v);});
 		if(input('search')){
 			$user=db('user')->where('name','like','%'.input('search').'%')->select();
 			if($user){
@@ -138,75 +135,106 @@ class Article extends Common
 				$article=db('article')
 				->alias('a')
 				->join('acate ac','ac.id=a.acateid')
-				->join('journal j','j.id=a.jid')
-				->where('atitle','like','%'.input('search').'%')
-				->whereOr('aid','in',$aids)
-				->field('a.*,j.title,ac.acatename')
+				->where('a.atitle','like','%'.input('search').'%')
+				->whereOr('a.aid','in',$aids)
+				->field('a.*,ac.acatename')
 				->order('a.id asc')
 				->paginate(8)
-				->each(function($v){return $this->fun1($v);});
+				->each(function($v){return $this->fun($v);});
 			}else{
 				$article=db('article')
 				->alias('a')
 				->join('acate ac','ac.id=a.acateid')
-				->join('journal j','j.id=a.jid')
-				->where('atitle','like','%'.input('search').'%')
-				->field('a.*,j.title,ac.acatename')
+				->where('a.atitle','like','%'.input('search').'%')
+				->field('a.*,ac.acatename')
 				->order('a.id asc')
 				->paginate(8)
-				->each(function($v){return $this->fun1($v);});
+				->each(function($v){return $this->fun($v);});
 			}
 			// dump($article);die;
 			$this->assign('article',$article);
+			$this->assign('juan',0);
+			$this->assign('qishu',0);
 			$this->assign('search',input('search'));
 			return view();
 		}else{
 			$article=$all;
 			// dump($article);die;
 			$this->assign('article',$article);
-			$this->assign('jid',0);
+			$this->assign('juan',0);
 			$this->assign('qishu',0);
 			return view();
 		}
 	}
 
 	public function search1(){
-		$journal=db('journal')->select();
-		$this->assign('journal',$journal);
-
-		if(!input('jid')==0){
+		
+		$this->getjuan();
+		if(!input('juan')==0){
 			if(input('qishu')){
 				$article=db('article')
 				->alias('a')
 				->join('acate ac','ac.id=a.acateid')
-				->join('journal j','j.id=a.jid')
-				->where('a.jid',input('jid'))
-				->where('qishu',input('qishu'))
-				->field('a.*,j.title,ac.acatename')
+				->where('a.juan',input('juan'))
+				->where('a.qishu',input('qishu'))
+				->field('a.*,ac.acatename')
 				->order('a.id asc')
 				->paginate(8)
-				->each(function($v){return $this->fun1($v);});
+				->each(function($v){return $this->fun($v);});
 				$this->assign('article',$article);
-				$this->assign('jid',input('jid'));
+				$this->assign('juan',input('juan'));
 				$this->assign('qishu',input('qishu'));
 				return view('search');
 			}else{
 				$article=db('article')
 				->alias('a')
 				->join('acate ac','ac.id=a.acateid')
-				->join('journal j','j.id=a.jid')
-				->where('a.jid','in',input('jid'))
-				->field('a.*,j.title,ac.acatename')
+				->where('a.juan ',input('juan'))
+				->field('a.*,ac.acatename')
 				->order('a.id asc')
 				->paginate(8)
-				->each(function($v){return $this->fun1($v);});
+				->each(function($v){return $this->fun($v);});
 				$this->assign('article',$article);
-				$this->assign('jid',input('jid'));
+				$this->assign('juan',input('juan'));
 				$this->assign('qishu',input('qishu'));
 				return view('search');
 			}
 		}else{
-			return $this->error('请选择期刊！');
+			return $this->error('请选择年份！');
+		}
+	}
+
+	public function getjuan(){
+		$arts=db('article')->field('juan')->distinct(true)->select();
+		$years=db('article')->field('use_time')->distinct(true)->select();
+		// dump($years);die;
+		$juanlst=[];
+		$i=0;
+		foreach ($arts as $k => $v) {
+			$juanlst[$i]['juan']=$v['juan'];
+			$years=db('article')->where('juan',$v['juan'])->field('use_time')->distinct(true)->select();
+			
+			foreach ($years as $key2 => $val2) {
+				$year=date('Y',$val2['use_time']);
+			}
+			$juanlst[$i]['year']=$year;
+			$i++;
+		}
+		// dump($juanlst);die;
+		return $this->assign('juanlst',$juanlst);
+	}
+
+	public function getqishu(){
+		$arts=db('article')->where('juan',input('juan'))->field('qishu')->distinct(true)->select();
+		$qishu=[];
+		if($arts){
+			foreach ($arts as $key => $v) {
+				$qishu[]=$v['qishu'];
+			}
+			return json(['code'=>1,'msg'=>$qishu]);
+		}else{
+			$qishu='';
+			return json(['code'=>2,'msg'=>$qishu]);
 		}
 	}
 

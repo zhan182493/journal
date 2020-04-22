@@ -65,7 +65,6 @@
                                 <th class="text-center">c/m</th>
                                 <th class="text-center">权限名称</th>
                                 <th class="text-center">父级</th>
-                                <th class="text-center">是否启用</th>
                                 <th class="text-center">操作</th>
                             </tr>
                         </thead>
@@ -81,12 +80,6 @@
                             {$vo['name']}
                             {/if}</td>
                             <td align="center">{$vo['pid']}</td>
-                            <td align="center"><label>
-                            
-                                <input rid="{$vo['id']}" class="checkbox-slider slider-icon colored-success status" type="checkbox" name="status" {if condition="$vo['status'] eq 1"}checked="checked"{/if}>
-                            
-                                <span class="text"></span>
-                            </label></td>
                             
                             <td align="center">
                                 <a href="{:url('edit',array('rid'=>$vo['id']

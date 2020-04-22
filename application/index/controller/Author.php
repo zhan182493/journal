@@ -3,12 +3,13 @@ namespace app\index\controller;
 use app\index\controller\Common;
 use app\index\model\Draft;
 use app\index\model\User;
+// use think\DB;
 
 class Author extends Common{
 
 	public function index(){
 		if(!cookie('aid')){
-			return $this->error('请先登录！','Login/signin');
+			return view('Login/signin');
 		}
 		$uid=cookie('aid');
 		$res=db('user')->where('id',$uid)->find();
@@ -73,7 +74,7 @@ class Author extends Common{
 			if(db('draft')->where('title',$data['title'])->where('uid',input('uid'))->find()){
 				return $this->error('该稿件已存在！若想重投，请先删除已投稿件！');
 			}
-
+			$data['zjid']=$this->getzjid($data['acateid']);
 			$draft=new Draft;
 			if($draft->save($data)){
 				return $this->success('投稿成功！');
@@ -81,6 +82,33 @@ class Author extends Common{
 				return $this->error('投稿失败！');
 			}
 		}
+	}
+
+	public function getzjid($acateid){
+		$user=db('user')->where('acateid',$acateid)->select();
+		$arr=[];
+		// dump($user);die;
+		if($user){
+			foreach ($user as $v) {
+				$zid=$v['id'];
+				$num=db('draft')->where('zjid',$v['id'])->count();
+				if($num){
+					$arr[$zid]=$num;
+				}else{
+					$arr[$zid]=0;
+				}
+			}
+		}
+		// dump($arr);
+		$a=100000000;
+		foreach ($arr as $k => $v) {
+			if($v<=$a){
+				$zjid=$k;
+				$a=$v;
+			}
+		}
+		// dump($zjid);die;
+		return $zjid;
 	}
 
 	public function del(){

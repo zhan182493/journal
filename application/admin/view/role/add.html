@@ -76,15 +76,13 @@
                                 {volist name="ruletree" id="vo"}
                                     <tr>
                                         <td>
-                                        
                                         <label>
                                         <?php echo str_repeat('|---',$vo['level']);?>
-                                            <input dataid="id-{$vo.dataid}" type="checkbox" class="checkbox-parent 
-                                            {if condition="$vo['level'] neq 0"}checkbox-child{/if}" name="rules[]"
+                                            <input dataid="id-{$vo.dataid}" type="checkbox" class=" 
+                                            {if condition="$vo['level'] eq 0"}checkbox-parent {else /}checkbox-child{/if} " name="rules[]"
                                             value="{$vo.id}">
                                             <span {if condition="$vo['level'] eq 0"}style="font-weight:bold;font-size:16px;"{else /}style="color:#5B5B5B"{/if} class="text">{$vo.name}</span>
                                         </label>
-
                                         </td>
                                     </tr>
                                 {/volist}
@@ -93,14 +91,6 @@
                
                             </div>
                             <p class="help-block col-sm-4 red" style="float: right">* 必选</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="rpwd" class="col-sm-2 control-label no-padding-right">状态</label>
-                            <label style="margin:5px 0 0 10px;">
-                                <input class="checkbox-slider slider-icon colored-success" type="checkbox" name="status" checked="checked">
-                                <span class="text"></span>
-                            </label>
                         </div>
 
                         <div class="form-group">
@@ -139,7 +129,7 @@
                 $('input.checkbox-parent').on('change', function() {
                     //动态选择框，上下级选中状态变化
                     var dataid = $(this).attr("dataid");
-                    console.log(dataid);
+                    // console.log(dataid);
                     $('input[dataid^=' + dataid + ']').prop('checked', $(this).is(':checked'));
                     //[dataid^=value]匹配指定属性以value开始的input元素，和正则^以xx开始相似
                     //prop()函数用于设置或返回当前jQuery对象所匹配的元素的属性值。

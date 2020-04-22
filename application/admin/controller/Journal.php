@@ -109,9 +109,18 @@ class Journal extends Common
 		$ids=json_decode($ids);
 		$ids = implode(",", $ids);
 		$time=time();
+		$article=db('article')->where('id','in',$ids)->select();
+		$draftid='0';
+		foreach ($article as $v) {
+			$draftid=$draftid.",".$v['draftid'];
+		}
 		// return json(['code'=>1,'msg'=>$ids]);
 		if(db('article')->where('id','in',$ids)->update(['is_use'=>1,'use_time'=>$time])){
-			return json(['code'=>1,'msg'=>'发布成功！']);
+			if(db('draft')->where('id','in',$draftid)->update(['is_use'=>1,'use_time'=>$time])){
+				return json(['code'=>1,'msg'=>'发布成功！']);
+			}else{
+				return json(['code'=>2,'msg'=>'发布失败！']);
+			}
 		}else{
 			return json(['code'=>2,'msg'=>'发布失败！']);
 		}
@@ -121,9 +130,18 @@ class Journal extends Common
 		$ids = trim($_POST['ids']);
 		$ids=json_decode($ids);
 		$ids = implode(",", $ids);
+		$article=db('article')->where('id','in',$ids)->select();
+		$draftid='0';
+		foreach ($article as $v) {
+			$draftid=$draftid.",".$v['draftid'];
+		}
 		// return json(['code'=>1,'msg'=>$ids]);
 		if(db('article')->where('id','in',$ids)->update(['is_use'=>0,'use_time'=>0])){
-			return json(['code'=>1,'msg'=>'已取消！']);
+			if(db('draft')->where('id','in',$draftid)->update(['is_use'=>0,'use_time'=>0])){
+				return json(['code'=>1,'msg'=>'已取消！']);
+			}else{
+				return json(['code'=>2,'msg'=>'取消失败！']);
+			}
 		}else{
 			return json(['code'=>2,'msg'=>'取消失败！']);
 		}
@@ -194,12 +212,12 @@ class Journal extends Common
 		return view();
 	}
 
-	public function del(){
-		if(db('journal')->delete(input('id'))){
-			return json(['code'=>1,'msg'=>'删除成功!']);
-		}else{
-			return json(['code'=>2,'msg'=>'删除失败!']);
-		} 
-	}
+	// public function del(){
+	// 	if(db('journal')->delete(input('id'))){
+	// 		return json(['code'=>1,'msg'=>'删除成功!']);
+	// 	}else{
+	// 		return json(['code'=>2,'msg'=>'删除失败!']);
+	// 	} 
+	// }
 
 }

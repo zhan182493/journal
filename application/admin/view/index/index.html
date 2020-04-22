@@ -11,13 +11,24 @@
     <link href="__ADMIN__/style/bootstrap.css" rel="stylesheet">
     <link href="__ADMIN__/style/font-awesome.css" rel="stylesheet">
     <link href="__ADMIN__/style/weather-icons.css" rel="stylesheet">
+    
 
     <!--Beyond styles-->
-    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
+    
     <link href="__ADMIN__/style/demo.css" rel="stylesheet">
     <link href="__ADMIN__/style/typicons.css" rel="stylesheet">
     <link href="__ADMIN__/style/animate.css" rel="stylesheet">
+    <link id="beyond-link" href="__ADMIN__/style/beyond.css" rel="stylesheet" type="text/css">
 
+
+    <style type="text/css">
+        td{
+            vertical-align: middle!important;
+        }
+        .sys_msg span{
+            margin-right: 30px;            
+        }
+    </style>
 </head>
 <body>
 	<!-- 头部 -->
@@ -34,35 +45,128 @@
             <!-- Page Content -->
             <div class="page-content">
                 <!-- Page Breadcrumb -->
-                <div class="page-breadcrumbs" style="">
+                <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
-                    <li class="active">面包屑导航</li>
+                    <li class="active">首页</li>
                     </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
-
                 <!-- Page Body -->
                 <div class="page-body">
-                    
-				welcome!
-
-                </div>
-                
-
-                </div>
-                <!-- /Page Body -->
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                           <div class="widget">
+                                <div class="widget-body">
+                                    <div class="flip-scroll">                 
+            <div class="sys_message">
+                <table class="table ">
+                    <thead class="text-center">
+                        <tr>
+                            <td colspan="2" style="width: 48%;">期刊信息</td>
+                            <td>系统信息</td>
+                            <td style="width: 18%;">快捷导航</td>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr>
+                            <td>
+                                <img alt="" src="{$journal['pic']}" style="width: 200px;height: 270px;" />
+                            </td>
+                            <td>
+                                <p>期刊名称：{$journal['title']}</p>
+                                <p>周期类型：{$journal['cycle']}</p>
+                                <p>ISSN：{$journal['issn']}</p>
+                                <p>CN：{$journal['cn']}</p>
+                                <p>期刊分类号：{$journal['jclassid']}</p>
+                                <p>责任主编：{$journal['name']}</p>
+                                <p>创刊时间：{$journal['create_time']}</p>
+                            </td>
+                            <td class="sys_msg">
+                                <p>北京时间：<span class="time"></span></p>
+                                <p><span>动态总数：{$num_news} | <a href="{:url('news/lst')}">管理</a></span>
+                                <span>链接总数：{$num_link} | <a href="{:url('link/lst')}">管理</a></span></p>
+                                <p><span>公告总数：{$num_notice} | <a href="{:url('notice/lst')}">管理</a></span>
+                                <span>文章总数：{$num_article} | <a href="{:url('article/lst')}">管理</a></span></p>
+                                <p><span>稿件总数：{$num_draft} | <a href="{:url('draft/lst')}">管理</a></span></p>
+                                <p><span class="label label-warning"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">待审核：{$num_check}</font></font></span>
+                                <span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">已通过：{$num_pass}</font></font></span></p>
+                                <p><span class="label label-warning"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">待支付：{$num_pay}</font></font></span>
+                                <span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">已发布：{$num_use}</font></font></span></p>
+                            </td>
+                            <td>
+                                <p><span><a href="{:url('article/add')}"><i class="menu-icon fa fa-pencil-square-o"></i> 编辑文章</a></span></p>
+                                <p><span><a href="{:url('notice/add')}"><i class="menu-icon fa fa-bullhorn"></i> 发布公告</a></span></p>
+                                <p><span><a href="{:url('news/add')}"><i class="menu-icon fa fa-rocket"></i> 发布动态</a></span></p>
+                                <p><span><a href="{:url('pay/lst')}"><i class="menu-icon fa fa-credit-card"></i> 稿费支付</a></span></p>
+                                <p><span><a href="javascript:;" class="clear"><i class="menu-icon fa fa-trash-o"></i> 清理缓存</a></span></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <!-- /Page Content -->
-		</div>	
-	</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>     
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Body -->
+        </div>
+        <!-- /Page Content -->
+    </div>
 
+		
 	    <!--Basic Scripts-->
     <script src="__ADMIN__/style/jquery_002.js"></script>
     <script src="__ADMIN__/style/bootstrap.js"></script>
     <script src="__ADMIN__/style/jquery.js"></script>
     <!--Beyond Scripts-->
     <script src="__ADMIN__/style/beyond.js"></script>
+    <!-- layer -->
+    <script type="text/javascript" src="__ADMIN__/layer/layer.js"></script>
     
+    <script>
+        $(function(){
+            //时间显示
+            setInterval(function() {
+              var now = (new Date()).toLocaleString();
+              $('.time').text(now);
+            }, 1000);
 
+            //清理缓存
+        $('.clear').click(function(){
+            //询问框
+            layer.confirm('您确定要清除吗？', {
+                  btn: ['确定','取消'] //按钮
+                },function(index){
+                    $.ajax({
+                        url:"{:url('index/clear_all')}",
+                        type:"post",
+                        data:{id:1},
+                        dateType:"json",
+                        success:function(data){
+                            if(data.code==1){
+                                layer.msg(data.msg,{icon:1,time:500,},
+                                function(){
+                                    location.reload();
+                                });
+                            }else if(data.code==2){
+                                layer.msg(data.msg,{
+                                icon:2,
+                                time:500,},
+                                function(){
+                                    location.reload();
+                                });
+                            }
+                        }
+                    });
+                    layer.close(index);
+                });
+            });
+
+
+        });
+    </script>
 
 </body></html>

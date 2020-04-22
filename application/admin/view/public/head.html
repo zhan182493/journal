@@ -22,7 +22,7 @@
                         <li>
                             <a class="login-area dropdown-toggle" data-toggle="dropdown" style="width: 100px;border-left:2px solid white;">
                                 <section>
-                                    <h2><span class="profile"><span>admin</span></span></h2>
+                                    <h2><span class="profile"><span>{$name} <i class="fa  fa-angle-down"></i></span></span></h2>
                                 </section>
                             </a>
                             <!--Login Area Dropdown-->
@@ -32,7 +32,7 @@
                                     <a href="{:url('login/logout')}">退出登录</a>
                                 </li>
                                 <li class="dropdown-footer" style="text-align: center;">
-                                    <a href="/admin/user/changePwd.html">修改密码</a>
+                                    <a href="{:url('user/edit',array('uid'=>cookie('uid'),'rid'=>cookie('rid')))}">修改密码</a>
                                 </li>
                             </ul>
                             <!--/Login Area Dropdown-->
