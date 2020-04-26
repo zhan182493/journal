@@ -79,8 +79,12 @@ class Reviewers extends Common{
 	public function edit(){
 		if(request()->isPost()){
 			$data=input('post.');
-			$data['pwd']=MD5("zxcv".$data['pwd']);
 			$find=db('user')->where('id',$data['id'])->find();
+			if($data['pwd']==''){
+				$data['pwd']=$find['pwd'];
+			}else{
+				$data['pwd']=MD5("zxcv".$data['pwd']);
+			}
 			$user=new User;
 			if($user->update($data)){
 				if($data['pwd']==$find['pwd']){

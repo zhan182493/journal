@@ -86,8 +86,9 @@
 						<div class="jtitle">
 							<div class="njq">{$year}年 第{$juan}卷 第{$qishu}期 &nbsp;&nbsp; 刊出日期：{$date}</div>
 						</div>
-<form id="AbstractList" action="" method=post target=_blank>
+<!-- <form id="AbstractList" action="" method=post target=_blank> -->
 {volist name="artlst" id="vo"}
+
 	<div  class=noselectrow>
 		<div class="wenzhang">
 		<dl>							
@@ -96,11 +97,12 @@
 					<a target="_blank" href="{:url('article/article',array('id'=>$vo['id']))}" class="biaoti">{$vo['atitle']}</a>	( <font color="red">{$vo['click']}</font> )&nbsp;&nbsp;					
 				{$vo['name']}
 				<div style="float: right;">
+					<input type="hidden" id="aid" value="{$vo['id']}">
 					<img src="http://www.journal.shu.edu.cn/images/1007-2861/abstract2.png" width="16" height="16"> 
 					<a class="txt_zhaiyao" href="javascript:void(0);" >摘要</a> 
 					<img src="http://www.journal.shu.edu.cn/images/1007-2861/pdf.png" width="16" height="16">
 					<a class="download" href="{$vo['thumb']}"  target="_blank">下载</a>
-					(<font color="red">{$vo['download']}</font>)&nbsp;&nbsp; 
+					(<font color="red" id="download{$vo['id']}">{$vo['download']}</font>)&nbsp;&nbsp; 
 					</div>										
 				</dd>
 
@@ -110,7 +112,7 @@
 		</div>
 	</div>
 	{/volist}
-</form>
+<!-- </form> -->
 					</div>
 				</div>
 		</div>
@@ -138,6 +140,27 @@
 			}else{
 				$(id).css('display','block');
 			} 
+		});
+
+		$('.download').click(function(){
+			var aid=$(this).parent().children('#aid').val();
+			// alert(aid);return false;
+			$.ajax({
+				url:"{:url('article/add_download')}",
+				type:"post",
+				data:{aid:aid},
+				datatype:"json",
+				success:function(data){
+					if(data.code==1){
+						// alert(data.num);return false;
+						var id="#download"+aid;
+						$(id).text(data.num);
+						// alert($(id).text());return false;
+					}else{
+						alert(data.num);
+					}
+				}
+			});
 		});
 
 

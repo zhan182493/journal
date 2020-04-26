@@ -9,6 +9,7 @@ class Register extends Common
 
 		if(request()->isPost()){
 			$data=input('post.');
+			// dump($data);die;
 			$validate=validate("Register"); //使用验证
            //scene("save")->check($data)内置方法
            if(!$validate->check($data)){
@@ -22,13 +23,7 @@ class Register extends Common
 			}elseif(db('user')->where('tel',$data['tel'])->find()){
 				return $this->error('该已注册过账号！');
 			}
-			if(input('men')){
-				$data['sex']=1;
-				unset($data['men']);
-			}else{
-				$data['sex']=2;
-				unset($data['women']);
-			}
+			
 			$pwd="zxcv".$data['password'];
 			$data['pwd']=MD5($pwd);
 			unset($data['password']);

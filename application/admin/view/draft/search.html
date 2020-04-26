@@ -124,7 +124,7 @@
                     </div>
                     <div class="modal-body">
                       姓名：{$vo['author']}<br>
-                      性别：{$vo['sex']}<br>
+                      性别：{if condition="$vo['sex'] eq 1"}男{else /}女{/if}<br>
                       年龄：{$vo['age']}<br>
                       身份证号：{$vo['idnum']}<br>
                       现住址：{$vo['nowaddress']}<br>
@@ -271,8 +271,8 @@
         $('.del').on('click',function(){
             var did=$(this).attr('did');
             //询问框
-            layer.confirm('确认删除？', {
-                title:'提示',
+            layer.confirm('警告：删除稿件会删除该稿件相关的文章！！！确认删除？', {
+                title:'警告',
                 btn: ['确认','取消'] //按钮
             }, function(index){
                 $.ajax({

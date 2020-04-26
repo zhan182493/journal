@@ -6,6 +6,8 @@ class Article extends Common
 {
 	public function article(){
 		$article=db('user')->alias('u')->join('article a','a.aid=u.id','LEFT')->where('a.id',input('id'))->find();
+		$click=$article['click']+1;
+		db('article')->where('id',input('id'))->update(['click'=>$click]);
 		// dump($article);die;
 		$acate=db('acate')->where("id",$article['acateid'])->find();
 		$draft=db('draft')->where('id',$article['draftid'])->find();
@@ -21,5 +23,15 @@ class Article extends Common
 		// dump($article);die;
 			$this->assign('art',$article);
 		return view();
+	}
+
+	public function add_download(){
+		$article=db('article')->where('id',input('aid'))->find();
+		$download=$article['download']+1;
+		if(db('article')->where('id',input('aid'))->update(['download'=>$download])){
+			return json(['code'=>1,'num'=>$download]);
+		}else{
+			return json(['code'=>2,'num'=>'失败']);
+		}
 	}
 }

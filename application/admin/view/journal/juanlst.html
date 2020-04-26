@@ -50,17 +50,35 @@
                 <div class="page-body">
                     
 <div class="btn-group">
-   <button type="button" class="btn btn-sm btn-azure btn-addon" data-toggle="dropdown">第{$qishu}期<span class="caret"></span>
+   <button type="button" class="btn btn-sm btn-azure btn-addon" id="juan_get" data-toggle="dropdown" value="{$juan}">第{$juan}卷<span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu" role="menu" style="min-width: 71px;">
+    {volist name="juanlst" id="vo"}
+    <form action="{:url('artlst')}" method="post">
+    <input type="hidden" name="qishu" id="qishu_val">
+    <input type="hidden" name="jname" value="{$jname}">
+    <input type="hidden" name="juan" value="{$vo['juan']}">
+    <input type="hidden" name="jid" value="{$jid}">
+    <li><span class="val" hidden>{$vo['juan']}</span>
+    <input class="btn btn-block btn-azure juan_sub" type="button" value="第{$vo['juan']}卷">
+
+    </li></form>
+    {/volist} 
+   </ul>
+</div>
+
+<div class="btn-group">
+   <button type="button" class="btn btn-sm btn-azure btn-addon" id="qishu_get" data-toggle="dropdown" value="{$qishu}">第{$qishu}期<span class="caret"></span>
    </button>
    <ul class="dropdown-menu" role="menu" style="min-width: 71px;">
     {volist name="qishulst" id="vo"}
-    <form action="{:url('artlst')}" method="post" id="roleform">
+    <form action="{:url('artlst')}" method="post">
     <input type="hidden" name="qishu" value="{$vo['qishu']}">
     <input type="hidden" name="jname" value="{$jname}">
-    <input type="hidden" name="juan" value="{$juan}">
+    <input type="hidden" name="juan" id="juan_val">
     <input type="hidden" name="jid" value="{$jid}">
     <li><span class="val" hidden>{$vo['qishu']}</span>
-    <input class="btn btn-block btn-azure qishu" type="submit" value="第{$vo['qishu']}期">
+    <input class="btn btn-block btn-azure qishu_sub" type="button" value="第{$vo['qishu']}期">
     </li></form>
     {/volist} 
    </ul>
@@ -278,6 +296,21 @@
             
         });
 
+        //期数，卷选择
+        $('.qishu_sub').click(function(){
+            var juan=$('#juan_get').val();
+            $(this).parent().parent().children('#juan_val').val(juan);
+            $(this).parent().parent().submit();
+        });
+
+        $('.juan_sub').click(function(){
+            var qishu=$('#qishu_get').val();
+            $(this).parent().parent().children('#qishu_val').val(qishu);
+            $(this).parent().parent().submit();
+        });
+            
+        
+        
 
     });
 </script>

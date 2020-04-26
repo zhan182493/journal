@@ -22,7 +22,7 @@ class Joulist extends Common
 			foreach ($arts2 as $key => $val) {
 				$qishu[]=$val['qishu'];
 			}
-			
+			sort($qishu);
 			$juanlst[$i]['qishu']=$qishu;
 			$qishu='';
 			$years=db('article')->where('juan',$v['juan'])->field('use_time')->distinct(true)->select();
@@ -34,6 +34,7 @@ class Joulist extends Common
 			$i++;
 			
 		}
+		// $juanlst=sort($juanlst);
 		// dump($juanlst);die;
 		$this->assign('title','过刊浏览');
 		$this->assign('juanlst',$juanlst);
@@ -49,7 +50,19 @@ class Joulist extends Common
 			$one=db('article')->where('juan',$juan)->find();
 			$year=date('Y',$one['use_time']);
 		}
-		$artlst=db('article')->where('juan',$juan)->where('qishu',$qishu)->select();
+		$artres=db('user')->alias('u')->join('article a','a.aid=u.id')->where('a.juan',$juan)->where('a.qishu',$qishu)->where('a.is_use',1)->select();
+        if(!$artres){
+            $qishu--;
+            $artres=db('user')->alias('u')->join('article a','a.aid=u.id')->where('a.juan',$juan)->where('a.qishu',$qishu)->where('a.is_use',1)->select();
+        }
+
+        $artlst=[];
+        foreach ($artres as $v) {
+            $draft=db('draft')->where('id',$v['draftid'])->find();
+            $v['thumb']=$draft['thumb'];
+            $v['fthumb']=$draft['fthumb'];
+            $artlst[]=$v;
+        }
 		$this->assign('artlst',$artlst);
 		$this->assign('year',$year);
 		$this->assign('juan',$juan);

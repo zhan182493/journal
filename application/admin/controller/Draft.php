@@ -60,7 +60,9 @@ class Draft extends Common
 	}
 
 	public function del(){
-		if(db('draft')->delete(input('id'))){
+		$article=db('article')->where('draftid',input('id'))->delete();
+		$draft=db('draft')->delete(input('id'));
+		if($article!==false&&$draft!==false){
 			return json(['code'=>1,'msg'=>'删除成功!']);
 		}else{
 			return json(['code'=>2,'msg'=>'删除失败!']);
@@ -69,14 +71,19 @@ class Draft extends Common
 	
 
 	public function search(){
+		// dump(input('search'));die;
 		if(input('search')){
 			$user=db('user')->where('name','like','%'.input('search').'%')->select();
+			// dump($user);die;
 			if($user){
 				$aids=[];
 				foreach ($user as $k => $v) {
 					array_push($aids,$v['id']);
 				}
-				$draftlst=db('draft')->where('title','like','%'.input('search').'%')->whereOr('id','in',$aids)->paginate(5)->each(function($v){return $this->fun($v);});
+				$aids=implode(',',$aids);
+				// dump($aids);die;
+				$draftlst=db('draft')->where('title','like','%'.input('search').'%')->whereOr('uid','in',$aids)->paginate(5)->each(function($v){return $this->fun($v);});
+				// dump($draftlst);die;
 			}else{
 				$draftlst=db('draft')->where('title','like','%'.input('search').'%')->paginate(5)->each(function($v){return $this->fun($v);});
 			}

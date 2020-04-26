@@ -141,7 +141,7 @@
           </div>
 
           <div class="col-lg-4">
-            <p><input type="text" name="title" placeholder="请输入标题" style="margin-top: 50px;"></p>
+            <p><input type="text" name="title" placeholder="请输入标题" required style="margin-top: 50px;"></p>
             
             <p><select name="acateid" id="" style="width: 100%;height: 34px;margin-top:40px;">
               <option value="0">请选择类型</option>
@@ -360,13 +360,13 @@
                 <div class="form-col">
                   <div class="form-group">
                     <label for="pwd">新密码</label>
-                      <input type="password" class="form-control" id="pwd" name="pwd" placeholder="请输入新密码" required minlength="6">
+                      <input type="password" class="form-control" id="pwd" name="pwd" placeholder="请输入新密码" minlength="6">
                   </div><!--/.form-group -->
                 </div><!--/.form-group -->
                 <div class="form-col1">
                   <div class="form-group">
                     <label for="rpwd"> 确认密码</label>
-                      <input type="password" class="form-control" id="rpwd" placeholder="请确认密码"  required>
+                      <input type="password" class="form-control" id="rpwd" placeholder="请确认密码" >
                   </div><!--/.form-group -->
                 </div><!--/.form-col1 -->
 
@@ -375,11 +375,11 @@
                     <label for="sex">性别</label>
                     <div class="form-control" id="sex" style="border:0;">
                       <div class="radio icheck-primary" style="float: left;">
-                    <input type="radio" id="men" name="men" {if condition="$user['sex'] eq 1"}checked="checked"{/if}>
+                    <input type="radio" id="men" name="sex" value="1" {if condition="$user['sex'] eq 1"}checked="checked"{/if}>
                     <label for="men">男</label>
                     </div>
                       <div class="radio icheck-primary" style="float: left;margin-left: 20px;">
-                    <input type="radio"  id="women" name="women" {if condition="$user['sex'] eq 2"}checked="checked"{/if}>
+                    <input type="radio"  id="women" name="sex" value="2" {if condition="$user['sex'] eq 2"}checked="checked"{/if}>
                     <label for="women">女</label>
                     </div>
                     </div>

@@ -50,7 +50,8 @@ class Author extends Common{
                 $filename=input('title').'-'.input('author');
                 //移动到框架应用根目录/public/uploads/fengmian目录下
                 $info = $file->validate(['ext'=>'doc,pdf,wps'])->move(ROOT_PATH . 'public' . DS . '/uploads/draft',iconv("UTF-8","gb2312",$filename));
-				if(!$info){
+                // dump($info);die;
+				if($info==false){
 					return $this->error('稿件类型错误，请选择doc、pdf、wps类型文件！');
 				}
                 $data['thumb']='/uploads/draft/'.iconv("gb2312","UTF-8",$info->getSaveName());
@@ -60,13 +61,13 @@ class Author extends Common{
                 	$file2=request()->file('fthumb');
                 $filename2=input('title').'-'.input('author').'(附件)';
                 $info2 = $file2->validate(['ext'=>'doc,pdf,wps'])->move(ROOT_PATH . 'public' . DS . '/uploads/draft',iconv("UTF-8","gb2312",$filename2));
-                if(!$info2){
+                if($info2==false){
 					return $this->error('附件类型错误，请选择doc、pdf、wps类型文件！');
 				}
                 $data['fthumb']='/uploads/draft/'.iconv("gb2312","UTF-8",$info2->getSaveName());
                 }
-                
-
+			}else{
+				return $this->error('请选择稿件！');
 			}
 			// dump($data); die;
 			
@@ -122,15 +123,15 @@ class Author extends Common{
 	public function edit(){
 		if(request()->isPost()){
 			$data=input('post.');
-			$data['pwd']=MD5("zxcv".$data['pwd']);
+			// dump($data);die;
 			$find=db('user')->where('id',$data['id'])->find();
-			if($data['men']){
-				$data['sex']=1;
-				unset($data['men']);
+			if($data['pwd']==''){
+				$data['pwd']=$find['pwd'];
 			}else{
-				$data['sex']=2;
-				unset($data['women']);
+				$data['pwd']=MD5("zxcv".$data['pwd']);
 			}
+			// dump($data);die;
+
 			$user=new User;
 			if($user->update($data)){
 				if($data['pwd']==$find['pwd']){

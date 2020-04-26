@@ -37,7 +37,6 @@ class Article extends Common
 				$v['direction']='网站开发';
 			}
 		}
-		
 		return $v;
 	}
 
@@ -61,18 +60,29 @@ class Article extends Common
 		$journal=db('journal')->select();
 		if(request()->isPost()){
 			$data=input('post.');
-			// dump($data);die;
-			$draft=db('draft')->where('id',$data['draftid'])->find();
-			$data['aid']=$draft['uid'];
-			$data['acateid']=$draft['acateid'];
-			//卷
+			if(db('article')->where('atitle',$data['atitle'])->find()){
+				return $this->error("文章题目已存在！");
+			}
+			/*-----文章编号number-----*/
+			//期刊
 			$joures=db('journal')->where('id',$data['jid'])->find();
+			$issn=$joures['issn'];
 			//创刊年
 			$year=date('Y',$joures['create_time']);
 			//当前年
 			$year2=date('Y',time());
 			$data['juan']=$year2-$year+1;
-			// dump($data['juan']);die;
+			$year=date('Y',time());
+			$qishu=$data['qishu'];
+			$begin_page=db('article')->sum('page');//文章在期刊的开始页码
+			$page=$data['page'];
+			$data['number']=$issn."(".$year.")".$qishu."-".$begin_page."-".$page;
+			/*-----文章编号number-----*/
+			// dump($data);die;
+			$draft=db('draft')->where('id',$data['draftid'])->find();
+			$data['aid']=$draft['uid'];
+			$data['acateid']=$draft['acateid'];
+			// dump($data);die;
 			$article=new ArtModel;
 			$res=$article->save($data);
 			if($res){
@@ -83,7 +93,15 @@ class Article extends Common
 		}
 		
 		// dump($journal);die;
-		$draft=db('draft')->where('is_pay',1)->where('is_use',0)->select();
+		$draftids=[];
+		$draftres=db('draft')->where('is_pay',1)->where('is_use',0)->select();
+		foreach ($draftres as $k => $v) {
+			if(db('article')->where('draftid',$v['id'])->find()){
+				$draftids[]=$v['id'];
+			}
+		}
+		$draftids=implode(',',$draftids);
+		$draft=db('draft')->where('is_pay',1)->where('is_use',0)->where('id','not in',$draftids)->select();
 		$this->assign('draft',$draft);
 		$this->assign('acate',$acate);
 		$this->assign('journal',$journal);
@@ -97,6 +115,24 @@ class Article extends Common
 		// dump($article);die;
 		if(request()->isPost()){
 			$data=input('post.');
+			/*-----文章编号number-----*/
+			//期刊
+			$joures=db('journal')->where('id',$data['jid'])->find();
+			$issn=$joures['issn'];
+			//创刊年
+			$year=date('Y',$joures['create_time']);
+			//当前年
+			$year2=date('Y',time());
+			$data['juan']=$year2-$year+1;
+			$year=date('Y',time());
+			$qishu=$data['qishu'];
+			$begin_page=db('article')->where('id','<',$data['id'])->sum('page');//文章在期刊的开始页码
+			$page=$data['page'];
+			$data['number']=$issn."(".$year.")".$qishu."-".$begin_page."-".$page;
+			/*-----文章编号number-----*/
+			$draft=db('draft')->where('id',$data['draftid'])->find();
+			$data['aid']=$draft['uid'];
+			$data['acateid']=$draft['acateid'];
 			// dump($data);die;
 			$article=new ArtModel;
 			$res=$article->update($data);
@@ -106,7 +142,17 @@ class Article extends Common
 				return $this->error('修改失败！');
 			}
 		}
-		$draft=db('draft')->where('is_pay',1)->where('is_use',0)->select();
+		$draftids=[];
+		$draftres=db('draft')->where('is_pay',1)->where('is_use',0)->select();
+		foreach ($draftres as $k => $v) {
+			if(db('article')->where('draftid',$v['id'])->find()){
+				$draftids[]=$v['id'];
+			}
+		}
+		$draftids=implode(',',$draftids);
+		$draftids=str_replace($article['draftid'], '', $draftids);
+		// dump($draftids);die;
+		$draft=db('draft')->where('is_pay',1)->where('is_use',0)->where('id','not in',$draftids)->select();
 		$this->assign('draft',$draft);
 		$this->assign('acate',$acate);
 		$this->assign('article',$article);
@@ -206,16 +252,16 @@ class Article extends Common
 
 	public function getjuan(){
 		$arts=db('article')->field('juan')->distinct(true)->select();
-		$years=db('article')->field('use_time')->distinct(true)->select();
-		// dump($years);die;
+		$years=db('article')->field('create_time')->distinct(true)->select();
+		
 		$juanlst=[];
 		$i=0;
 		foreach ($arts as $k => $v) {
 			$juanlst[$i]['juan']=$v['juan'];
-			$years=db('article')->where('juan',$v['juan'])->field('use_time')->distinct(true)->select();
-			
+			$years=db('article')->where('juan',$v['juan'])->field('create_time')->distinct(true)->select();
+			// dump($years);die;
 			foreach ($years as $key2 => $val2) {
-				$year=date('Y',$val2['use_time']);
+				$year=date('Y',$val2['create_time']);
 			}
 			$juanlst[$i]['year']=$year;
 			$i++;
@@ -231,6 +277,7 @@ class Article extends Common
 			foreach ($arts as $key => $v) {
 				$qishu[]=$v['qishu'];
 			}
+			sort($qishu);
 			return json(['code'=>1,'msg'=>$qishu]);
 		}else{
 			$qishu='';

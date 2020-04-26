@@ -33,7 +33,7 @@ class Journal extends Common
 	}
 
 	public function juanlst(){
-		if(request()->isGet()){
+		if(input('jid')){
 			// dump(input('juan'));die;
 			$jid=input('jid');
 			$juan=input('juan');
@@ -46,16 +46,19 @@ class Journal extends Common
 				// dump($qishulst);die;
 			}
 			$fabu=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->field('is_use')->find();
+			$juanlst=db('article')->alias('a')->join('journal j','j.id=a.jid')->field('a.juan')->Distinct(true)->order('a.juan asc')->select();//关键词 DISTINCT 用于返回唯一不同的值
 			$this->assign('fabu',$fabu['is_use']);
 			$this->assign('juan',$juan);
 			$this->assign('artlst',$artlst);
 			$this->assign('qishulst',$qishulst);
+			$this->assign('juanlst',$juanlst);
 			$this->assign('jname',$jname);
 			$this->assign('jid',$jid);
 			$this->assign('qishu',1);
 			return view();
 		}
-
+		$juanlst=db('article')->alias('a')->join('journal j','j.id=a.jid')->field('a.juan')->Distinct(true)->order('a.juan asc')->select();//关键词 DISTINCT 用于返回唯一不同的值
+		// dump($juanlst);die;
 		$juan=1;
 		$jres=db('journal')->find();
 		$jname=$jres['title'];
@@ -69,10 +72,12 @@ class Journal extends Common
 			// dump($qishulst);die;
 		}
 		$fabu=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->field('is_use')->find();
+		// dump($juanlst);die;
 		$this->assign('fabu',$fabu['is_use']);
 		$this->assign('juan',$juan);
 		$this->assign('artlst',$artlst);
 		$this->assign('qishulst',$qishulst);
+		$this->assign('juanlst',$juanlst);
 		$this->assign('jname',$jname);
 		$this->assign('jid',$jid);
 		$this->assign('qishu',1);
@@ -81,10 +86,12 @@ class Journal extends Common
 
 	public function artlst(){
 		if(request()->isPost()){
+			// dump(input('post.'));die;
 			$jid=input('jid');
 			$juan=input('juan');
 			$jname=input('jname');
 			$qishu=input('qishu');
+			// dump($qishu);die;
 			$artlst=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',$qishu)->select();
 			$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
 			$qishulst=[];
@@ -93,10 +100,12 @@ class Journal extends Common
 				// dump($qishulst);die;
 			}
 			$fabu=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',$qishu)->field('is_use')->find();
+			$juanlst=db('article')->alias('a')->join('journal j','j.id=a.jid')->field('a.juan')->Distinct(true)->order('a.juan asc')->select();//关键词 DISTINCT 用于返回唯一不同的值
 			$this->assign('fabu',$fabu['is_use']);
 			$this->assign('juan',$juan);
 			$this->assign('artlst',$artlst);
 			$this->assign('qishulst',$qishulst);
+			$this->assign('juanlst',$juanlst);
 			$this->assign('jname',$jname);
 			$this->assign('jid',$jid);
 			$this->assign('qishu',input('qishu'));

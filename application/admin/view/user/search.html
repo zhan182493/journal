@@ -144,28 +144,35 @@
 
         $('.del').on('click',function(){
             var uid=$(this).attr('uid');
-            $.ajax({
-                url:"{:url('del')}",
-                type:"post",
-                data:{uid:uid},
-                datatype:"json",
-                success:function(data){
-                    if(data.code==1){
-                        layer.msg(data.msg,{
-                        icon:1,
-                        time:1000,},
-                        function(){
-                            location.reload();
-                        });
-                    }else if(data.code==2){
-                        layer.msg(data.msg,{
-                        icon:2,
-                        time:1000,},
-                        function(){
-                            location.reload();
-                        });
+            //询问框
+            layer.confirm('确认继续删除？(警告:删除用户账号将删除所有该用户相关的稿件及文章！！)', {
+                title:'警告',
+                btn: ['确认','取消'] //按钮
+            }, function(index){
+                $.ajax({
+                    url:"{:url('del')}",
+                    type:"post",
+                    data:{uid:uid},
+                    datatype:"json",
+                    success:function(data){
+                        if(data.code==1){
+                            layer.msg(data.msg,{
+                            icon:1,
+                            time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }else if(data.code==2){
+                            layer.msg(data.msg,{
+                            icon:2,
+                            time:500,},
+                            function(){
+                                location.reload();
+                            });
+                        }
                     }
-                }
+                });
+                layer.close(index);
             });
         });
         

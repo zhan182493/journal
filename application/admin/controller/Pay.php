@@ -5,7 +5,7 @@ use app\admin\controller\Common;
 class Pay extends Common
 {
 	public function lst(){
-		$draftlst=db('draft')->where('is_pass',1)->paginate(5)->each(function($v){
+		$draftlst=db('draft')->where('is_pass',1)->order('create_time desc')->paginate(5)->each(function($v){
             if($v['uid']!==''){
 			$author=db('user')->where('id',$v['uid'])->find();
 			if($author){

@@ -148,12 +148,16 @@ class User extends Common
 
 	public function del(){
 		// dump(input('id'));die;
-		if(db('auth_group_access')->delete(input('uid'))){
-			if(db('user')->delete(input('uid'))){
-				return json(['code'=>1,'msg'=>'删除成功!']);
-			}else{
-				return json(['code'=>2,'msg'=>'删除失败!']);
-			} 
+		//删除稿件
+		$draft=db('draft')->where('uid',input('uid'))->delete();
+		//删除文章
+		$article=db('article')->where('aid',input('uid'))->delete();
+		//删除角色对应关系
+		$role_access=db('auth_group_access')->delete(input('uid'));
+		//删除用户
+		$user=db('user')->delete(input('uid'));
+		if($draft!==false&&$article!==false&&$role_access!==false&&$user!==false){
+			return json(['code'=>1,'msg'=>'删除成功!']);
 		}else{
 			return json(['code'=>2,'msg'=>'删除失败!']);
 		}

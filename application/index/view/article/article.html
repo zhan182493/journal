@@ -30,6 +30,7 @@
          {$art['atitle']}
          
        </h2>
+       <input type="hidden" id="aid" value="{$art['id']}">
        <p><small>[{$art['number']}]</small> </p>
 		<!-- 文章编号：XXXX－XXXX（YYYY）NN－PPPP－CC
 		XXXX－XXXX为文章所在期刊的国际标准刊号(ISSN，参见GB 9999)，YYYY 为文章所在期刊的出版年，NN为文章所在期刊的期次，PPPP 为文章首页所在期刊页码，CC为文章页数，“-”为连字符。 -->
@@ -58,22 +59,13 @@
         <div class="row diyihangdg">
 			<div class="col-xs-6 col-sm-4 col-md-2 col-lg-2 margin-bottom-10">
 	            <span class="change-section">
-	                <a href="{$art['thumb']}" class="black-bg btn-menu">
+	                <a href="{$art['thumb']}" class="black-bg btn-menu download">
 	                    <img src="__INDEX__/images/download.jpg" alt="">
 	                    <h2>下载 </h2>
-	                    <span class="badge">{$art['download']}</span>
+	                    <span class="badge" id="download">{$art['download']}</span>
 	                </a>
 	            </span>
             </div>
-            <!-- <div class="col-xs-6 col-sm-4 col-md-2 col-lg-2 margin-bottom-10" id="knowledge_map_div" style="display:none;">
-                <span class="change-section">
-                    <a href="#">
-                        <i class="fa text-muted"><img src="../../images/knowledge_map1.png" height="40" style="margin:0px;" width="36" id="knowledge_map_img"></i>
-                        <h2>可视化</h2>
-                        <span class="badge" id="knowledge_map_count">0</span>
-                    </a>
-                </span>
-            </div> -->
         </div>        
     </div>
 
@@ -144,5 +136,32 @@
 	{include file="public/foot" /}
 <!-- foot结束 -->
 
+<script type="text/javascript">
+$(function(){
+
+	$('.download').click(function(){
+		var aid=$('#aid').val();
+		// alert(aid);return false;
+		$.ajax({
+			url:"{:url('article/add_download')}",
+			type:"post",
+			data:{aid:aid},
+			datatype:"json",
+			success:function(data){
+				if(data.code==1){
+					// alert(data.num);return false;
+					$('#download').text(data.num);
+				}else{
+					alert(data.num);
+				}
+			}
+		});
+	});
+
+
+
+
+});
+</script>
 </body>
 </html>
