@@ -38,7 +38,8 @@ class Journal extends Common
 			$jid=input('jid');
 			$juan=input('juan');
 			$jname=input('jname');
-			$artlst=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->select();
+			$artlst=db('acate')->alias('ac')->join('article a','a.acateid=ac.id')->where('a.juan',$juan)->where('a.qishu',1)->select();
+			// $artlst=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->select();
 			$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
 			$qishulst=[];
 			foreach ($qishures as $k => $v) {
@@ -47,6 +48,7 @@ class Journal extends Common
 			}
 			$fabu=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->field('is_use')->find();
 			$juanlst=db('article')->alias('a')->join('journal j','j.id=a.jid')->field('a.juan')->Distinct(true)->order('a.juan asc')->select();//关键词 DISTINCT 用于返回唯一不同的值
+			// dump($fabu);die;
 			$this->assign('fabu',$fabu['is_use']);
 			$this->assign('juan',$juan);
 			$this->assign('artlst',$artlst);
@@ -63,7 +65,7 @@ class Journal extends Common
 		$jres=db('journal')->find();
 		$jname=$jres['title'];
 		$jid=$jres['id'];
-		$artlst=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->select();
+		$artlst=db('acate')->alias('ac')->join('article a','a.acateid=ac.id')->where('a.juan',$juan)->where('a.qishu',1)->select();
 		// dump($artlst);die;
 		$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
 		$qishulst=[];
@@ -72,7 +74,7 @@ class Journal extends Common
 			// dump($qishulst);die;
 		}
 		$fabu=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->field('is_use')->find();
-		// dump($juanlst);die;
+		// dump($fabu);die;
 		$this->assign('fabu',$fabu['is_use']);
 		$this->assign('juan',$juan);
 		$this->assign('artlst',$artlst);
@@ -92,7 +94,8 @@ class Journal extends Common
 			$jname=input('jname');
 			$qishu=input('qishu');
 			// dump($qishu);die;
-			$artlst=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',$qishu)->select();
+			$artlst=db('acate')->alias('ac')->join('article a','a.acateid=ac.id')->where('a.juan',$juan)->where('a.qishu',$qishu)->select();
+			// dump($artlst);die;
 			$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
 			$qishulst=[];
 			foreach ($qishures as $k => $v) {

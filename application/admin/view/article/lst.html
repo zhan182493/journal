@@ -104,6 +104,7 @@
                                 <th class="text-center">文章类型</th>
                                 <th class="text-center">期刊</th>
                                 <th class="text-center">期数&nbsp;&nbsp;</th>
+                                <th class="text-center">是否发布</th>
                                 <th class="text-center">浏览量</th>
                                 <th class="text-center">下载量</th>
                                 <th class="text-center">操作</th>
@@ -174,13 +175,17 @@
               <!-- 作者卡片end -->
               </td>
 
-
                                 <td align="center">{$vo['editor']}</td>
                                 <td align="center">{$vo['aclassid']}</td>
                                 <td align="center">{$vo['idcode']}</td>
                                 <td align="center">{$vo['acatename']}</td>
                                 <td align="center">{$vo['title']}</td>
                                 <td align="center">{$vo['qishu']}</td>
+                                <td align="center">{if condition="$vo['is_use'] eq 1"}
+                                <span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">已发布</font></font></span>
+                                {else /}
+                                <span class="label label-danger"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">未发布</font></font></span>
+                                {/if}</td>
                                 <td align="center">{$vo['click']}</td>
                                 <td align="center">{$vo['download']}</td>
                                 <td align="center">

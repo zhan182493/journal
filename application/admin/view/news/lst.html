@@ -77,6 +77,7 @@
                                 <th class="text-center">ID</th>
                                 <th class="text-center">动态标题</th>
                                 <th class="text-center">动态内容</th>
+                                <th class="text-center">发布时间</th>
                                 <th class="text-center">操作</th>
                             </tr>
                         </thead>
@@ -84,10 +85,9 @@
                         {volist name="newslst" id="vo"}
                         <tr>
                             <td align="center">{$vo['id']}</td>
-                            <td align="center">
-                            {$vo['title']}
-                            </td>
+                            <td align="center">{$vo['title']}</td>
                             <td align="center"><input type="button" class="btn chakan" value="点击查看" rid="{$vo['id']}"></td>
+                            <td align="center">{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
                             <td align="center">
                                 <a href="{:url('edit',array('id'=>$vo['id']
                                 ))}" class="btn btn-primary btn-sm shiny">

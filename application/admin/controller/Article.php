@@ -60,6 +60,7 @@ class Article extends Common
 		$journal=db('journal')->select();
 		if(request()->isPost()){
 			$data=input('post.');
+			// dump($data);die;
 			if(db('article')->where('atitle',$data['atitle'])->find()){
 				return $this->error("文章题目已存在！");
 			}
@@ -71,7 +72,9 @@ class Article extends Common
 			$year=date('Y',$joures['create_time']);
 			//当前年
 			$year2=date('Y',time());
-			$data['juan']=$year2-$year+1;
+			if(!isset($data['juan'])){
+				$data['juan']=$year2-$year+1;
+			}
 			$year=date('Y',time());
 			$qishu=$data['qishu'];
 			$begin_page=db('article')->sum('page');//文章在期刊的开始页码
@@ -161,8 +164,11 @@ class Article extends Common
 	}
 
 	public function del(){
+		$article=db('article')->where('id',input('id'))->find();
 		if(db('article')->delete(input('id'))){
-			return json(['code'=>1,'msg'=>'删除成功!']);
+			if(db('draft')->where('id',$article['draftid'])->update(['is_use'=>0,'use_time'=>0])){
+				return json(['code'=>1,'msg'=>'删除成功!']);
+			}
 		}else{
 			return json(['code'=>2,'msg'=>'删除失败!']);
 		} 

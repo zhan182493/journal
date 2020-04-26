@@ -103,6 +103,7 @@
                             <th class="text-center">编辑</th>
                             <th class="text-center">作者</th>
                             <th class="text-center">所属分类</th>
+                            <th class="text-center">发布时间</th>
                             <th class="text-center">浏览量</th>
                             <th class="text-center">下载量</th>
                             <th class="text-center">操作</th>
@@ -114,10 +115,18 @@
                                 <td>{$vo['atitle']}</td>
                                 <td>{$vo['editor']}</td>
                                 <td>{$vo['aid']}</td>
-                                <td>{$vo['acateid']}</td>
+                                <td>{$vo['acatename']}</td>
+                                <td>
+                                    {if condition="$vo['is_use'] eq 1"}
+                                    {:date('Y-m-d H:i:s',$vo['use_time'])}
+                                    {else /}
+                                    /
+                                    {/if}
+                                </td>
                                 <td>{$vo['click']}</td>
                                 <td>{$vo['download']}</td>
                                 <td class="text-center" style="vertical-align: middle!important;">
+                                <a class="btn btn-sm btn-success fabu" {if condition="$vo['is_use'] eq 1"}style="display:none"{/if} href="javascript:void(0);"><i class="fa fa-eject"></i>发布</a>
                                 <a href="{:url('article/edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-sm shiny">
                                     <i class="fa fa-edit"></i> 编辑
                                 </a>

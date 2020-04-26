@@ -62,6 +62,9 @@
             <div class="widget-body">
                 <div id="horizontal-form">
                     <form class="form-horizontal" action="{:url('add')}" method="post">
+                        {if condition="isset($juan) neq false"}
+                        <input type="hidden" name="juan" value="{$juan}">
+                        {/if}
                         <div class="form-group">
                             <label for="atitle" class="col-sm-2 control-label no-padding-right">文章标题</label>
                             <div class="col-sm-6">
