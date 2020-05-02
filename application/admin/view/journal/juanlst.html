@@ -114,7 +114,44 @@
                                 <td>{$vo['id']}</td>
                                 <td>{$vo['atitle']}</td>
                                 <td>{$vo['editor']}</td>
-                                <td>{$vo['aid']}</td>
+                                
+                                <td align="center">
+                    <!-- 作者卡片 -->
+              <!-- Button trigger modal -->
+              <a data-toggle="modal" data-target="#myModal{$vo['id']}" style="cursor: pointer;">
+              <!-- data-target的值由#myModal+变量id组成 -->
+                {$vo['name']}
+              </a>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="myModal{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <!-- div的id由myModal+变量id组成 -->
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"> 作者信息</h4>
+                    </div>
+                    <div class="modal-body">
+                      姓名：{$vo['name']}<br>
+                      性别：{if condition="$vo['sex'] eq 1"}男{else /}女{/if}<br>
+                      年龄：{$vo['age']}<br>
+                      身份证号：{$vo['idnum']}<br>
+                      现住址：{$vo['nowaddress']}<br>
+                      学历：{$vo['edu']}<br>
+                      专业：{$vo['profession']}<br>
+                      工作单位：{$vo['company']}<br>
+                      职称：{$vo['position']}<br>
+                      研究方向：{$vo['direction']}<br>
+                      邮箱：{$vo['email']}<br>
+                      tel:{$vo['tel']}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 作者卡片end -->
+              </td>
+
                                 <td>{$vo['acatename']}</td>
                                 <td>
                                     {if condition="$vo['is_use'] eq 1"}

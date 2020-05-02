@@ -7,7 +7,8 @@ class Index extends Common
     public function index()
     {
     	//动态
-    	$news=db('news')->select();
+    	$news=db('news')->limit(8)->order('create_time desc')->select();
+        // dump($news);die;
     	$this->assign('news',$news);
     	//最新期文章列表
     	$this->newArtlst();

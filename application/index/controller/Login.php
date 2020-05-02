@@ -28,7 +28,7 @@ class Login extends Common
 					}
 					
 				}else{
-					return $this->error('密码错误！');
+					return $this->error('用户名或密码错误！');
 				}
 			}else{
 				return $this->error('用户名或密码错误！');

@@ -70,8 +70,10 @@ class Author extends Common{
 				return $this->error('请选择稿件！');
 			}
 			// dump($data); die;
-			
 			unset($data['author']);
+			if($data['acateid']==0){
+				return $this->error('请选择类型！');
+			}
 			if(db('draft')->where('title',$data['title'])->where('uid',input('uid'))->find()){
 				return $this->error('该稿件已存在！若想重投，请先删除已投稿件！');
 			}

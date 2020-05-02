@@ -70,8 +70,5 @@ class Joulist extends Common
 		return view();
 	}
 
-	public function datelist(){//当年期数目录
-		return view();
-	}
 	
 }

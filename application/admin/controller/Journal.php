@@ -38,7 +38,12 @@ class Journal extends Common
 			$jid=input('jid');
 			$juan=input('juan');
 			$jname=input('jname');
-			$artlst=db('acate')->alias('ac')->join('article a','a.acateid=ac.id')->where('a.juan',$juan)->where('a.qishu',1)->select();
+			$artlst=db('user')->alias('u')->join('article a','a.aid=u.id')->where('a.juan',$juan)->where('a.qishu',1)->paginate(20)->each(function($v){
+			$acate=db('acate')->where('id',$v['acateid'])->find();
+			$v['acatename']=$acate['acatename'];
+			return $v;
+		});
+			// dump($artlst);die;
 			// $artlst=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->select();
 			$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
 			$qishulst=[];
@@ -65,7 +70,12 @@ class Journal extends Common
 		$jres=db('journal')->find();
 		$jname=$jres['title'];
 		$jid=$jres['id'];
-		$artlst=db('acate')->alias('ac')->join('article a','a.acateid=ac.id')->where('a.juan',$juan)->where('a.qishu',1)->select();
+		$artlst=db('user')->alias('u')->join('article a','a.aid=u.id')->where('a.juan',$juan)->where('a.qishu',1)->paginate(20)->each(function($v){
+			$acate=db('acate')->where('id',$v['acateid'])->find();
+			$v['acatename']=$acate['acatename'];
+			return $v;
+		});
+		
 		// dump($artlst);die;
 		$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
 		$qishulst=[];
@@ -74,7 +84,7 @@ class Journal extends Common
 			// dump($qishulst);die;
 		}
 		$fabu=db('article')->where('jid',$jid)->where('juan',$juan)->where('qishu',1)->field('is_use')->find();
-		// dump($fabu);die;
+		// dump($artlst);die;
 		$this->assign('fabu',$fabu['is_use']);
 		$this->assign('juan',$juan);
 		$this->assign('artlst',$artlst);
@@ -91,10 +101,15 @@ class Journal extends Common
 			// dump(input('post.'));die;
 			$jid=input('jid');
 			$juan=input('juan');
+
 			$jname=input('jname');
 			$qishu=input('qishu');
 			// dump($qishu);die;
-			$artlst=db('acate')->alias('ac')->join('article a','a.acateid=ac.id')->where('a.juan',$juan)->where('a.qishu',$qishu)->select();
+			$artlst=db('user')->alias('u')->join('article a','a.aid=u.id')->where('a.juan',$juan)->where('a.qishu',$qishu)->paginate(20)->each(function($v){
+			$acate=db('acate')->where('id',$v['acateid'])->find();
+			$v['acatename']=$acate['acatename'];
+			return $v;
+		});
 			// dump($artlst);die;
 			$qishures=db('article')->where('jid',$jid)->where('juan',$juan)->field('qishu')->Distinct(true)->order('qishu asc')->select();
 			$qishulst=[];

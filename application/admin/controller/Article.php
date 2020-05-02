@@ -72,9 +72,11 @@ class Article extends Common
 			$year=date('Y',$joures['create_time']);
 			//当前年
 			$year2=date('Y',time());
+
 			if(!isset($data['juan'])){
 				$data['juan']=$year2-$year+1;
 			}
+			// dump($data);die;
 			$year=date('Y',time());
 			$qishu=$data['qishu'];
 			$begin_page=db('article')->sum('page');//文章在期刊的开始页码

@@ -143,13 +143,13 @@
           <div class="col-lg-4">
             <p><input type="text" name="title" placeholder="请输入标题" required style="margin-top: 50px;"></p>
             
-            <p><select name="acateid" id="" style="width: 100%;height: 34px;margin-top:40px;">
+            <p><select name="acateid" id="acate" style="width: 100%;height: 34px;margin-top:40px;">
               <option value="0">请选择类型</option>
               {volist name="acate" id="vo"}
               <option value="{$vo['id']}">{$vo['acatename']}</option>
               {/volist}
             </select></p>
-                <p><input type="submit" class="form-control" style="width: 100%;background-color: #43CD80;margin-top:70px;" ></p>
+                <p><input type="submit" class="form-control tougao_sub" style="width: 100%;background-color: #43CD80;margin-top:70px;" ></p>
           </div>
           </br>
           </form>
@@ -182,25 +182,6 @@
             <td><span class="badge badge-success">通过</span></td>
             <td>{:date('Y-m-d H:i:s',$vo['create_time'])}投</td>
             <td>{:date('Y-m-d H:i:s',$vo['update_time'])}审</td>
-            
-            <!-- <td>
-              <a data-toggle="modal" data-target="#myModal">
-                摘要
-              </a>
-              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">摘要</h4>
-                    </div>
-                    <div class="modal-body">
-                      这里是内容
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td> -->
             <td>
             {if condition="$vo['is_pay'] eq 1"}
             <span class="badge badge-success">已支付</span>
@@ -505,14 +486,18 @@
   <script type="text/javascript" src="__INDEX__/layer/layer.js"></script>
     
 <script>
-
-
-
     $(function(){
+
+      $(".tougao_sub").click(function(){
+        if($("#acate").val()==0){
+          alert("请选择类型！");
+          return false; 
+        }
+      });
 
       //密码验证
     $('.submit').click(function(){
-
+      var acateid=$("#acate").val(); 
       if($('#rpwd').val()!=$('#pwd').val()){
           alert("两次密码不一致");
           return false;

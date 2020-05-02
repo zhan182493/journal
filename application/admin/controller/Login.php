@@ -20,6 +20,7 @@ class Login extends Controller
     	$pwd= addslashes(trim(stripslashes($data['pwd'])));
     	$pwd="zxcv".$pwd;
 		$user=db('user')->where('uname',$data['uname'])->find();
+		// dump($user);die;
 		if($user){
 			if(MD5($pwd)!=$user['pwd']){
 				return $this->error('用户名或密码错误！');
@@ -35,6 +36,8 @@ class Login extends Controller
 				cookie('rid',$rid,3600);
 				return $this->success('登录成功正在跳转...','index/index');
 			}
+		}else{
+			return $this->error('用户名或密码错误！');
 		}
 		
 	}

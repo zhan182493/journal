@@ -65,10 +65,15 @@ class Reviewers extends Common{
 
 	public function review(){
 		$data=input('post.');
+		if(!cookie('zjid')){
+			return view('Login/signin');
+		}
+		$data['zjid']=cookie('zjid');
 		if(!isset($data['is_pass'])){
 			$data['is_pass']=0;
 		}
 		$data['is_check']=1;
+
 		if(db('draft')->update($data)){
 			return $this->success("提交成功！");
 		}else{
