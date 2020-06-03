@@ -145,41 +145,67 @@
             {if condition="$vo['is_check'] eq 0"}
                             <td align="center">
                             <span class="label label-warning"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">未审核</font></font></span></td>
-                            <td align="center">\</td>
+                            <td align="center">
+                            <!-- 专家卡片 -->
+                              <!-- Button trigger modal -->
+                              <a data-toggle="modal" data-target="#myModal2{$vo['id']}" style="cursor: pointer;">
+                              <!-- data-target的值由#myModal+变量id组成 -->
+                                {$vo['z_name']}
+                              </a>
+                  
+                              <!-- Modal -->
+                              <div class="modal fade" id="myModal2{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                              <!-- div的id由myModal+变量id组成 -->
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                      <h4 class="modal-title" id="myModalLabel"> 审稿专家联系方式</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      姓名：{$vo['z_name']}<br>
+                                      邮箱：{$vo['z_email']}<br>
+                                      tel:{$vo['z_tel']}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- 专家卡片end -->
+                              </td>
                             <td align="center">\</td>
                             <td align="center">\</td>
                             <td align="center">\</td>
 
-                    {else /}
+                {else /}
                             <td align="center"><span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">已审核</font></font></span></td>
-                            
+                           
                             <td align="center">
-                    <!-- 专家卡片 -->
-              <!-- Button trigger modal -->
-              <a data-toggle="modal" data-target="#myModal2{$vo['id']}" style="cursor: pointer;">
-              <!-- data-target的值由#myModal+变量id组成 -->
-                {$vo['z_name']}
-              </a>
-  
-              <!-- Modal -->
-              <div class="modal fade" id="myModal2{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <!-- div的id由myModal+变量id组成 -->
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel"> 审稿专家联系方式</h4>
-                    </div>
-                    <div class="modal-body">
-                      姓名：{$vo['z_name']}<br>
-                      邮箱：{$vo['z_email']}<br>
-                      tel:{$vo['z_tel']}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 专家卡片end -->
-              </td>
+                            <!-- 专家卡片 -->
+                              <!-- Button trigger modal -->
+                              <a data-toggle="modal" data-target="#myModal2{$vo['id']}" style="cursor: pointer;">
+                              <!-- data-target的值由#myModal+变量id组成 -->
+                                {$vo['z_name']}
+                              </a>
+                  
+                              <!-- Modal -->
+                              <div class="modal fade" id="myModal2{$vo['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                              <!-- div的id由myModal+变量id组成 -->
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                      <h4 class="modal-title" id="myModalLabel"> 审稿专家联系方式</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      姓名：{$vo['z_name']}<br>
+                                      邮箱：{$vo['z_email']}<br>
+                                      tel:{$vo['z_tel']}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- 专家卡片end -->
+                              </td>
         
                             <td align="center">
                             {if condition="$vo['is_pass'] eq 0"}
@@ -201,7 +227,7 @@
                             {else /}
                             <span class="label label-success"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">已采用</font></font></span>
                             {/if}</td>
-                    {/if} 
+                {/if} 
                             <td align="center">{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
                     
                             <td align="center">

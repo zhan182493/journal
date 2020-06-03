@@ -35,13 +35,13 @@ class Draft extends Common
 				$v['direction']='网站开发';
 			}
 		}
-		if($v['is_check']==1){
+		// if($v['is_check']==1){
 				$zj=db('user')->where('id',$v['zjid'])->find();
 				// dump($zj);die;
 				$v['z_name']=$zj['name'];
 				$v['z_email']=$zj['email'];
 				$v['z_tel']=$zj['tel'];
-		}
+		// }
 		
 		if($v['acateid']!==0){
             $acate=db('acate')->where('id',$v['acateid'])->find();
@@ -53,7 +53,7 @@ class Draft extends Common
 	}
 
 	public function lst(){
-		$draftlst=db('draft')->paginate(5)->each(function($v){return $this->fun($v);});
+		$draftlst=db('draft')->order('create_time desc')->paginate(5)->each(function($v){return $this->fun($v);});
 		// dump($draftlst);die;
 		$this->assign('draftlst',$draftlst);
 		return view();

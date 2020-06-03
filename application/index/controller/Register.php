@@ -21,7 +21,7 @@ class Register extends Common
 			}elseif(db('user')->where('name',$data['name'])->find()){
 				return $this->error($data['name'].'已注册过账号！');
 			}elseif(db('user')->where('tel',$data['tel'])->find()){
-				return $this->error('该已注册过账号！');
+				return $this->error('该手机号已注册！');
 			}
 			
 			$pwd="zxcv".$data['password'];

@@ -7,6 +7,11 @@ class Common extends Controller
 	function _initialize(){
 		$this->linklst();
 		$this->noticelst();
+		$time=date('Y-m-d',time());
+		$week=date('w',time());
+		// dump(date('Y-m-d H:i:s',time()));die;
+		$this->assign('time',$time);
+		$this->assign('week',$week);
 	}
 	
 	/*首页导航栏页面*/

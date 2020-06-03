@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 use app\index\controller\Common;
+// header ( "Content-Type:text/html; charset=utf-8" );
 
 class Page extends Common
 {
@@ -28,6 +29,7 @@ class Page extends Common
 		}
 		
 		$this->assign('article',$article);
+		// dump($article);die;
 		$this->assign('title',input('title'));
 		return view();
 	}

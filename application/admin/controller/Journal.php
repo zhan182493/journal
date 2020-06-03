@@ -64,7 +64,7 @@ class Journal extends Common
 			$this->assign('qishu',1);
 			return view();
 		}
-		$juanlst=db('article')->alias('a')->join('journal j','j.id=a.jid')->field('a.juan')->Distinct(true)->order('a.juan asc')->select();//关键词 DISTINCT 用于返回唯一不同的值
+		$juanlst=db('article')->alias('a')->join('journal j','j.id=a.jid')->field('a.juan')->Distinct(true)->order('a.juan asc')->select();//DISTINCT 去重
 		// dump($juanlst);die;
 		$juan=1;
 		$jres=db('journal')->find();
@@ -132,18 +132,38 @@ class Journal extends Common
 	}
 
 	public function qishufabu(){
-		$ids = trim($_POST['ids']);
-		$ids=json_decode($ids);
-		$ids = implode(",", $ids);
+		
+			$ids = trim($_POST['ids']);
+			$ids=json_decode($ids);
+			$ids = implode(",", $ids);
+			$time=time();
+			$article=db('article')->where('id','in',$ids)->select();
+			$draftid='0';
+			foreach ($article as $v) {
+				$draftid=$draftid.",".$v['draftid'];
+			}
+			// return json(['code'=>1,'msg'=>$ids]);
+			if(db('article')->where('id','in',$ids)->update(['is_use'=>1,'use_time'=>$time])){
+				if(db('draft')->where('id','in',$draftid)->update(['is_use'=>1,'use_time'=>$time])){
+					return json(['code'=>1,'msg'=>'发布成功！']);
+				}else{
+					return json(['code'=>2,'msg'=>'发布失败！']);
+				}
+			}else{
+				return json(['code'=>2,'msg'=>'发布失败！']);
+			}
+		
+		
+	}	
+
+	public function onefabu(){
+		$id=input('id');
 		$time=time();
-		$article=db('article')->where('id','in',$ids)->select();
-		$draftid='0';
-		foreach ($article as $v) {
-			$draftid=$draftid.",".$v['draftid'];
-		}
+		$article=db('article')->where('id',$id)->find();
+		$draftid=$article['draftid'];
 		// return json(['code'=>1,'msg'=>$ids]);
-		if(db('article')->where('id','in',$ids)->update(['is_use'=>1,'use_time'=>$time])){
-			if(db('draft')->where('id','in',$draftid)->update(['is_use'=>1,'use_time'=>$time])){
+		if(db('article')->where('id',$id)->update(['is_use'=>1,'use_time'=>$time])){
+			if(db('draft')->where('id',$draftid)->update(['is_use'=>1,'use_time'=>$time])){
 				return json(['code'=>1,'msg'=>'发布成功！']);
 			}else{
 				return json(['code'=>2,'msg'=>'发布失败！']);
@@ -151,6 +171,8 @@ class Journal extends Common
 		}else{
 			return json(['code'=>2,'msg'=>'发布失败！']);
 		}
+		
+		
 	}	
 
 	public function quxiaofabu(){
